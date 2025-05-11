@@ -1,0 +1,50 @@
+[
+{
+    "name": "Sebastian Rodriguez",
+    "birthDay": "14/11/1995",
+    "description": "Soy Seba ",
+    "image": "",
+    "github": "sebitacasa",
+    "linkedIn": ""
+},
+{
+    "name": "Luciana Lourdes Bonucci Llabra",
+    "birthDay": "14/11/1995",
+    "description": "Soy la lu ",
+    "image": "",
+    "github": "Lulubonucci",
+    "linkedIn": "lbonucci"
+},
+{
+    "name": "Sara Victoria Gismondi",
+    "birthDay": "14/11/1995",
+    "description": "Soy saris ",
+    "image": "",
+    "github": "saragismondi",
+    "linkedIn": "sara-gismondi-fullstack-dev-"
+},
+{
+    "name": "Franco Nahuel Pirez",
+    "birthDay": "14/11/1995",
+    "description": "Soy el fran ",
+    "image": "",
+    "github": "Pirez10",
+    "linkedIn": "franco-pirez"
+},
+{
+    "name": "Martín Sebastián Hailant",
+    "birthDay": "14/11/1995",
+    "description": "Soy martin ",
+    "image": "",
+    "github": "mashailant",
+    "linkedIn": ""
+},
+{
+    "name": "Tomás Augusto Tagliaferri",
+    "birthDay": "07/02/2000",
+    "description": "Soy tomi ",
+    "image": "",
+    "github": "TomasTag",
+    "linkedIn": "tomas-tagliaferri-0a9708227"
+}
+]

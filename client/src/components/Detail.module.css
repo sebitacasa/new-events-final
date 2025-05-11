@@ -1,0 +1,191 @@
+.containerGral{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background:  hsl(195, 4%, 82%) ; 
+    height: 100%;
+    width: auto;
+}
+
+.container{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background:  hsl(195, 4%, 82%) ; 
+    height: auto;
+   
+}
+
+.containerFirst{
+    height: 130px;
+ 
+    border-style: dashed;
+}
+
+.containerSecond{
+    width: 555px;
+    height: 130px;
+    border-style: dashed;
+  
+
+ 
+}
+
+.containerInfo{
+    width: 600px;
+}
+
+
+
+
+
+
+
+
+
+.containerGral{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background:  hsl(195, 4%, 82%) ; 
+    height: 100%;
+    width: auto;
+}
+
+.container{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+      url('../images/pexels-thibault-trillet-167636.jpg');
+      
+    height: 100%;   ;
+   
+}
+
+.container2{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background: rgba(244, 208, 63, 0.638);
+    
+    height: 70%;
+    width: 600px;
+    margin-right: 80%;
+   
+   
+        
+        
+      
+        /* Set a specific height */
+      
+      
+        /* Create the parallax scrolling effect */
+       
+    
+}
+
+.containerGrid{
+    border-style:double;
+    border-color: #d8a602;
+    border-width: 5px;
+    box-shadow: 0 0 3px rgb(190, 190, 190), 0 0 6px rgb(193, 193, 193),
+    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
+    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
+}
+
+.cardImg{
+    border-style:double;
+    border-color: #d8a602;
+    border-width: 5px;
+    box-shadow: 0 0 3px rgb(190, 190, 190), 0 0 6px rgb(193, 193, 193),
+    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
+    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
+    margin-top: 10px;
+}
+.img{
+    width: 850px;
+    height: 650px;
+}
+
+.ticketContainer{
+    
+    width: 100%;
+    display: flex;
+    align-self: center;
+    background:  #6464645c ;
+    
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    
+}
+
+.ticketContainer h1{
+    font-size: 23px;
+}
+
+.ticketContainerBuy{
+    width: 100%;
+    display: flex;
+    align-self: center;
+
+    margin-top: 20px;
+}
+
+
+
+
+.caption{
+    margin-top: 55px;
+    color: rgba(242, 242, 242, 0.982);
+    
+}
+
+.caption{
+    margin-top: 60px;
+}
+
+.caption h2{
+    font-size: 25px;
+    font-weight: bolder;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.caption p{
+    font-size: 15px;
+    font-weight: bolder;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.containerDate{
+    margin-top: 60px;
+}
+
+.caption h4 {
+    font-size: 24px;
+    font-weight: bolder;
+  
+}
+
+.caption h5{
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.footer{
+    margin-top: 150px;
+  }
+  
+  .btn:hover{
+    transform: scale(1.1);
+  transition: all 0.5s;
+  z-index: 1000;
+  position: relative;  
+  }

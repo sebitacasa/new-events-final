@@ -1,0 +1,40 @@
+.special_modal .modal-content{
+    background-color: #000;
+    color: #fff;
+ }
+ 
+.btn{
+    position:relative;
+    padding-top: 0px;
+}
+/* .contactUs {
+    background-color: rgb(180, 140, 10);
+    width: 100%;
+    height: 100%;
+}
+
+.contactUs .contactUsContent{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 500px;
+}
+
+.title{
+    cursor: pointer;
+}
+
+.contactUsTitle{
+    color: beige;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.emailPlace{
+    background-color: black;
+} */
+
