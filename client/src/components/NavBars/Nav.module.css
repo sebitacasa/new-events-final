@@ -1,12 +1,14 @@
-
-.title{
-	color: white;
+.responsive-select {
+  width: 150px;
+  min-width: 120px;
+  background: #f0ad4e;
+  border-color: black;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-
-.title{
-	font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-	color: rgb(226, 181, 0);
-	font-weight: bold;
-	font-size: 27px;
+@media (max-width: 576px) {
+  .responsive-select {
+    width: 100%;
+  }
 }
