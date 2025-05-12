@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import CartitaDeCarrito from "./CartitaDeCarrito";
 import SumaTotalTotal from "./SumaTotalTotal";
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
+
 
 const MySwal = withReactContent(Swal);
 
@@ -114,7 +116,7 @@ function Carrito() {
               <div className="col text-center">
                 <h4>TOTAL: ${priceForStripe / 100}</h4>
                 <StripeCheckout
-                  stripeKey="pk_test_51KvehVGJ6earutDK1a1AVoXZQWqbwpdHDV7NBvEPnSP1w8IxXkDaVltQOMwsixWtUaYHgOJSCrzlarO3ghGsZfIs00cRkKkzoE"
+                  stripeKey={stripeKey}
                   label="Pagar ahora"
                   name="Compra en Under Event"
                   billingAddress
