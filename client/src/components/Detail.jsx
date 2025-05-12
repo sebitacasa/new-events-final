@@ -66,6 +66,7 @@ const Detail = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(getDetail(id));
 
     dispatch(getTickets(id)).then((tickets) => {
@@ -129,351 +130,240 @@ const Detail = () => {
               <NavTop />
             </div>
 
+           <Container>
+  <Row className="justify-content-center">
+    {/* Card con imagen, lugar, dirección, fecha y formulario de comentarios */}
+    <Col md={6} xs={12}>
+      <div className={styles.firstContainer}>
+        {["Dark"].map((variant) => (
+          <Card
+            bg={variant.toLowerCase()}
+            key={variant}
+            text={variant.toLowerCase() === "light" ? "dark" : "white"}
+            className="mb-2"
+            style={{ width: "auto", marginTop: "15px"}}
+            border="warning"
+          >
+            <Card.Img
+              variant="top"
+              src={detalles.imagen}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = image2;
+              }}
+            />
+            <Card.Body>
+              <Card.Title style={{ fontSize: "22px", fontWeight: "bolder" }}>
+                {detalles.title}
+              </Card.Title>
+              <hr />
+              <Card.Text style={{ fontSize: "17px", fontWeight: "bolder" }}>
+                {detalles.description}
+              </Card.Text>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroupItem
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  background: "#292b2c",
+                  color: "#f0ad4e",
+                }}
+              >
+                <FaCalendar /> {detalles.date}
+              </ListGroupItem>
+              <ListGroupItem
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  background: "#292b2c",
+                  color: "#f0ad4e",
+                }}
+              >
+                <GoLocation /> {detalles.place}
+              </ListGroupItem>
+              <ListGroupItem
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  background: "#292b2c",
+                  color: "#f0ad4e",
+                }}
+              >
+                <GoLocation /> {detalles.address}
+              </ListGroupItem>
+            </ListGroup>
+
+            <Button
+              style={{ fontWeight: "bold" }}
+              variant="outline-warning"
+              onClick={handleShow}
+            >
+              Deja tu Comentario!!
+            </Button>
+
+            {/* Modal para comentarios */}
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header style={{ background: "#f0ad4e" }} closeButton>
+                <Modal.Title>Deja tu Comentario</Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{ background: "#1C2833" }}>
+                <Form variant="warning" onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3">
+                    <Form.Label style={{ color: "#f0ad4e" }}>Nombre</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      value={input.name}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label style={{ color: "#f0ad4e" }}>
+                      Descripcion del evento
+                    </Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="description"
+                      rows={3}
+                      value={input.description}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                  <Button
+                    style={{ width: "350px", marginLeft: "12%" }}
+                    type="submit"
+                    variant="outline-warning"
+                    onClick={handleClose}
+                  >
+                    Enviar
+                  </Button>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer style={{ background: "#f0ad4e" }}>
+                <Button variant="dark" onClick={handleClose}>
+                  Cerrar
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </Card>
+        ))}
+      </div>
+    </Col>
+
+    {/* Card de Tickets + botón Comprar */}
+    <Col md={6} xs={12}>
+      <Card
+        bg="dark"
+        text="white"
+        style={{ width: "auto", marginTop: "25px" }}
+        className="mb-2"
+        border="warning"
+      >
+        <Card.Body>
+          <Card.Title>
             <Container>
               <Row>
                 <Col>
-                  {["Dark "].map((variant) => (
-                    <Card
-                      bg={variant.toLowerCase()}
-                      key={variant}
-                      text={
-                        variant.toLowerCase() === "light" ? "dark" : "white"
-                      }
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        marginTop: "25px",
-                      }}
-                      className="mb-2"
-                      border="warning"
-                    >
-                      <Card.Body bg="waring" variant="warning">
-                        <Card.Title bg="waring" variant="warning">
-                          <Container>
-                            <Row>
-                              <Col xs>
-                                <h5
-                                  style={{
-                                    maringTop: "25px",
-                                
-                                    fontSize: "22px",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  Tickets
-                                </h5>
-                              </Col>
-                              <Col xs={{ order: 12 }}>
-                                <h5
-                                  style={{
-                                    maringTop: "25px",
-                                    
-                                    fontSize: "22px",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  Valor
-                                </h5>
-                              </Col>
-                              <Col>
-                                <h5
-                                  style={{
-                                    maringTop: "25px",
-                                    
-                                    fontSize: "22px",
-                                    
-                                  }}
-                                >
-                                  Cantidad
-                                </h5>
-                              </Col>
-                              <hr />
-                            </Row>
-                          </Container>
-                          <br />{" "}
-                        </Card.Title>
-                        <Card.Text>
-                          <Container>
-                            <Row>
-                              <Col xs>
-                                <h5
-                                  style={{
-                                    maringTop: "25px",
-                                 
-                                  }}
-                                >
-                                  {detalles.title}
-                                </h5>
-                              </Col>
-                              <Col xs={{ order: 12 }}>
-                                <h5 >
-                                  {" "}
-                                  $ {detalles.cost}.00
-                                </h5>
-                              </Col>
-                              <Col>
-                                <h5 >
-                                  {detalles.stock}
-                                </h5>
-                              </Col>
-                              <hr />
-                            </Row>
-                          </Container>
-                        </Card.Text>
-                      </Card.Body>
-                      <ListGroup className="list-group-flush">
-                        <ListGroupItem
-                          style={{ height: "380px", marginBottom: "20px" }}
-                        >
-                          <MapContainer
-                            style={{ height: "100%", width: "100wh" }}
-                            center={[detalles.lat, detalles.long]}
-                            zoom={10}
-                            scrollWheelZoom={false}
-                          >
-                            <TileLayer
-                              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                            <Marker
-                              icon={leafletIcon}
-                              position={[detalles.lat, detalles.long]}
-                            ></Marker>
-                          </MapContainer>
-                        </ListGroupItem>
-                        <ListGroupItem
-                          style={{
-                            color: "black",
-                            fontSize: "18px",
-                            fontWeight: "bolder",
-                            background: "#292b2c",
-                            
-                          }}
-                        >
-                          {detalles.description}
-                        </ListGroupItem>
-
-                        <ListGroupItem
-                          style={{
-                            color: "black",
-                            fontSize: "18px",
-                          
-                            background: "#292b2c",
-                           
-                          }}
-                        >
-                         Comentarios:
-                        </ListGroupItem>
-
-                        <ListGroupItem
-                          bg="waring"
-                          variant="warning"
-                          style={{
-                            marginTop: "15px",
-                           
-                            background: "#292b2c",
-                            height: "auto",
-                            gap: "10px"
-                          }}
-                        >
-                          {detalles.Reviews.length > 0 ? (
-                            detalles.Reviews.map((e) => {
-                              return (
-                                <div style={{height: "auto", gap: "10px"}}>
-                                <DetailCard
-                                  name={e.name}
-                                  description={e.description}
-                                  rating={e.rating}
-                                  
-                                />
-                                </div>
-                              );
-                            })
-                          ) : (
-                            
-                            <h5>No hay comentarios aun. Deja el tuyo!!</h5>
-                          )}
-                        </ListGroupItem>
-                      </ListGroup>
-                     
-                    </Card>
-                  ))}
-
-                  <Button
-                    style={{
-                      width: "520px",
-                      marginTop: "20px",
-                      marginLeft: "2%",
-                      fontWeight: "bold",
-                    }}
-                    className={styles.btn}
-                    variant="warning"
-                    size="lg"
-                    value={detalles}
-                    onClick={() => {
-                      addItem(
-                        {
-                          id: detalles.id,
-                          name: detalles.title,
-                          price: Number(detalles.cost.replace(".", "")),
-                          
-                          image: detalles.imagen,
-                        },
-                        1
-                      );
-                    }}
-                  >
-                    Comprar
-                  </Button>
+                  <h5 style={{ fontSize: "22px", fontWeight: "bold" }}>
+                    Tickets
+                  </h5>
                 </Col>
-
-                <Col xs={{ order: 5 }}>
-                  {" "}
-                  <div className={styles.firstContainer}>
-                    {["Dark"].map((variant) => (
-                      <Card
-                        bg={variant.toLowerCase()}
-                        key={variant}
-                        text={
-                          variant.toLowerCase() === "light" ? "dark" : "white"
-                        }
-                        className="mb-2"
-                        style={{ width: "auto", marginTop: "15px" }}
-                        border="warning"
-                      >
-                        <Card.Img variant="top"  src={detalles.imagen}
-                            onError={(e) => { e.target.onerror = null; e.target.src = image2; }} />
-                        <Card.Body>
-                          <Card.Title
-                            style={{
-                              fontSize: "22px",
-                              fontWeight: "Bolder",
-                          
-                            }}
-                          >
-                            {detalles.title}
-                          </Card.Title>
-                          <hr />
-                          <Card.Text
-                            style={{
-                              fontSize: "17px",
-                              fontWeight: "Bolder",
-                              
-                            }}
-                          >
-                            {detalles.description}
-                          </Card.Text>
-                        </Card.Body>
-                        <ListGroup className="list-group-flush">
-                          <ListGroupItem
-                            bg="dark"
-                            variant="warning"
-                            style={{ fontSize: "18px", fontWeight: "Bold", background: "#292b2c", color:"#f0ad4e" }}
-                          >
-                            {" "}
-                            <FaCalendar /> {detalles.date}
-                          </ListGroupItem>
-                          <ListGroupItem
-                            bg="dark"
-                            variant="warning"
-                            style={{ fontSize: "16px", fontWeight: "Bold", background: "#292b2c", color:"#f0ad4e" }}
-                          >
-                            <GoLocation /> {detalles.place}
-                          </ListGroupItem>
-                          <ListGroupItem
-                            bg="dark"
-                            variant="warning"
-                            style={{ fontSize: "16px", fontWeight: "Bold", background: "#292b2c", color:"#f0ad4e"}}
-                          >
-                            <GoLocation /> {detalles.address}
-                          </ListGroupItem>
-                        </ListGroup>
-                        <Card.Img src={detalles.imagen} />
-                        <ListGroupItem
-                          bg="dark"
-                          variant="warning"
-                          style={{ fontSize: "16px", fontWeight: "Bold", background: "#292b2c", color:"#f0ad4e"}}
-                        ></ListGroupItem>
-
-                        <Button style={{fontWeight: "bold"}} variant="outline-warning" onClick={handleShow}>
-                          Deja tu Comentario!!
-                        </Button>
-
-                        <Modal show={show} onHide={handleClose}>
-                          <Modal.Header
-                            style={{ background: "#f0ad4e" }}
-                            closeButton
-                          >
-                            <Modal.Title>Deja tu Comentario</Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body
-                            style={{ background: "#1C2833 " }}
-                          >
-                            <Form variant="warning" onSubmit={handleSubmit}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label style={{color: "#f0ad4e"}}>Nombre </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  autoFocus
-                                  name="name"
-                                  value={input.name}
-                                  onChange={handleInputChange}
-                                />
-                              </Form.Group>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlTextarea1"
-                              >
-                                <Form.Label style={{color: "#f0ad4e"}} >Descripcion del evento</Form.Label>
-                                <Form.Control
-                                  name="description"
-                                  value={input.description}
-                                  as="textarea"
-                                  rows={3}
-                                  onChange={handleInputChange}
-                                />
-                              </Form.Group>
-
-                               {/* <Form.Select
-                                name="rating"
-                                value={input.rating}
-                                onChange={handleSelect}
-                                aria-label="Default select example"
-                              >
-                                <option>Open this select menu</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                              </Form.Select>  */}
-                              <Button
-                                style={{width: "350px", marginLeft: "12%"}}
-                                type="submit"
-                                variant="outline-warning"
-                                onClick={handleClose}
-                                
-                                
-                              >
-                                Enviar
-                              </Button>
-                            </Form>
-                          </Modal.Body>
-                          <Modal.Footer style={{ background: "#f0ad4e" }}>
-                            <Button style={{color: "#f0ad4e"}} variant="dark" onClick={handleClose}>
-                              Cerrar
-                            </Button>
-                          </Modal.Footer>
-                        </Modal>
-                      </Card>
-                    ))}
-                  </div>
+                <Col>
+                  <h5 style={{ fontSize: "22px", fontWeight: "bold" }}>
+                    Valor
+                  </h5>
+                </Col>
+                <Col>
+                  <h5 style={{ fontSize: "22px" }}>Cantidad</h5>
                 </Col>
               </Row>
             </Container>
+          </Card.Title>
+          <Card.Text>
+            <Container>
+              <Row>
+                <Col>
+                  <h5>{detalles.title}</h5>
+                </Col>
+                <Col>
+                  <h5>${detalles.cost}.00</h5>
+                </Col>
+                <Col>
+                  <h5>{detalles.stock}</h5>
+                </Col>
+              </Row>
+            </Container>
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem
+            style={{
+              background: "#292b2c",
+              color: "white",
+              fontWeight: "bolder",
+            }}
+          >
+            {detalles.description}
+          </ListGroupItem>
+
+          <ListGroupItem
+            style={{ background: "#292b2c", color: "white" }}
+          >
+            Comentarios:
+          </ListGroupItem>
+
+          <ListGroupItem
+            style={{
+              background: "#292b2c",
+              height: "auto",
+              gap: "10px",
+            }}
+          >
+            {detalles.Reviews.length > 0 ? (
+              detalles.Reviews.map((e, idx) => (
+                <DetailCard
+                  key={idx}
+                  name={e.name}
+                  description={e.description}
+                  rating={e.rating}
+                />
+              ))
+            ) : (
+              <h5>No hay comentarios aun. Deja el tuyo!!</h5>
+            )}
+          </ListGroupItem>
+        </ListGroup>
+      </Card>
+
+      <Button
+        style={{
+          width: "100%",
+          marginTop: "20px",
+          fontWeight: "bold",
+        }}
+        className={styles.btn}
+        variant="warning"
+        size="lg"
+        value={detalles}
+        onClick={() => {
+          addItem(
+            {
+              id: detalles.id,
+              name: detalles.title,
+              price: Number(detalles.cost.replace(".", "")),
+              image: detalles.imagen,
+            },
+            1
+          );
+        }}
+      >
+        Comprar
+      </Button>
+    </Col>
+  </Row>
+</Container>
+
             <div className={styles.footer}>
               <Footer />
             </div>
