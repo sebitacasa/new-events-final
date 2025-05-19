@@ -30,7 +30,8 @@ export const GET_EVENTS_CLIENT = "GET_EVENTS_CLIENT"
 
 
 
-const API_URL = "http://localhost:3001";
+// const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL
 
 
 
@@ -43,7 +44,7 @@ const API_URL = "http://localhost:3001";
 export function getAllEvent() {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/events/getAll`);
+      const json = await axios.get(`${API_URL}/events/getAll`);
       console.log("✅ Data recibida del backend:", json.data)
       return dispatch({
         type: GET_ALL_EVENTS_DB,
@@ -60,7 +61,7 @@ export function getAllDate() {
   //ME TRAE UN ARRAY CON LAS FECHAS DE LOS EVENTOS
   return async function (dispatch) {
     try {
-      const date = await axios.get("http://localhost:3001/events/getDates/");
+      const date = await axios.get(`${API_URL}/events/getDates/`);
       return dispatch({
         type: GET_ALL_DATE,
         payload: date.data,
@@ -171,7 +172,7 @@ export function createUser(payload, getAccessTokenSilently) {
         audience: "https://underevents/api", // este debe coincidir con el backend
       });
      
-      await fetch("http://localhost:3001/users/debug-token", {
+      await fetch(`${API_URL}/users/debug-token`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -310,7 +311,7 @@ export function getAllOrders() {
   return async function (dispatch) {
     try {
       const orders = await axios.get(
-        "http://localhost:3001/users/getAllOrders"
+        `${API_URL}/users/getAllOrders`
       );
       return dispatch({
         type: GET_ALL_ORDERS,
@@ -329,7 +330,7 @@ export function addReviews(payload, id) {
   return async (dispatch) => {
     try {
       const json = await axios.post(
-        `http://localhost:3001/users/createReview/${id}/`, 
+        `${API_URL}/users/createReview/${id}/`, 
         payload
       );
       return dispatch({
@@ -348,7 +349,7 @@ export function getReviews(id) {
   return async function (dispatch) {
     try {
       const orders = await axios.get(
-        `http://localhost:3001/users/getReviews/${id}/`
+        `${API_URL}/users/getReviews/${id}/`
       );
       return dispatch({
         type: GET_REVIEWS,
@@ -373,7 +374,7 @@ export function getEventClient(id) {
   return async function (dispatch) {
     try {
       const events = await axios.get(
-        `http://localhost:3001/events/eventclient/${id}/`
+        `${API_URL}/events/eventclient/${id}/`
       );
       return dispatch({
         type: GET_EVENTS_CLIENT,
@@ -390,7 +391,7 @@ export function getEventClient(id) {
 export function putEventClient(id, payload) {
   return async function () {
     try {
-       await axios.put( `http://localhost:3001/events/putEvent/${id}/`, payload);
+       await axios.put( `${API_URL}/events/putEvent/${id}/`, payload);
      
     } catch (err) {
       console.log(err);
