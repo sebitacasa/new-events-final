@@ -121,7 +121,7 @@ export default function Cart() {
       </section>
       
 
-      <div style={{marginTop: "75px"}}>
+      <div style={{marginTop: "150x"}}>
         <Carousely />
       </div>
       </div>
