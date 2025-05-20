@@ -25,7 +25,7 @@ export default function PaymentForm() {
     const token = await getAccessTokenSilently();
 
     const res = await axios.post(
-       `${API_URL}/events/create-payment-intent/`,
+       `${API_URL}/events/create-payment-intent`,
       { amount: cartTotal },
       {
         headers: {
