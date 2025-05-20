@@ -82,21 +82,46 @@ export default function PaymentForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "auto" }}>
-      <CardElement />
-      <button
-        type="submit"
-        disabled={!stripe}
-        style={{
-          marginTop: "20px",
-          background: "#f0ad4e",
-          border: "none",
-          padding: "10px 20px",
-          fontWeight: "bold",
-        }}
-      >
-        Pagar ${cartTotal}
-      </button>
-    </form>
+    <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "40px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}>
+  <CardElement
+    options={{
+      style: {
+        base: {
+          fontSize: "16px",
+          color: "#32325d",
+          "::placeholder": {
+            color: "#a0aec0",
+          },
+        },
+        invalid: {
+          color: "#e53e3e",
+        },
+      },
+    }}
+  />
+  <button
+    type="submit"
+    disabled={!stripe}
+    style={{
+      marginTop: "20px",
+      backgroundColor: "#f0ad4e",
+      color: "#fff",
+      border: "none",
+      padding: "12px 24px",
+      borderRadius: "8px",
+      fontWeight: "bold",
+      fontSize: "16px",
+      cursor: "pointer",
+      width: "100%",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      transition: "background 0.3s",
+    }}
+    onMouseOver={(e) => (e.target.style.backgroundColor = "#ec971f")}
+    onMouseOut={(e) => (e.target.style.backgroundColor = "#f0ad4e")}
+  >
+    Pagar ${cartTotal}
+  </button>
+</form>
+
   );
 }
