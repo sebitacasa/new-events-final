@@ -87,6 +87,7 @@ export default function PaymentForm() {
     options={{
       style: {
         base: {
+          marginTop: "50px",
           fontSize: "16px",
           color: "#32325d",
           "::placeholder": {
