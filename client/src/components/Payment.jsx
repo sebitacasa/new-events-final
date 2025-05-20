@@ -13,6 +13,7 @@ export default function PaymentForm() {
   const elements = useElements();
   const { user, getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
   const { items, cartTotal, emptyCart } = useCart();
+  const API_URL = import.meta.env.VITE_API_URL
 
   // ⛔ No renderizar si Auth0 o Stripe no están listos
   if (isLoading || !isAuthenticated || !stripe || !elements) {
@@ -24,7 +25,7 @@ export default function PaymentForm() {
     const token = await getAccessTokenSilently();
 
     const res = await axios.post(
-      "http://localhost:3001/events/create-payment-intent",
+       `${API_URL}/events/create-payment-intent/`,
       { amount: cartTotal },
       {
         headers: {
@@ -54,7 +55,7 @@ export default function PaymentForm() {
       MySwal.fire("Error", result.error.message, "error");
     } else if (result.paymentIntent.status === "succeeded") {
       await axios.post(
-        "http://localhost:3001/events/payment",
+        `${API_URL}/events/payment`,
         {
           amount: cartTotal,
           clientSecret,
