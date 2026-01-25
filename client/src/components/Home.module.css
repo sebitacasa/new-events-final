@@ -84,11 +84,16 @@
 @media (max-width: 768px) {
   
   /* Centramos el sidebar en móvil */
-  .calendarContainer, .cardSecondContainer {
+  .calendarContainer {
     margin-left: auto;
     margin-right: auto;
-    /* Un poco de margen a los lados para que no toque el borde */
     width: 90%; 
+    max-width: 320px; /* Aseguramos que el calendario no se deforme */
+  }
+
+  /* 🔥 ESTO ES LO QUE PIDES: Ocultar la imagen publicitaria en móvil */
+  .cardSecondContainer {
+    display: none !important; 
   }
 
   /* Ajuste para que las cards no toquen los bordes */
