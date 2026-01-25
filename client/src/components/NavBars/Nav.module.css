@@ -3,65 +3,84 @@
 .nav {
   margin-bottom: 0;
   width: 100%;
+  position: relative;
+  z-index: 1000;
 }
 
-/* --- Estilos para la barra de Filtros (Selector) --- */
-
+/* --- BARRA DE FILTROS --- */
 .selectorContainer {
-  background-color: #212529; /* Fondo oscuro para que coincida con el NavTop */
+  background-color: #212529;
   padding: 10px 0;
+  width: 100%;
+  border-bottom: 1px solid #333;
 }
 
 .selectorNavbar {
   padding: 0;
 }
 
+/* --- GRUPO CENTRAL DE SELECTS --- */
 .filterGroup {
   display: flex;
-  gap: 10px; /* Espacio entre los filtros */
+  flex-direction: row; /* En PC siempre en fila */
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px; /* Espacio uniforme entre selects */
 }
 
 .filterSelect {
-  width: 160px; /* Ancho fijo en escritorio */
+  /* En PC: ancho automático pero con mínimo para que se lea */
+  width: auto;
+  min-width: 180px; 
   height: 38px;
-  background-color: #f0ad4e;
-  border: 1px solid black;
-  font-weight: bold;
+  background-color: #fff; /* Blanco para mejor lectura */
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-weight: 500;
   cursor: pointer;
-  color: black;
+  color: #333;
 }
 
+.filterSelect:focus {
+  outline: none;
+  border-color: #f0ad4e;
+  box-shadow: 0 0 5px rgba(240, 173, 78, 0.5);
+}
+
+/* Link de "Filtros" (Título) */
 .brandLink {
   color: #f0ad4e !important;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-decoration: none;
-  margin-right: 15px;
   cursor: pointer;
+  white-space: nowrap;
+  margin-right: 20px;
 }
 
-/* --- RESPONSIVE (Celulares y Tablets pequeñas) --- */
+/* --- RESPONSIVE (Celulares y Tablets) --- */
 @media (max-width: 991px) {
+  .selectorContainer {
+    padding: 15px;
+  }
+
+  /* En celular, apilamos todo verticalmente */
   .filterGroup {
-    flex-direction: column; /* Apila los filtros verticalmente */
+    flex-direction: column;
     width: 100%;
-    margin-bottom: 15px;
+    gap: 10px;
+    margin: 10px 0;
   }
 
   .filterSelect {
-    width: 100%; /* Ocupa todo el ancho en celular */
+    width: 100%; /* Ocupa todo el ancho en móvil */
+    min-width: 0;
   }
 
   .brandLink {
-    display: block;
+    margin-right: 0;
     text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  /* Ajuste para el Searchbar en móvil */
-  .selectorNavbar .navbar-collapse {
-    padding-top: 10px;
+    display: block;
+    margin-bottom: 5px;
   }
 }
