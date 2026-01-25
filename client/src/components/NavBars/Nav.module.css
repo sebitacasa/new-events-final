@@ -44,6 +44,8 @@
 
 /* RESPONSIVE */
 @media (max-width: 991px) {
+  /* ... tus otros estilos ... */
+
   .filtersContainer {
     flex-direction: column;
     width: 100%;
@@ -54,16 +56,21 @@
   }
 
   .navSelect {
-    width: 100%; /* En celular ocupan todo el ancho */
+    width: 100%;
   }
   
-  /* Separación para el usuario en móvil */
+  /* 🔥 ESTO ES LO QUE ACOMODA AL USUARIO 🔥 */
   .userSection {
-    margin-top: 15px;
+    margin-top: 10px;
     padding-top: 15px;
-    border-top: 1px solid #444;
+    border-top: 1px solid #444; /* Línea separadora */
     width: 100%;
-    display: flex;
-    justify-content: center;
+    
+    /* Forzamos que se pongan en fila horizontal */
+    display: flex !important; 
+    flex-direction: row !important; 
+    justify-content: center; /* Centrados al medio */
+    align-items: center;
+    gap: 20px; /* Espacio entre Opciones, Carrito y Foto */
   }
 }
