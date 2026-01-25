@@ -31,6 +31,7 @@ export default function NavTop() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Traemos isAuthenticated aquí para que exista en el HTML
   const { user, isAuthenticated, logout, getAccessTokenSilently } = useAuth0();
   const userLoged = useSelector((state) => state.userLoged);
 
@@ -106,13 +107,13 @@ export default function NavTop() {
               </div>
             </Nav>
 
-            <Nav>
-              {/* Dropdown de Usuario */}
+            {/* NAV USUARIO - ALINEADO Y RESPONSIVE */}
+            <Nav className="d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
               {isAuthenticated && (
-                <Dropdown align="end" className="mt-3 mt-lg-0">
+                <Dropdown align="end">
                   <Dropdown.Toggle
                     as="div"
-                    className="d-flex align-items-center justify-content-center"
+                    className="d-flex align-items-center justify-content-center shadow-sm"
                     style={{
                       cursor: "pointer",
                       width: "45px",
@@ -123,7 +124,10 @@ export default function NavTop() {
                       color: "black",
                       fontWeight: "bold",
                       border: "2px solid #f0ad4e",
+                      transition: "transform 0.2s"
                     }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+                    onMouseOut={(e) => e.currentTarget.style.transform = "scale(1.0)"}
                   >
                     {userLoged?.picture ? (
                       <Image
@@ -139,21 +143,22 @@ export default function NavTop() {
                     )}
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu style={{ background: "#f0ad4e" }}>
+                  <Dropdown.Menu style={{ background: "#f0ad4e", border: "1px solid black" }}>
                     <LinkContainer to="/profile">
-                      <Dropdown.Item>
+                      <Dropdown.Item className="text-dark">
                         <b>{userLoged?.name || "Usuario"}</b> (Perfil)
                       </Dropdown.Item>
                     </LinkContainer>
                     
                     {userLoged?.roll === "Admin" && (
                       <LinkContainer to="/userManagement">
-                        <Dropdown.Item>Gestión de Usuarios</Dropdown.Item>
+                        <Dropdown.Item className="text-dark">Gestión de Usuarios</Dropdown.Item>
                       </LinkContainer>
                     )}
                     
-                    <Dropdown.Divider />
+                    <Dropdown.Divider style={{ borderColor: "black" }} />
                     <Dropdown.Item
+                      className="text-dark"
                       onClick={() => logout({ returnTo: window.location.origin })}
                     >
                       Cerrar Sesión
@@ -162,6 +167,7 @@ export default function NavTop() {
                 </Dropdown>
               )}
             </Nav>
+
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -236,7 +242,7 @@ export function Selector() {
 
   const handleDate = (e) => {
     const mes = e.target.value;
-    setFilterMes(mes); // Nota: filterMes no se usaba en el render, solo set
+    setFilterMes(mes);
     localStorage.setItem("mes", mes);
     localStorage.setItem("filtro", "mes");
     dispatch(Action.byFilterDate(mes));
@@ -251,66 +257,73 @@ export function Selector() {
             <Navbar.Toggle aria-controls="filter-navbar-scroll" className="mb-2" />
             
             <Navbar.Collapse id="filter-navbar-scroll">
-             {/* Este es el Nav de la derecha con el usuario */}
-            <Nav className="d-flex align-items-center ms-lg-3">
-              {isAuthenticated && (
-                <Dropdown align="end" className="mt-3 mt-lg-0">
-                  <Dropdown.Toggle
-                    as="div"
-                    className="d-flex align-items-center justify-content-center shadow-sm"
-                    style={{
-                      cursor: "pointer",
-                      width: "45px",
-                      height: "45px",
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                      backgroundColor: "#f0ad4e",
-                      color: "black",
-                      fontWeight: "bold",
-                      border: "2px solid #f0ad4e",
-                      transition: "transform 0.2s"
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-                    onMouseOut={(e) => e.currentTarget.style.transform = "scale(1.0)"}
-                  >
-                    {userLoged?.picture ? (
-                      <Image
-                        roundedCircle
-                        src={userLoged.picture}
-                        width="100%"
-                        height="100%"
-                        alt="User"
-                        style={{ objectFit: "cover" }}
-                      />
-                    ) : (
-                      <span style={{ fontSize: "14px" }}>User</span>
-                    )}
-                  </Dropdown.Toggle>
+              <Nav className="w-100 d-flex justify-content-between align-items-lg-center flex-column flex-lg-row">
+                
+                {/* Título Clickable para Resetear Filtros */}
+                <div 
+                  className={styles.brandLink} 
+                  onClick={handleClick}
+                  title="Click para ver todos los eventos"
+                >
+                  Filtros
+                </div>
 
-                  <Dropdown.Menu style={{ background: "#f0ad4e", border: "1px solid black" }}>
-                    <LinkContainer to="/profile">
-                      <Dropdown.Item className="text-dark">
-                        <b>{userLoged?.name || "Usuario"}</b> (Perfil)
-                      </Dropdown.Item>
-                    </LinkContainer>
-                    
-                    {userLoged?.roll === "Admin" && (
-                      <LinkContainer to="/userManagement">
-                        <Dropdown.Item className="text-dark">Gestión de Usuarios</Dropdown.Item>
-                      </LinkContainer>
-                    )}
-                    
-                    <Dropdown.Divider style={{ borderColor: "black" }} />
-                    <Dropdown.Item
-                      className="text-dark"
-                      onClick={() => logout({ returnTo: window.location.origin })}
-                    >
-                      Cerrar Sesión
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </Nav>
+                {/* Grupo de Selects */}
+                <div className={styles.filterGroup}>
+                  {/* Filtro Ciudades */}
+                  <Form.Select
+                    className={styles.filterSelect}
+                    value={filterCity}
+                    onChange={handleStates}
+                    aria-label="Filtrar por ciudad"
+                  >
+                    <option value="All">Todas las Ciudades</option>
+                    {cities?.map((item) => (
+                      <option key={item} value={item}>{item}</option>
+                    ))}
+                  </Form.Select>
+
+                  {/* Filtro Géneros */}
+                  <Form.Select
+                    className={styles.filterSelect}
+                    value={filterGenero}
+                    onChange={handleEventType}
+                    aria-label="Filtrar por género"
+                  >
+                    <option value="All">Todos los Géneros</option>
+                    {generos?.map((item) => (
+                      <option key={item} value={item}>{item}</option>
+                    ))}
+                  </Form.Select>
+
+                  {/* Filtro Meses */}
+                  <Form.Select
+                    className={styles.filterSelect}
+                    onChange={handleDate}
+                    aria-label="Filtrar por mes"
+                  >
+                    <option value="All">Todos los Meses</option>
+                    <option value="Enero">Enero 2022</option>
+                    <option value="Febrero">Febrero 2022</option>
+                    <option value="Marzo">Marzo 2022</option>
+                    <option value="Abril">Abril 2022</option>
+                    <option value="Mayo">Mayo 2022</option>
+                    <option value="Junio">Junio 2022</option>
+                    <option value="Julio">Julio 2022</option>
+                    <option value="Agosto">Agosto 2022</option>
+                    <option value="Septiembre">Septiembre 2022</option>
+                    <option value="Octubre">Octubre 2022</option>
+                    <option value="Noviembre">Noviembre 2022</option>
+                    <option value="Diciembre">Diciembre 2022</option>
+                  </Form.Select>
+                </div>
+
+                {/* Barra de Búsqueda */}
+                <div className="mt-3 mt-lg-0">
+                  <Searchbar />
+                </div>
+
+              </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
