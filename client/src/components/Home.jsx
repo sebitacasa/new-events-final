@@ -8,7 +8,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Footer from "./Footer/Footer";
 import Carousely from "./Carousel";
 import Cardi from "./Cardi";
-//import Buttom from "./Button/ScrollButton"
 import { SpinnerCircularFixed } from "spinners-react";
 import { Selector } from "./NavBars/Nav";
 import NavTop from "./NavBars/Nav";
@@ -26,15 +25,14 @@ import {
   Alert,
   Card,
   ListGroupItem,
-  Button,
 } from "react-bootstrap";
 
 export default function Home() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventosDb || []);
-  console.log(events)
+  console.log(events);
   const [carga, setCarga] = useState(true);
-  const { isLoading, error, user, isAuthenticated } = useAuth0();
+  const { error } = useAuth0(); // Eliminé variables no usadas para limpiar warnings
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
@@ -44,11 +42,11 @@ export default function Home() {
       console.log("⚠️ No hay eventos o la lista está vacía.");
     }
   }, [events]);
-  
+
   useEffect(() => {
     dispatch(Action.getAllEvent()).then(() => setCarga(false));
   }, [dispatch]);
-  
+
   useEffect(() => {
     if (error) {
       console.log(error);
@@ -59,12 +57,13 @@ export default function Home() {
   if (carga) {
     return (
       <div className={styles.containerSpinner}>
-        <div style={{ background: "#1C2833 ", width: "2000px", height: "100vh" }}>
+        <div style={{ background: "#1C2833 ", width: "100%", height: "100vh" }}>
           <SpinnerCircularFixed
             style={{
-              marginLeft: "940px",
-              fontWeight: "bold",
-              marginTop: "250px",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
             }}
           />
         </div>
@@ -95,13 +94,13 @@ export default function Home() {
       </ToastContainer>
 
       <NavTop />
+      
       <div style={{ marginTop: "15px" }}>
-        <Carousely  />
+        <Carousely />
 
         <Container fluid>
           <Row>
             <Col>
-              {" "}
               <div className={styles.navegation}>
                 <Selector />
               </div>
@@ -109,121 +108,89 @@ export default function Home() {
           </Row>
         </Container>
 
+        {/* --- INICIO SECCIÓN PRINCIPAL (FONDO) --- */}
         <div className={styles.background}>
-          <div className={styles.infoContainer}></div>
           <div className={styles.cardsContainer}>
             <div className={styles.Date}></div>
 
-            <Container fluid style={{ width: "100wh" }}>
-              <Row>
-              <Col style={{ marginTop: "120px", float: "rigth" , width: "auto" }} md="auto">
-                  <div
-                    className={styles.calendarContainer}
-                    style={{ marginLeft: "6%" }}
-                  >
+            <Container fluid>
+              {/* Usamos Row para dividir la pantalla en dos columnas grandes */}
+              <Row className="justify-content-center">
+                
+                {/* --- COLUMNA IZQUIERDA: CALENDARIO Y SIDE CARD --- */}
+                {/* xs={12} ocupa todo en celular. lg={3} ocupa 25% en PC */}
+                <Col xs={12} lg={3} className="d-flex flex-column align-items-center mb-4" style={{marginTop: "20px"}}>
+                  
+                  {/* Calendario */}
+                  <div className={styles.calendarContainer}>
                     <CalendarioMejorado />
                   </div>
-                  <div
-                    style={{ marginTop: "120px" }}
-                    className={styles.cardSecondContainer}
-                  >
-                    <Card style={{ width: "17rem", background: "#292b2c " }}>
+
+                  {/* Tarjeta Lateral Extra */}
+                  <div className={styles.cardSecondContainer}>
+                    <Card style={{ width: "100%", background: "#292b2c" }}>
                       <Card.Img variant="top" src={img} />
                       <Card.Body>
-                        {/* <Card.Title
-                          style={{ fontSize: "19px", fontWeight: "Bolder" }}
-                        ></Card.Title>
-
-                        <Card.Text
-                          style={{ fontSize: "17px", fontWeight: "Bolder" }}
-                        ></Card.Text> */}
+                        {/* Contenido vacio por ahora */}
                       </Card.Body>
-
                       <Card.Img src={imagen} />
-                      <ListGroupItem
-                        style={{
-                          fontSize: "19px",
-                          fontWeight: "Bolder",
-                          background: "#292b2c ",
-                        }}
-                      >
-                        <Card.Title
-                          style={{
-                            fontSize: "19px",
-                            fontWeight: "Bolder",
-                            background: "#292b2c ",
-                          }}
-                        ></Card.Title>
-                        <hr />
-                        <Card.Text
-                          style={{
-                            fontSize: "17px",
-                            fontWeight: "Bolder",
-                            background: "#292b2c ",
-                          }}
-                        >
-                          <Card.Img src={altaImage} />
-                        </Card.Text>
+                      <ListGroupItem style={{ background: "#292b2c", border: "none" }}>
+                        <Card.Img src={altaImage} />
                       </ListGroupItem>
                     </Card>
                   </div>
                 </Col>
-                <Col style={{ width: "100wh", marginLeft: "60px" }}>
-{" "}
-<div className={styles.cards}>
-  {Array.isArray(events) && events.length ? (
-    events.map((e) => {
-      return (
-        <div key={e.id}>
-          <Cardi
-            title={e.title}
-            imagen={e.imagen}
-            date={e.date}
-            id={e.id}
-            eventType={e.eventType}
-            state={e.state}
-            place={e.place}
-            key={e.id}
-            month={e.month}
-          />
-        </div>
-      );
-    })
-  ) : (
-    <Alert
-      style={{
-        width: "850px",
-        height: "350px",
-        marginLeft: "75%",
-        background: "#292b2c",
-        color: '#f0ad4e'
-      }}
-      variant="light"
-    >
-      <Alert.Heading>
-        No eventos que coincidan con tu busqueda
-      </Alert.Heading>
-    
-      <hr />
-      <p className="mb-0">
-        Whenever you need to, be sure to use margin utilities
-        to keep things nice and tidy.
-      </p>
-    </Alert>
-  )}
-</div>
-</Col>
-               
+
+                {/* --- COLUMNA DERECHA: LISTA DE EVENTOS --- */}
+                {/* xs={12} ocupa todo en celular. lg={9} ocupa 75% en PC */}
+                <Col xs={12} lg={9}>
+                  <div className={styles.cards}>
+                    {Array.isArray(events) && events.length ? (
+                      events.map((e) => {
+                        return (
+                          <div key={e.id} style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                            <Cardi
+                              title={e.title}
+                              imagen={e.imagen}
+                              date={e.date}
+                              id={e.id}
+                              eventType={e.eventType}
+                              state={e.state}
+                              place={e.place}
+                              month={e.month}
+                            />
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <Alert
+                        style={{
+                          width: "100%",
+                          maxWidth: "850px",
+                          margin: "0 auto",
+                          background: "#292b2c",
+                          color: "#f0ad4e",
+                          textAlign: "center"
+                        }}
+                        variant="light"
+                      >
+                        <Alert.Heading>
+                          No hay eventos que coincidan con tu búsqueda
+                        </Alert.Heading>
+                        <hr />
+                        <p className="mb-0">
+                          Prueba cambiando los filtros o buscando en otra fecha.
+                        </p>
+                      </Alert>
+                    )}
+                  </div>
+                </Col>
+
               </Row>
             </Container>
-
-            {/* <div className={styles.contactUS}>
-            <ContactUs />
-          </div> */}
           </div>
-
-          {/* <Buttom /> */}
         </div>
+
         <div className={styles.footer}>
           <Footer />
         </div>

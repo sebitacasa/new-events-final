@@ -1,402 +1,211 @@
-.containerGeneral{
- 
-  
-  
-}
-.containerGeneral:before{
-  top: 50%;
-  height: 0px;
-  
-  content: ' ';
+/* Home.module.css */
+
+/* --- Estructura General --- */
+.containerGeneral {
+  min-height: 100vh;
   width: 100%;
-  display: block;
-  position: relative;
-}
-.containerBootstrap{
-  width: 100vw;
-  
-}
-
-.containerGeneral{
-  height: 100%;
-  background:       #D0D3D4;
+  background-color: #D0D3D4;
   background-attachment: fixed;
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-
-height: 100%;   ;
-
-background-image: 
-  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
-  url('../images/pexels-thibault-trillet-167636.jpg');
-  
-  
-  
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+    url('../images/pexels-thibault-trillet-167636.jpg');
 }
 
-.navegation{
+.containerSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #1C2833;
+}
+
+.navegation {
   margin-top: 37px;
 }
 
-.background{
-    
-    
-  /* background-image: 
-linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),
-url('../images/pexels-wendy-wei-1916821\(1\).jpg');  */
-background-attachment: fixed;
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-background-image: 
-  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
-  url('../images/pexels-thibault-trillet-167636.jpg');
+.footer {
+  margin-top: 75px;
+}
+
+/* --- Contenedor Principal del contenido --- */
+/* Eliminamos margins fijos para evitar scroll horizontal en movil */
+.cardsContainer {
+  width: 100%;
+  padding: 10px;
+}
+
+/* --- GRID DE LAS CARDS (La magia de las columnas) --- */
+.cards {
+  display: grid;
+  width: 100%;
+  /* Por defecto (Móvil): 1 sola columna */
+  grid-template-columns: minmax(280px, 1fr); 
+  gap: 25px;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 50px;
+}
+
+/* Tablet: 2 Columnas */
+@media (min-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Escritorio (Laptop/PC): 3 Columnas (LO QUE PEDISTE) */
+@media (min-width: 1200px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr); /* Fuerza 3 columnas */
+    gap: 30px;
+  }
+}
+
+/* --- Barra Lateral (Calendario y Card Extra) --- */
+.calendarContainer {
+  width: 100%;
+  max-width: 350px; /* Evita que se haga gigante */
+  margin-bottom: 30px;
   
-height: 100%;   ;
-
-
-}
-
-
-
-
-
-
-.cardsContainer{
-margin-right: 60px;
-}
-
-.cards{
-display: grid;
-
-justify-content: center;
-grid-template-columns: repeat(auto-fill, 300px);
-padding: 45px;
-gap: 35px;
-margin-top: 7px;
-text-decoration: none;
-
-
-
-}
-
-.calendarContainer{
-  border-style:double;
+  /* Estilos originales preservados */
+  border-style: double;
   border-color: #d8a602;
   border-width: 5px;
   box-shadow: 0 0 3px rgb(190, 190, 190), 0 0 6px rgb(193, 193, 193),
-  0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
-  0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
-  margin-right: 29px;
-  margin-bottom: 10px;
-  height: 248px;
-
+    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
+    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
 }
 
-.parallax{
-/* background-image: 
-linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),
-url('../images/pexels-wendy-wei-1916821\(1\).jpg');  */
+.cardSecondContainer {
+  width: 100%;
+  max-width: 350px;
+  margin-top: 20px;
 
-
-/* Set a specific height */
-min-height: 500px;
-
-/* Create the parallax scrolling effect */
-background-attachment: fixed;
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-
-
+  /* Estilos originales preservados */
+  border-style: double;
+  border-color: #d8a602;
+  border-width: 5px;
+  box-shadow: 0 0 3px rgb(190, 190, 190), 0 0 6px rgb(193, 193, 193),
+    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
+    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
 }
 
-.acercaDe{
-width: 100%;
-
-margin-top:150px ;
-
-}
-.acercaDe .infoContainer{
-width: 80%;
-
-margin: auto;
-display: flex;
-justify-content: center;
-flex-direction: column;
+/* --- Estilos de Texto y Decoración --- */
+.Date {
+  background: rgb(0, 0, 0);
+  color: rgb(238, 238, 238);
 }
 
-.acercaDe .infoContainer p{
-text-align: center;
-font-size: 25px;
-color: rgb(255, 255, 255);
-line-height: 35px;
-margin:10px 0px;
-}
-
-.acercaDe .infoContainer p{
+.h1, .events {
+  font-size: 40px; /* Reducido un poco para móvil */
+  font-weight: 400;
+  color: rgb(250, 250, 250); 
   text-align: center;
-  font-size: 25px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .h1, .events {
+    font-size: 50px;
+  }
+}
+
+/* --- Header y Bienvenida --- */
+.imgHeader .Welcome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.imgHeader .Welcome h1 {
+  font-size: 32px; /* Ajustado para móvil */
+  animation: flicker 1.5s infinite alternate;
   color: rgb(255, 255, 255);
-  line-height: 35px;
-  margin:10px 0px;
+  font-weight: bold;
+  font-family: 'Trebuchet MS', sans-serif;
+  text-align: center;
 }
 
-.h1{
-font-size: 50px;
-font-weight: 400;
-color: rgb(250, 250, 250); 
-text-align: center;
-margin-bottom: 48px;
-
+@media (min-width: 768px) {
+  .imgHeader .Welcome h1 {
+    font-size: 45px;
+  }
 }
 
-.events{
-font-size: 50px;
-font-weight: 400;
-color: rgb(250, 250, 250); 
-text-align: center;
-margin-bottom: 48px;
-padding-top: 15px;
+.imgHeader .Welcome hr {
+  width: 80%;
+  max-width: 400px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.678);
+  border: none;
+  margin-top: 5px;
 }
 
-
-.acercaDe .infoContainer p{
-text-align: center;
-font-size: 25px;
-color: rgb(255, 255, 255);
-line-height: 35px;
-margin:10px 0px;
+.imgHeader .Welcome p {
+  font-size: 24px;
+  text-align: center;
+  animation: flicker 1.5s infinite alternate;
+  color: rgb(255, 255, 255);
+  margin-bottom: 35px;
 }
 
-
-.acercaDe .infoContainer .aboutGallery{
-width:100% ;
-display: flex;
-justify-content: center;
-margin-bottom: 55px;
-
+/* --- Botones --- */
+.myBtn {
+  display: none; 
+  position: fixed; 
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 99; 
+  border: none; 
+  outline: none; 
+  background-color: red; 
+  color: white; 
+  cursor: pointer; 
+  padding: 15px; 
+  border-radius: 10px; 
+  font-size: 18px; 
 }
 
-
-.imgHeader .Welcome{
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+.myBtn:hover {
+  background-color: #555; 
 }
 
-.imgHeader .Welcome h1{
-font-size: 45px;
-animation: flicker 1.5s infinite alternate;
-color: rgb(255, 255, 255);
-font-weight: bold;
-font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
-
-
-}
-
-.imgHeader .Welcome hr{
-width:400px;
-height: 2px;
-background: rgba(255, 255, 255, 0.678);
-border:none;
-margin-top: 5px;
-}
-
-.imgHeader .Welcome p{
-font-size: 35px;
-animation: flicker 1.5s infinite alternate;
-color: rgb(255, 255, 255);
-margin-bottom: 35px;
-
-
-}
-
-.imgHeader .Welcome > button{
-width:160px ;
-height: 65px;
-background: rgb(244, 244, 244) ;
-
-border: none;
-outline: none;
-font-size: 22px;
-color:rgb(8, 0, 0);
-text-align: center;
-cursor: pointer;
-transition: 0.5s;
-font-weight: bold;
-
-
-
-
-}
-
-.btnArrowDown{
+.btnArrowDown {
   font-size: 55px;
   color: white;
   cursor: pointer;
-  
 }
 
-.btnArrowDown:hover{
+.btnArrowDown:hover {
   transform: scale(1.18);
   transition: all 0.5s;
   z-index: 1000;
   position: relative;
 }
 
-.imgHeader .Welcome > button:hover{
-
-background: rgb(0, 0, 0);
-color: rgb(238, 238, 238);
-}
-
-
-.contactUs{
-  position: relative;
-  height: 100vh;
-  background: black;
-  margin-top: 55px;
-  
-}
-
-
-.Date{
-  
-    background: rgb(0, 0, 0);
-    color: rgb(238, 238, 238);
-  
-}
-
-.cardSecondContainer{
-  border-style:double;
-  border-color: #d8a602;
-  border-width: 5px;
-  box-shadow: 0 0 3px rgb(190, 190, 190), 0 0 6px rgb(193, 193, 193),
-  0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
-  0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
-  margin-right: 15px;
-  margin-top: 10px;
-  height: auto;
-
-}
-
-
-
-
-
-.myBtn {
-  display: none; /* Hidden by default */
-  position: fixed; /* Fixed/sticky position */
-  bottom: 20px; /* Place the button at the bottom of the page */
-  right: 30px; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
-  border: none; /* Remove borders */
-  outline: none; /* Remove outline */
-  background-color: red; /* Set a background color */
-  color: white; /* Text color */
-  cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 15px; /* Some padding */
-  border-radius: 10px; /* Rounded corners */
-  font-size: 18px; /* Increase font size */
-}
-
-.myBtn:hover {
-  background-color: #555; /* Add a dark-grey background on hover */
-}
-
-.contactUS{
-  margin-bottom: 55px;
-  height: 100%;
-  padding-bottom: 50px;
-}
-
-.containerSpinner{
-  margin-right: 55%;
-     
-  
-}
-
-.footer{
-  margin-top: 75px;
-}
-
+/* --- Ajustes Responsive Específicos --- */
 @media (max-width: 576px) {
-  .cards {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    padding: 20px;
-    gap: 20px;
+  .containerGeneral {
+    background-attachment: scroll; /* Mejor rendimiento en móviles antiguos */
+  }
+  
+  .cardsContainer {
+    padding: 5px;
   }
 
-  .acercaDe .infoContainer p {
-    font-size: 18px;
-    line-height: 28px;
-    padding: 0 10px;
-  }
-
-  .imgHeader .Welcome h1,
-  .imgHeader .Welcome p {
-    font-size: 28px;
-    text-align: center;
-    padding: 0 10px;
-  }
-
-  .imgHeader .Welcome > button {
-    width: 140px;
-    height: 55px;
-    font-size: 18px;
-  }
-
-  .calendarContainer,
-  .cardSecondContainer {
-    margin: 10px;
-    height: auto;
-  }
-
-  .myBtn {
-    bottom: 15px;
-    right: 15px;
-    padding: 12px;
-    font-size: 16px;
-  }
-}
-
-/* Tablets (576px - 768px) */
-@media (min-width: 577px) and (max-width: 768px) {
-  .cards {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-  }
-
-  .imgHeader .Welcome h1 {
-    font-size: 36px;
-  }
-
-  .imgHeader .Welcome p {
-    font-size: 26px;
-  }
-}
-
-/* Laptops pequeños (769px - 992px) */
-@media (min-width: 769px) and (max-width: 992px) {
-  .cards {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-
-  .imgHeader .Welcome h1 {
-    font-size: 40px;
-  }
-
-  .imgHeader .Welcome p {
-    font-size: 30px;
+  /* Asegura que el calendario no se salga de la pantalla */
+  .calendarContainer, .cardSecondContainer {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }
