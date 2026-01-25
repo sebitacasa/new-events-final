@@ -6,15 +6,34 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { useCart } from "react-use-cart"; // 1. Importamos el hook
 import style from "./Card.module.css";
 import image2 from "../images/imagen-set.jpg";
 
-export default function Cardi({ id, title, imagen, date, place }) {
+// 2. Agregamos 'price' (o cost) a las props recibidas
+export default function Cardi({ id, title, imagen, date, place, price }) {
+  
+  const { addItem } = useCart(); // 3. Inicializamos el carrito
+
+  // 4. Función para agregar al carrito (Copiada de Detail.js y adaptada)
+  const handleAddToCart = () => {
+    addItem(
+      {
+        id: id,
+        name: title,
+        // Asumimos que el precio viene como string con puntos ej: "1.000" igual que en Detail
+        price: typeof price === 'string' ? Number(price.replace(".", "")) : Number(price), 
+        image: imagen,
+      },
+      1
+    );
+    alert("¡Evento agregado al carrito!"); // Feedback visual simple
+  };
+
   return (
     <Card 
       bg="dark"
       text="white"
-      // CAMBIO CLAVE: width 100% para llenar la columna de la grilla
       style={{ width: '100%', height: "100%" }} 
       className={style.cards}
     >
@@ -22,7 +41,7 @@ export default function Cardi({ id, title, imagen, date, place }) {
         <Card.Img
           variant="top"
           src={imagen}
-          className={style.cardImage} // Usamos clase CSS en lugar de inline styles
+          className={style.cardImage}
           onError={(e) => { e.target.onerror = null; e.target.src = image2; }}
         />
       </div>
@@ -40,17 +59,34 @@ export default function Cardi({ id, title, imagen, date, place }) {
         <ListGroupItem style={{ background: "#292b2c", color: "#f0ad4e", fontWeight: "bold", textAlign: "center" }}>
           {place}
         </ListGroupItem>
+        {/* Opcional: Mostrar el precio en la tarjeta */}
+        <ListGroupItem style={{ background: "#292b2c", color: "white", textAlign: "center" }}>
+           Valor: ${price}
+        </ListGroupItem>
       </ListGroup>
 
-      <Card.Body className="p-0"> {/* Padding 0 para que el botón pegue abajo */}
+      {/* Contenedor de Botones */}
+      <Card.Body className="p-0 d-flex flex-column"> 
+        
+        {/* Botón AGREGAR AL CARRITO */}
+        <Button
+          className={`${style.btn} ${style.btnCart}`} // Clase extra para estilo diferente
+          variant="success" // Verde para comprar (o usa warning si prefieres)
+          onClick={handleAddToCart}
+        >
+          Agregar al Carrito
+        </Button>
+
+        {/* Botón VER DETALLE */}
         <LinkContainer to={`/${id}`}>
           <Button
             className={style.btn}
-            variant="warning"
+            variant="outline-warning" // Outline para diferenciarlo del de comprar
           >
-            Ver detalle del evento
+            Ver detalle
           </Button>
         </LinkContainer>
+
       </Card.Body>
     </Card>
   );

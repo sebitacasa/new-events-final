@@ -1,37 +1,51 @@
 .cards {
-  /* Tu sombra original (efecto glow) */
   box-shadow: 0 0 3px rgb(17, 15, 15), 0 0 6px rgb(193, 193, 193),
     0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
     0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
   
-  border: none; /* Quitamos borde por defecto de bootstrap */
-  transition: transform 0.3s ease; /* Suavidad al pasar el mouse */
-  overflow: hidden; /* Para que la imagen no se salga en las esquinas */
+  border: none;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Efecto opcional: la carta se levanta un poco al pasar el mouse */
 .cards:hover {
   transform: translateY(-5px);
 }
 
 .cardImage {
   width: 100%;
-  height: 200px; /* Altura fija para uniformidad */
-  object-fit: cover; /* IMPORTANTE: Recorta la imagen, no la estira */
+  height: 200px; 
+  object-fit: cover; 
   object-position: center;
 }
 
+/* Estilo base para botones */
 .btn {
   width: 100%;
-  border-radius: 0 0 4px 4px; /* Bordes redondeados solo abajo */
   font-weight: bold;
   border: none;
   padding: 12px;
   transition: all 0.3s ease;
+  border-radius: 0; /* Cuadrados para que se apilen bien */
+}
+
+/* El último botón (Ver detalle) tendrá bordes redondeados abajo */
+.btn:last-child {
+  border-radius: 0 0 4px 4px;
 }
 
 .btn:hover {
-  background-color: #d8a602; /* Un amarillo un poco más oscuro */
+  background-color: #d8a602;
   color: black;
-  transform: scale(1.02); /* Escala sutil */
+  transform: scale(1.02);
+  z-index: 2; /* Para que el hover se vea por encima */
+}
+
+/* Estilo específico para el botón de carrito si quieres personalizarlo más */
+.btnCart {
+    background-color: #f0ad4e;
+    color: black;
+    border-bottom: 1px solid rgba(0,0,0,0.1); /* Separador sutil */
 }

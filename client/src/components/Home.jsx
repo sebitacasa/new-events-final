@@ -147,6 +147,7 @@ export default function Home() {
                               state={e.state}
                               place={e.place}
                               month={e.month}
+                              price={e.cost}
                             />
                           </div>
                         );
