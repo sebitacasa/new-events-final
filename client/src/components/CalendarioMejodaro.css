@@ -1,98 +1,104 @@
-/* CalendarioMejodaro.css */
+/* Home.module.css */
 
-/* 1. Contenedor Principal: Que ocupe todo el ancho disponible */
-.react-datepicker {
-  font-family: "Arial", sans-serif;
-  font-size: 1rem;
-  background-color: #212529; /* Fondo oscuro (igual al navbar) */
-  color: white;
-  border: none; /* Quitamos bordes feos */
-  border-radius: 0;
-  display: flex; /* Flex para centrar */
+.containerGeneral {
+  min-height: 100vh;
+  width: 100%;
+  /* 🔥 ESTO ELIMINA EL SCROLL LATERAL MOLESTO */
+  overflow-x: hidden; 
+  background-color: #D0D3D4;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+    url('../images/pexels-thibault-trillet-167636.jpg');
+}
+
+.containerSpinner {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #1C2833;
+}
+
+.cardsContainer {
   width: 100%;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-/* 2. Contenedor del mes: Asegura que se estire */
-.react-datepicker__month-container {
+/* --- SIDEBAR (Calendario y Publicidad) --- */
+.calendarContainer {
   width: 100%;
-  background-color: #212529;
+  /* 🔥 ESTO ARREGLA EL TAMAÑO EN MÓVIL: Nunca será más ancho que 320px */
+  max-width: 320px; 
+  margin-bottom: 20px;
+  
+  /* Estilos visuales */
+  border: 4px double #d8a602;
+  box-shadow: 0 0 10px rgba(225, 174, 7, 0.5);
+  background: rgba(0,0,0,0.8);
 }
 
-/* 3. Cabecera (Mes y Año) */
-.react-datepicker__header {
-  background-color: #1c1c1c; /* Un poco más oscuro que el fondo */
-  border-bottom: 1px solid #f0ad4e; /* Línea separadora amarilla */
-  padding-top: 15px;
+.cardSecondContainer {
+  width: 100%;
+  /* 🔥 Igual aquí: tope máximo de ancho */
+  max-width: 320px; 
+  margin-top: 20px;
+  
+  border: 4px double #d8a602;
+  box-shadow: 0 0 10px rgba(225, 174, 7, 0.5);
+  background: #292b2c;
 }
 
-/* Título del Mes (Ej: Enero 2026) */
-.react-datepicker__current-month {
-  color: #f0ad4e; /* Amarillo */
-  font-weight: bold;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  margin-bottom: 10px;
+/* Asegura que las imágenes dentro del sidebar no se desborden */
+.cardSecondContainer img, 
+.cardSecondContainer .card-img-top {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* Nombres de los días (Lu, Ma, Mi...) */
-.react-datepicker__day-name {
-  color: #fff;
-  width: 2.5rem; /* Ancho uniforme */
-  line-height: 2.5rem;
-  margin: 0.2rem;
+/* --- GRID DE EVENTOS --- */
+.cards {
+  display: grid;
+  width: 100%;
+  /* Grid inteligente: se adapta solo */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+  gap: 20px;
+  justify-content: center;
+  padding: 10px;
 }
 
-/* 4. Días del calendario */
-.react-datepicker__day {
-  color: #ddd; /* Texto claro */
-  width: 2.5rem; /* Ancho uniforme para que quede cuadrado */
-  line-height: 2.5rem; /* Centrado vertical */
-  margin: 0.2rem; /* Espacio entre días */
-  border-radius: 5px;
-  transition: all 0.2s ease;
+.footer {
+  margin-top: 50px;
 }
 
-/* Hover sobre los días */
-.react-datepicker__day:hover {
-  background-color: #444;
-  color: white;
-  border-radius: 50%; /* Efecto redondo al pasar mouse */
+.Date {
+  height: 20px;
 }
 
-/* 5. Días Seleccionados (Rango o Día único) */
-.react-datepicker__day--selected,
-.react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range {
-  background-color: #f0ad4e !important; /* Fondo Amarillo */
-  color: #000 !important; /* Texto Negro para contraste */
-  font-weight: bold;
-  border-radius: 50%;
-}
+/* --- AJUSTES FINOS PARA CELULAR --- */
+@media (max-width: 768px) {
+  
+  /* Centramos el sidebar en móvil */
+  .calendarContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%; 
+    max-width: 320px; /* Aseguramos que el calendario no se deforme */
+  }
 
-/* Día actual (Hoy) */
-.react-datepicker__day--today {
-  border: 1px solid #f0ad4e; /* Borde amarillo para "hoy" */
-  font-weight: bold;
-}
+  /* 🔥 ESTO ES LO QUE PIDES: Ocultar la imagen publicitaria en móvil */
+  .cardSecondContainer {
+    display: none !important; 
+  }
 
-/* Días deshabilitados (fuera de rango o pasados) */
-.react-datepicker__day--disabled {
-  color: #555;
-  cursor: default;
-}
-
-/* 6. Triángulo del header (navegación mes) */
-.react-datepicker__navigation-icon::before {
-  border-color: #f0ad4e; /* Flechas amarillas */
-}
-
-/* Ajuste Responsive para que no se rompa en pantallas muy chicas */
-@media (max-width: 350px) {
-  .react-datepicker__day-name,
-  .react-datepicker__day {
-    width: 2rem;
-    line-height: 2rem;
-    margin: 0.1rem;
+  /* Ajuste para que las cards no toquen los bordes */
+  .cards {
+    padding: 0 15px;
+    grid-template-columns: 1fr; /* Una sola columna en móvil */
   }
 }

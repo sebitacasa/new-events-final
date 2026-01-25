@@ -36,6 +36,12 @@
   max-width: 320px; 
   margin-bottom: 20px;
   
+  /* 🔥 NUEVO: CENTRADO PERFECTO DEL CONTENIDO INTERNO */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* Un poco de aire para que no toque los bordes */
+
   /* Estilos visuales */
   border: 4px double #d8a602;
   box-shadow: 0 0 10px rgba(225, 174, 7, 0.5);
