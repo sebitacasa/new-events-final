@@ -98,15 +98,7 @@ export default function Home() {
       <div style={{ marginTop: "15px" }}>
         <Carousely />
 
-        <Container fluid>
-          <Row>
-            <Col>
-              <div className={styles.navegation}>
-                <Selector />
-              </div>
-            </Col>
-          </Row>
-        </Container>
+       
 
         {/* --- INICIO SECCIÓN PRINCIPAL (FONDO) --- */}
         <div className={styles.background}>

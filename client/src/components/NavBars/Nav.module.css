@@ -1,86 +1,69 @@
 /* Nav.module.css */
 
 .nav {
-  margin-bottom: 0;
   width: 100%;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-/* --- BARRA DE FILTROS --- */
-.selectorContainer {
-  background-color: #212529;
-  padding: 10px 0;
-  width: 100%;
-  border-bottom: 1px solid #333;
-}
-
-.selectorNavbar {
-  padding: 0;
-}
-
-/* --- GRUPO CENTRAL DE SELECTS --- */
-.filterGroup {
-  display: flex;
-  flex-direction: row; /* En PC siempre en fila */
-  align-items: center;
-  justify-content: center;
-  gap: 15px; /* Espacio uniforme entre selects */
-}
-
-.filterSelect {
-  /* En PC: ancho automático pero con mínimo para que se lea */
-  width: auto;
-  min-width: 180px; 
-  height: 38px;
-  background-color: #fff; /* Blanco para mejor lectura */
-  border: 1px solid #ced4da;
-  border-radius: 5px;
+/* Estilos para los Selects dentro del Navbar */
+.navSelect {
+  background-color: #343a40; /* Fondo oscuro */
+  color: #f0ad4e; /* Texto dorado */
+  border: 1px solid #f0ad4e;
   font-weight: 500;
   cursor: pointer;
-  color: #333;
+  height: 38px;
+  min-width: 140px;
 }
 
-.filterSelect:focus {
-  outline: none;
+.navSelect:focus {
+  background-color: #495057;
+  color: #fff;
   border-color: #f0ad4e;
-  box-shadow: 0 0 5px rgba(240, 173, 78, 0.5);
+  box-shadow: none;
 }
 
-/* Link de "Filtros" (Título) */
-.brandLink {
+/* Link del Brand */
+.brand {
   color: #f0ad4e !important;
+  font-size: 22px;
   font-weight: bold;
-  font-size: 1.1rem;
-  text-decoration: none;
   cursor: pointer;
-  white-space: nowrap;
   margin-right: 20px;
 }
 
-/* --- RESPONSIVE (Celulares y Tablets) --- */
-@media (max-width: 991px) {
-  .selectorContainer {
-    padding: 15px;
-  }
+/* Contenedor de filtros para alinearlos */
+.filtersContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  /* En celular, apilamos todo verticalmente */
-  .filterGroup {
+/* RESPONSIVE */
+@media (max-width: 991px) {
+  .filtersContainer {
     flex-direction: column;
     width: 100%;
-    gap: 10px;
-    margin: 10px 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #444;
   }
 
-  .filterSelect {
-    width: 100%; /* Ocupa todo el ancho en móvil */
-    min-width: 0;
+  .navSelect {
+    width: 100%; /* En celular ocupan todo el ancho */
   }
-
-  .brandLink {
-    margin-right: 0;
-    text-align: center;
-    display: block;
-    margin-bottom: 5px;
+  
+  /* Separación para el usuario en móvil */
+  .userSection {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #444;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }

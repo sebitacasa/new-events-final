@@ -24,14 +24,11 @@ import Searchbar from "../Searchbar";
 import styles from "./Nav.module.css";
 import ShoppingCart from "../shopCart";
 
-// ==========================================
-// COMPONENTE 1: NAVTOP (Barra negra superior)
-// ==========================================
 export default function NavTop() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Traemos isAuthenticated aquí para que exista en el HTML
+  // --- 1. Lógica de Auth0 y Usuario ---
   const { user, isAuthenticated, logout, getAccessTokenSilently } = useAuth0();
   const userLoged = useSelector((state) => state.userLoged);
 
@@ -55,112 +52,169 @@ export default function NavTop() {
     }
   }, [isAuthenticated, dispatch, user, getAccessTokenSilently]);
 
-  const handleMenu = (e) => {
-    e.preventDefault();
-    const target = e.target.getAttribute("name");
+  // --- 2. Lógica de Filtros (Fusionada aquí) ---
+  const cities = useSelector((state) => state.allCities);
+  const generos = useSelector((state) => state.allGeneros);
+
+  const [filterCity, setFilterCity] = useState("");
+  const [filterGenero, setFilterGenero] = useState("");
+
+  useEffect(() => {
+    dispatch(byFilterDate());
+    dispatch(getAllCities());
+    dispatch(getAllGeneros());
+    
+    // Recuperar filtros al cargar
+    const filtroGuardado = localStorage.getItem("filtro");
+    const nombre = localStorage.getItem("nombre");
+    const genero = localStorage.getItem("genero");
+    
+    if (filtroGuardado === "ciudad" && nombre) setFilterCity(nombre);
+    if (filtroGuardado === "genero" && genero) setFilterGenero(genero);
+
+  }, [dispatch]);
+
+  // Handlers de Filtros
+  const handleReset = () => {
+    dispatch(getAllEvent());
+    localStorage.setItem("filtro", "sin filtro");
+    setFilterCity("");
+    setFilterGenero("");
+    navigate("/");
+  };
+
+  const handleStates = (e) => {
+    const city = e.target.value;
+    setFilterCity(city);
+    localStorage.setItem("nombre", city);
+    localStorage.setItem("filtro", "ciudad");
+    dispatch(Action.getState(city));
+    navigate("/");
+  };
+
+  const handleEventType = (e) => {
+    const genero = e.target.value;
+    setFilterGenero(genero);
+    localStorage.setItem("genero", genero);
+    localStorage.setItem("filtro", "genero");
+    dispatch(Action.byEventType(genero));
+    navigate("/");
+  };
+
+  const handleDate = (e) => {
+    const mes = e.target.value;
+    localStorage.setItem("mes", mes);
+    localStorage.setItem("filtro", "mes");
+    dispatch(Action.byFilterDate(mes));
+    navigate("/");
+  };
+
+  const handleMenuClick = (target) => {
     if (target) navigate(`/${target}`);
-    else navigate("/");
   };
 
   return (
     <header className={styles.nav}>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand
-            onClick={() => navigate("/")}
-            style={{
-              color: "#f0ad4e",
-              fontSize: "22px",
-              fontWeight: "bold",
-              cursor: "pointer",
-            }}
-          >
+      <Navbar collapseOnSelect expand="xl" bg="dark" variant="dark">
+        <Container fluid>
+          
+          {/* LOGO */}
+          <Navbar.Brand onClick={handleReset} className={styles.brand}>
             UnderEventsApp
           </Navbar.Brand>
 
+          {/* TOGGLER (Hamburguesa para Móvil) */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
+          {/* CONTENIDO COLAPSIBLE */}
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto align-items-center">
-              {/* Menú Dropdown Amarillo */}
-              <NavDropdown
-                title={<span style={{ color: "black", fontWeight: "bold" }}>Menú</span>}
-                id="collasible-nav-dropdown"
-                style={{
-                  backgroundColor: "#f0ad4e",
-                  borderRadius: "5px",
-                  marginRight: "10px",
-                }}
-              >
-                <NavDropdown.Item name="createEvent" onClick={handleMenu}>
-                  Crea tu Evento
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item name="orderDetail" onClick={handleMenu}>
-                  Ordenes
-                </NavDropdown.Item>
-              </NavDropdown>
+            
+            {/* GRUPO 1: FILTROS (Al medio en PC, Apilados en Móvil) */}
+            <Nav className="me-auto d-flex align-items-center w-100 justify-content-center">
+              <div className={styles.filtersContainer}>
+                
+                {/* Botón Reset */}
+                <Nav.Link onClick={handleReset} className="text-warning fw-bold">
+                  Ver Todo
+                </Nav.Link>
 
-              {/* Carrito de Compras */}
-              <div className="mt-2 mt-lg-0">
-                <ShoppingCart />
+                {/* Select Ciudad */}
+                <Form.Select className={styles.navSelect} value={filterCity} onChange={handleStates}>
+                  <option value="All">Ciudades</option>
+                  {cities?.map((c) => <option key={c} value={c}>{c}</option>)}
+                </Form.Select>
+
+                {/* Select Genero */}
+                <Form.Select className={styles.navSelect} value={filterGenero} onChange={handleEventType}>
+                  <option value="All">Géneros</option>
+                  {generos?.map((g) => <option key={g} value={g}>{g}</option>)}
+                </Form.Select>
+
+                {/* Select Mes */}
+                <Form.Select className={styles.navSelect} onChange={handleDate}>
+                  <option value="All">Meses</option>
+                  {["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"].map(m => (
+                     <option key={m} value={m}>{m} 2022</option>
+                  ))}
+                </Form.Select>
+
+                {/* Searchbar */}
+                <div style={{minWidth: '200px'}}>
+                   <Searchbar />
+                </div>
               </div>
             </Nav>
 
-            {/* NAV USUARIO - ALINEADO Y RESPONSIVE */}
-            <Nav className="d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
+            {/* GRUPO 2: USUARIO Y CARRITO (A la derecha) */}
+            <Nav className={`d-flex align-items-center ${styles.userSection}`}>
+              
+              {/* Menú Opciones */}
+              <NavDropdown 
+                title={<span style={{color:'#f0ad4e', fontWeight:'bold'}}>Opciones</span>} 
+                id="basic-nav-dropdown" 
+                menuVariant="dark"
+                className="me-3"
+              >
+                <NavDropdown.Item onClick={() => handleMenuClick("createEvent")}>Crear Evento</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleMenuClick("orderDetail")}>Mis Órdenes</NavDropdown.Item>
+              </NavDropdown>
+
+              {/* Carrito */}
+              <div className="me-3">
+                <ShoppingCart />
+              </div>
+
+              {/* Avatar Usuario */}
               {isAuthenticated && (
                 <Dropdown align="end">
                   <Dropdown.Toggle
                     as="div"
-                    className="d-flex align-items-center justify-content-center shadow-sm"
+                    className="d-flex align-items-center justify-content-center"
                     style={{
                       cursor: "pointer",
                       width: "45px",
                       height: "45px",
                       borderRadius: "50%",
                       overflow: "hidden",
-                      backgroundColor: "#f0ad4e",
-                      color: "black",
-                      fontWeight: "bold",
                       border: "2px solid #f0ad4e",
-                      transition: "transform 0.2s"
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-                    onMouseOut={(e) => e.currentTarget.style.transform = "scale(1.0)"}
                   >
-                    {userLoged?.picture ? (
-                      <Image
-                        roundedCircle
-                        src={userLoged.picture}
-                        width="100%"
-                        height="100%"
-                        alt="User"
-                        style={{ objectFit: "cover" }}
-                      />
-                    ) : (
-                      <span style={{ fontSize: "14px" }}>User</span>
-                    )}
+                    <Image
+                      src={userLoged?.picture}
+                      alt="User"
+                      width="100%"
+                      height="100%"
+                      style={{objectFit: 'cover'}}
+                    />
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu style={{ background: "#f0ad4e", border: "1px solid black" }}>
-                    <LinkContainer to="/profile">
-                      <Dropdown.Item className="text-dark">
-                        <b>{userLoged?.name || "Usuario"}</b> (Perfil)
-                      </Dropdown.Item>
-                    </LinkContainer>
-                    
+                  <Dropdown.Menu align="end" style={{background: '#f0ad4e'}}>
+                    <LinkContainer to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></LinkContainer>
                     {userLoged?.roll === "Admin" && (
-                      <LinkContainer to="/userManagement">
-                        <Dropdown.Item className="text-dark">Gestión de Usuarios</Dropdown.Item>
-                      </LinkContainer>
+                        <LinkContainer to="/userManagement"><Dropdown.Item>Admin Usuarios</Dropdown.Item></LinkContainer>
                     )}
-                    
-                    <Dropdown.Divider style={{ borderColor: "black" }} />
-                    <Dropdown.Item
-                      className="text-dark"
-                      onClick={() => logout({ returnTo: window.location.origin })}
-                    >
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={() => logout({ returnTo: window.location.origin })}>
                       Cerrar Sesión
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -172,162 +226,5 @@ export default function NavTop() {
         </Container>
       </Navbar>
     </header>
-  );
-}
-
-// ==========================================
-// COMPONENTE 2: SELECTOR (Barra de Filtros)
-// ==========================================
-export function Selector() {
-  const dispatch = useDispatch();
-  
-  // Selectors
-  const cities = useSelector((state) => state.allCities);
-  const generos = useSelector((state) => state.allGeneros);
-
-  // Local State
-  const [filterCity, setFilterCity] = useState("");
-  const [filterGenero, setFilterGenero] = useState("");
-  const [setFilterMes] = useState("");
-
-  // Carga inicial
-  useEffect(() => {
-    dispatch(byFilterDate());
-    dispatch(getAllCities());
-    dispatch(getAllGeneros());
-
-    const filtroGuardado = localStorage.getItem("filtro");
-    const nombre = localStorage.getItem("nombre");
-    const genero = localStorage.getItem("genero");
-    const mes = localStorage.getItem("mes");
-    const search = localStorage.getItem("searchbar");
-
-    if (!filtroGuardado || filtroGuardado === "sin filtro") {
-      dispatch(getAllEvent());
-    } else if (filtroGuardado === "ciudad" && nombre) {
-      setFilterCity(nombre);
-      dispatch(Action.getState(nombre));
-    } else if (filtroGuardado === "genero" && genero) {
-      setFilterGenero(genero);
-      dispatch(Action.byEventType(genero));
-    } else if (filtroGuardado === "mes" && mes) {
-      dispatch(Action.byFilterDate(mes));
-    } else if (filtroGuardado === "searchbar" && search) {
-      dispatch(Action.getByTitle(search));
-    }
-  }, [dispatch]);
-
-  // Handlers
-  const handleClick = (e) => {
-    e.preventDefault();
-    dispatch(getAllEvent());
-    localStorage.setItem("filtro", "sin filtro");
-  };
-
-  const handleStates = (e) => {
-    const city = e.target.value;
-    setFilterCity(city);
-    localStorage.setItem("nombre", city);
-    localStorage.setItem("filtro", "ciudad");
-    dispatch(Action.getState(city));
-  };
-
-  const handleEventType = (e) => {
-    const genero = e.target.value;
-    setFilterGenero(genero);
-    localStorage.setItem("genero", genero);
-    localStorage.setItem("filtro", "genero");
-    dispatch(Action.byEventType(genero));
-  };
-
-  const handleDate = (e) => {
-    const mes = e.target.value;
-    setFilterMes(mes);
-    localStorage.setItem("mes", mes);
-    localStorage.setItem("filtro", "mes");
-    dispatch(Action.byFilterDate(mes));
-  };
-
-  return (
-    <div className={styles.selectorContainer}>
-      <Container>
-        <Navbar expand="lg" variant="dark" className={styles.selectorNavbar}>
-          <Container fluid className="p-0">
-            
-            <Navbar.Toggle aria-controls="filter-navbar-scroll" className="mb-2" />
-            
-            <Navbar.Collapse id="filter-navbar-scroll">
-              <Nav className="w-100 d-flex justify-content-between align-items-lg-center flex-column flex-lg-row">
-                
-                {/* Título Clickable para Resetear Filtros */}
-                <div 
-                  className={styles.brandLink} 
-                  onClick={handleClick}
-                  title="Click para ver todos los eventos"
-                >
-                  Filtros
-                </div>
-
-                {/* Grupo de Selects */}
-                <div className={styles.filterGroup}>
-                  {/* Filtro Ciudades */}
-                  <Form.Select
-                    className={styles.filterSelect}
-                    value={filterCity}
-                    onChange={handleStates}
-                    aria-label="Filtrar por ciudad"
-                  >
-                    <option value="All">Todas las Ciudades</option>
-                    {cities?.map((item) => (
-                      <option key={item} value={item}>{item}</option>
-                    ))}
-                  </Form.Select>
-
-                  {/* Filtro Géneros */}
-                  <Form.Select
-                    className={styles.filterSelect}
-                    value={filterGenero}
-                    onChange={handleEventType}
-                    aria-label="Filtrar por género"
-                  >
-                    <option value="All">Todos los Géneros</option>
-                    {generos?.map((item) => (
-                      <option key={item} value={item}>{item}</option>
-                    ))}
-                  </Form.Select>
-
-                  {/* Filtro Meses */}
-                  <Form.Select
-                    className={styles.filterSelect}
-                    onChange={handleDate}
-                    aria-label="Filtrar por mes"
-                  >
-                    <option value="All">Todos los Meses</option>
-                    <option value="Enero">Enero 2022</option>
-                    <option value="Febrero">Febrero 2022</option>
-                    <option value="Marzo">Marzo 2022</option>
-                    <option value="Abril">Abril 2022</option>
-                    <option value="Mayo">Mayo 2022</option>
-                    <option value="Junio">Junio 2022</option>
-                    <option value="Julio">Julio 2022</option>
-                    <option value="Agosto">Agosto 2022</option>
-                    <option value="Septiembre">Septiembre 2022</option>
-                    <option value="Octubre">Octubre 2022</option>
-                    <option value="Noviembre">Noviembre 2022</option>
-                    <option value="Diciembre">Diciembre 2022</option>
-                  </Form.Select>
-                </div>
-
-                {/* Barra de Búsqueda */}
-                <div className="mt-3 mt-lg-0">
-                  <Searchbar />
-                </div>
-
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </Container>
-    </div>
   );
 }
