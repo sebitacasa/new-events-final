@@ -6,28 +6,26 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { useCart } from "react-use-cart"; // 1. Importamos el hook
+import { useCart } from "react-use-cart"; 
 import style from "./Card.module.css";
 import image2 from "../images/imagen-set.jpg";
 
-// 2. Agregamos 'price' (o cost) a las props recibidas
 export default function Cardi({ id, title, imagen, date, place, price }) {
   
-  const { addItem } = useCart(); // 3. Inicializamos el carrito
+  const { addItem } = useCart();
 
-  // 4. Función para agregar al carrito (Copiada de Detail.js y adaptada)
   const handleAddToCart = () => {
     addItem(
       {
         id: id,
         name: title,
-        // Asumimos que el precio viene como string con puntos ej: "1.000" igual que en Detail
         price: typeof price === 'string' ? Number(price.replace(".", "")) : Number(price), 
         image: imagen,
       },
       1
     );
-    alert("¡Evento agregado al carrito!"); // Feedback visual simple
+    // Un pequeño alert o console.log opcional
+    // alert("¡Evento agregado al carrito!"); 
   };
 
   return (
@@ -59,29 +57,28 @@ export default function Cardi({ id, title, imagen, date, place, price }) {
         <ListGroupItem style={{ background: "#292b2c", color: "#f0ad4e", fontWeight: "bold", textAlign: "center" }}>
           {place}
         </ListGroupItem>
-        {/* Opcional: Mostrar el precio en la tarjeta */}
-        <ListGroupItem style={{ background: "#292b2c", color: "white", textAlign: "center" }}>
-           Valor: ${price}
+        {/* Mostramos el precio si existe */}
+        <ListGroupItem style={{ background: "#292b2c", color: "white", textAlign: "center", fontSize: "0.9rem" }}>
+           {price ? `Valor: $${price}` : "Consultar precio"}
         </ListGroupItem>
       </ListGroup>
 
-      {/* Contenedor de Botones */}
       <Card.Body className="p-0 d-flex flex-column"> 
         
-        {/* Botón AGREGAR AL CARRITO */}
+        {/* Botón 1: AGREGAR AL CARRITO (Amarillo) */}
         <Button
-          className={`${style.btn} ${style.btnCart}`} // Clase extra para estilo diferente
-          variant="success" // Verde para comprar (o usa warning si prefieres)
+          className={`${style.btn} ${style.btnCart}`}
+          variant="warning" 
           onClick={handleAddToCart}
         >
           Agregar al Carrito
         </Button>
 
-        {/* Botón VER DETALLE */}
+        {/* Botón 2: VER DETALLE (Amarillo) */}
         <LinkContainer to={`/${id}`}>
           <Button
-            className={style.btn}
-            variant="outline-warning" // Outline para diferenciarlo del de comprar
+            className={`${style.btn} ${style.btnDetail}`}
+            variant="warning"
           >
             Ver detalle
           </Button>

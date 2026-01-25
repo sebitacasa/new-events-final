@@ -1,3 +1,5 @@
+/* Card.module.css */
+
 .cards {
   box-shadow: 0 0 3px rgb(17, 15, 15), 0 0 6px rgb(193, 193, 193),
     0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
@@ -21,31 +23,36 @@
   object-position: center;
 }
 
-/* Estilo base para botones */
+/* --- ESTILOS DE LOS BOTONES --- */
+
 .btn {
   width: 100%;
   font-weight: bold;
   border: none;
   padding: 12px;
   transition: all 0.3s ease;
-  border-radius: 0; /* Cuadrados para que se apilen bien */
-}
-
-/* El último botón (Ver detalle) tendrá bordes redondeados abajo */
-.btn:last-child {
-  border-radius: 0 0 4px 4px;
+  /* Color Amarillo de la marca */
+  background-color: #f0ad4e; 
+  color: black; /* Letra Negra */
+  text-transform: uppercase;
+  font-size: 0.9rem;
 }
 
 .btn:hover {
-  background-color: #d8a602;
+  /* Un amarillo un poco más oscuro al pasar el mouse */
+  background-color: #d8a602; 
   color: black;
-  transform: scale(1.02);
-  z-index: 2; /* Para que el hover se vea por encima */
+  z-index: 2;
 }
 
-/* Estilo específico para el botón de carrito si quieres personalizarlo más */
+/* Botón de arriba (Agregar al Carrito) */
 .btnCart {
-    background-color: #f0ad4e;
-    color: black;
-    border-bottom: 1px solid rgba(0,0,0,0.1); /* Separador sutil */
+  border-radius: 0;
+  /* Una línea sutil para separarlo del botón de abajo */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15); 
+}
+
+/* Botón de abajo (Ver detalle) */
+.btnDetail {
+  border-radius: 0 0 4px 4px; /* Redondeado solo abajo */
 }
