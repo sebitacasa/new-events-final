@@ -1,89 +1,77 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-  padding: 50px 20px; /* Reduje el padding lateral para móviles */
-  background: #1C2833;
-  position: relative;
-  bottom: 0;
+  padding: 50px 20px;
+  background: #1C2833; /* Fondo oscuro */
   width: 100%;
-
-  @media (max-width: 768px) {
-    padding: 40px 15px;
-  }
+  margin-top: auto; /* Empuja el footer al fondo si hay poco contenido */
 `;
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 1200px; /* Un poco más ancho para pantallas grandes */
-  margin: 0 auto;
+  max-width: 1200px; /* Ancho máximo para que no se estire infinito */
+  margin: 0 auto; /* Centrado horizontal automático */
 `;
 
 export const Title = styled.h1`
   color: #f0ad4e;
   text-align: center;
-  margin-top: -10px;
-  margin-bottom: 40px;
   font-weight: bold;
   font-size: 32px;
-
-  @media (max-width: 768px) {
-    font-size: 26px; /* Letra un poco más chica en celular */
-  }
+  margin-bottom: 40px;
 `;
 
 export const Row = styled.div`
   display: grid;
-  /* Escritorio: 4 columnas iguales */
+  /* PC: 4 columnas iguales */
   grid-template-columns: repeat(4, 1fr); 
   grid-gap: 30px;
 
-  /* Tablet: 2 columnas (2 arriba, 2 abajo) */
-  @media (max-width: 900px) {
+  /* Tablet: 2 columnas */
+  @media (max-width: 992px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Celular: 1 sola columna (todo apilado) */
-  @media (max-width: 500px) {
+  /* Celular: 1 sola columna */
+  @media (max-width: 576px) {
     grid-template-columns: 1fr;
+    text-align: center; /* Texto centrado en móvil */
   }
 `;
 
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: left;
-  /* IMPORTANTE: Eliminé el margin-left: 60px que rompía el responsive */
-  
-  /* Centrar el contenido en celular para que se vea más ordenado */
-  @media (max-width: 500px) {
-    align-items: center;
+  text-align: left; /* Alineado a la izquierda en PC para orden */
+
+  /* En celular, centramos todo */
+  @media (max-width: 576px) {
+    align-items: center; 
     text-align: center;
   }
 `;
 
 export const Heading = styled.p`
-  font-size: 20px; /* Un poco más sutil */
-  color: #f0ad4e;
+  font-size: 18px;
+  color: #f0ad4e; /* Dorado */
   margin-bottom: 20px;
   font-weight: bold;
-  text-transform: uppercase; /* Queda más elegante en footers */
+  text-transform: uppercase;
+  letter-spacing: 1px;
 `;
 
 export const FooterLink = styled.a`
-  color: #fff; /* Blanco por defecto es más legible, hover en dorado */
+  color: #e0e0e0;
   margin-bottom: 12px;
   font-size: 16px;
   text-decoration: none;
-  font-family: 'Arial', sans-serif; /* Corregido typo 'font family' */
   cursor: pointer;
+  transition: color 0.3s ease;
 
   &:hover {
-    color: #f0ad4e;
-    transition: 0.3s ease-out;
+    color: #f0ad4e; /* Brillo dorado al pasar el mouse */
   }
-
+  
+  /* Iconos de redes sociales */
   i {
     margin-right: 10px;
   }
