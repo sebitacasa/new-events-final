@@ -6,17 +6,12 @@ import * as Action from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
-  Row,
-  Col,
   Navbar,
   Nav,
   Form,
-  Button,
   Dropdown,
   Image,
-  DropdownButton,
   NavDropdown,
-  FormControl
 } from "react-bootstrap";
 
 import {
@@ -29,202 +24,143 @@ import Searchbar from "../Searchbar";
 import styles from "./Nav.module.css";
 import ShoppingCart from "../shopCart";
 
-
-
+// ==========================================
+// COMPONENTE 1: NAVTOP (Barra negra superior)
+// ==========================================
 export default function NavTop() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user, isAuthenticated, loginWithRedirect, logout, loginWithPopup, getAccessTokenSilently } =
-    useAuth0();
-
+  const { user, isAuthenticated, logout, getAccessTokenSilently } = useAuth0();
   const userLoged = useSelector((state) => state.userLoged);
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log("🔍 Auth0 User:", user);
       dispatch(Action.getUserByExternalId(user.sub)).then((data) => {
-        console.log("🧠 Respuesta getUserByExternalId:", data);
         if (data.payload === null) {
-          console.log("🚀 Ejecutando createUser");
           dispatch(
-            Action.createUser({
-              
-              name: user.given_name,
-              lastName: user.family_name,
-              email: user.email,
-              picture: user.picture,
-            }, 
-            getAccessTokenSilently)
+            Action.createUser(
+              {
+                name: user.given_name,
+                lastName: user.family_name,
+                email: user.email,
+                picture: user.picture,
+              },
+              getAccessTokenSilently
+            )
           );
         }
       });
     }
-  }, [isAuthenticated]);
-
-  const handleLogin = async () => {
-    loginWithRedirect({
-      appState: {
-        targetUrl: window.location.pathname,
-      },
-    });
-  };
+  }, [isAuthenticated, dispatch, user, getAccessTokenSilently]);
 
   const handleMenu = (e) => {
     e.preventDefault();
-    navigate(`/${e.target.name}`);
+    const target = e.target.getAttribute("name");
+    if (target) navigate(`/${target}`);
+    else navigate("/");
   };
 
   return (
     <header className={styles.nav}>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
+          <Navbar.Brand
+            onClick={() => navigate("/")}
+            style={{
+              color: "#f0ad4e",
+              fontSize: "22px",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            UnderEventsApp
+          </Navbar.Brand>
+
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav.Link
-              name=""
-              style={{ color: "#f0ad4e", fontSize: "22px", fontWeight: "bold" }}
-              bg="warning"
-              onClick={handleMenu}
-            >
-              UnderEventsApp
-            </Nav.Link>
-            <Nav
-              style={{ background: "#f0ad4e", color: "black" }}
-              className="me-auto"
-            >
+            <Nav className="me-auto align-items-center">
+              {/* Menú Dropdown Amarillo */}
               <NavDropdown
-                variant="warning"
-                bg="waring"
-                style={{
-                  color: "black",
-                  fontSize: "15px",
-                  fontWeight: "bold",
-                  backgroundColor: "#f0ad4e",
-                }}
-                title="Menu"
+                title={<span style={{ color: "black", fontWeight: "bold" }}>Menú</span>}
                 id="collasible-nav-dropdown"
+                style={{
+                  backgroundColor: "#f0ad4e",
+                  borderRadius: "5px",
+                  marginRight: "10px",
+                }}
               >
-                <NavDropdown.Item
-                  
-                  name={"createEvent"}
-                  onClick={handleMenu}
-                >
+                <NavDropdown.Item name="createEvent" onClick={handleMenu}>
                   Crea tu Evento
                 </NavDropdown.Item>
-
                 <NavDropdown.Divider />
-                <NavDropdown.Item
-                 
-                  name={"orderDetail"}
-                  onClick={handleMenu}
-                >
+                <NavDropdown.Item name="orderDetail" onClick={handleMenu}>
                   Ordenes
                 </NavDropdown.Item>
               </NavDropdown>
+
+              {/* Carrito de Compras */}
+              <div className="mt-2 mt-lg-0">
+                <ShoppingCart />
+              </div>
             </Nav>
+
             <Nav>
-              <ShoppingCart />
-            </Nav>
-            <Nav>
-              <Nav.Link style={{ color: "#f0ad4e" }} eventKey={2}>
-               
+              {/* Dropdown de Usuario */}
               {isAuthenticated && (
-  <Dropdown align="end" className="m-1">
-    <Dropdown.Toggle
-      as="div"
-      className="d-flex align-items-center justify-content-center"
-      style={{
-        cursor: "pointer",
-        width: "45px",
-        height: "45px",
-        borderRadius: "50%",
-        overflow: "hidden",
-        backgroundColor: "#f0ad4e",
-        color: "black",
-        fontWeight: "bold",
-      }}
-    >
-      {userLoged?.picture ? (
-        <Image
-          roundedCircle
-          src={userLoged.picture}
-          width="60px"
-          alt="User"
-        />
-      ) : (
-        <span style={{ fontSize: "14px" }}>User</span>
-      )}
-    </Dropdown.Toggle>
+                <Dropdown align="end" className="mt-3 mt-lg-0">
+                  <Dropdown.Toggle
+                    as="div"
+                    className="d-flex align-items-center justify-content-center"
+                    style={{
+                      cursor: "pointer",
+                      width: "45px",
+                      height: "45px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      backgroundColor: "#f0ad4e",
+                      color: "black",
+                      fontWeight: "bold",
+                      border: "2px solid #f0ad4e",
+                    }}
+                  >
+                    {userLoged?.picture ? (
+                      <Image
+                        roundedCircle
+                        src={userLoged.picture}
+                        width="100%"
+                        height="100%"
+                        alt="User"
+                        style={{ objectFit: "cover" }}
+                      />
+                    ) : (
+                      <span style={{ fontSize: "14px" }}>User</span>
+                    )}
+                  </Dropdown.Toggle>
 
-    <Dropdown.Menu
-      style={{
-        background: "#f0ad4e",
-        color: "black",
-        fontWeight: "bold",
-      }}
-    >
-      {/* <Dropdown.Item enable>{userLoged?.name || "Usuario"}</Dropdown.Item> */}
-      {/* <Dropdown.Divider /> */}
-      <LinkContainer to="/profile">
-        <Dropdown.Item enable>{userLoged?.name || "Usuario"}</Dropdown.Item>
-      </LinkContainer>
-      {userLoged?.roll === "Admin" && (
-        <LinkContainer to="/userManagement">
-          <Dropdown.Item>User Management</Dropdown.Item>
-        </LinkContainer>
-      )}
-      <Dropdown.Divider />
-      <Dropdown.Item
-        onClick={() => logout({ returnTo: window.location.origin })}
-      >
-        Log Out
-      </Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
-)}
-
-                {/* {isAuthenticated && (
-                  <Dropdown align="end" className="m-1">
-                    <Dropdown.Toggle
-                      as={Image}
-                      roundedCircle={true}
-                      src={userLoged?.picture}
-                      width="45px"
-                    ></Dropdown.Toggle>
-                    <Dropdown.Menu
-                      style={{
-                        background: "#f0ad4e",
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <Dropdown.Item show={false}>
-                        {userLoged?.name}
+                  <Dropdown.Menu style={{ background: "#f0ad4e" }}>
+                    <LinkContainer to="/profile">
+                      <Dropdown.Item>
+                        <b>{userLoged?.name || "Usuario"}</b> (Perfil)
                       </Dropdown.Item>
-                      <Dropdown.Divider />
-                      <LinkContainer to="/profile">
-                        <Dropdown.Item>Profile</Dropdown.Item>
+                    </LinkContainer>
+                    
+                    {userLoged?.roll === "Admin" && (
+                      <LinkContainer to="/userManagement">
+                        <Dropdown.Item>Gestión de Usuarios</Dropdown.Item>
                       </LinkContainer>
-                      {userLoged?.roll === "Admin" && (
-                        <LinkContainer to="/userManagement">
-                          <Dropdown.Item>User Management</Dropdown.Item>
-                        </LinkContainer>
-                      )}
-
-                      <Dropdown.Divider />
-                      <Dropdown.Item
-                        onClick={() =>
-                          logout({ returnTo: window.location.origin })
-                        }
-                      >
-                        Log Out
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                )} */}
-              </Nav.Link>
+                    )}
+                    
+                    <Dropdown.Divider />
+                    <Dropdown.Item
+                      onClick={() => logout({ returnTo: window.location.origin })}
+                    >
+                      Cerrar Sesión
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -233,311 +169,159 @@ export default function NavTop() {
   );
 }
 
+// ==========================================
+// COMPONENTE 2: SELECTOR (Barra de Filtros)
+// ==========================================
 export function Selector() {
-  const eventosBack = useSelector((state) => state.eventosBack);
-  const filterDate = useSelector((state) => state.filterDate);
+  const dispatch = useDispatch();
+  
+  // Selectors
   const cities = useSelector((state) => state.allCities);
   const generos = useSelector((state) => state.allGeneros);
 
+  // Local State
   const [filterCity, setFilterCity] = useState("");
   const [filterGenero, setFilterGenero] = useState("");
-  const [filtroMes, setFilterMes] = useState("");
-  const [filterActivo, setFilterActivo] = useState("sin filtro");
+  const [setFilterMes] = useState("");
 
+  // Carga inicial
   useEffect(() => {
     dispatch(byFilterDate());
     dispatch(getAllCities());
     dispatch(getAllGeneros());
 
-    if (
-      localStorage.getItem("filtro") === "sin filtro" ||
-      localStorage.getItem("filtro") === null
-    ) {
+    const filtroGuardado = localStorage.getItem("filtro");
+    const nombre = localStorage.getItem("nombre");
+    const genero = localStorage.getItem("genero");
+    const mes = localStorage.getItem("mes");
+    const search = localStorage.getItem("searchbar");
+
+    if (!filtroGuardado || filtroGuardado === "sin filtro") {
       dispatch(getAllEvent());
-    } else if (localStorage.getItem("filtro") === "ciudad") {
-      dispatch(Action.getState(localStorage.getItem("nombre")));
-    } else if (localStorage.getItem("filtro") === "genero") {
-      dispatch(Action.byEventType(localStorage.getItem("genero")));
-    } else if (localStorage.getItem("filtro") === "searchbar") {
-      dispatch(Action.getByTitle(localStorage.getItem("searchbar")));
-    } else if (localStorage.getItem("filtro") === "mes") {
-      dispatch(Action.byFilterDate(localStorage.getItem("mes")));
+    } else if (filtroGuardado === "ciudad" && nombre) {
+      setFilterCity(nombre);
+      dispatch(Action.getState(nombre));
+    } else if (filtroGuardado === "genero" && genero) {
+      setFilterGenero(genero);
+      dispatch(Action.byEventType(genero));
+    } else if (filtroGuardado === "mes" && mes) {
+      dispatch(Action.byFilterDate(mes));
+    } else if (filtroGuardado === "searchbar" && search) {
+      dispatch(Action.getByTitle(search));
     }
-  }, []);
+  }, [dispatch]);
 
-  const dispatch = useDispatch();
-
-  function handleDate(e) {
+  // Handlers
+  const handleClick = (e) => {
     e.preventDefault();
-    const mes = e.target.value;
-    setFilterMes(mes);
-    window.localStorage.setItem("mes", mes);
-    dispatch(
-      Action.byFilterDate(/* localStorage.getItem("mes") */ e.target.value)
-    );
-    window.localStorage.setItem("filtro", "mes");
-  }
-
-  const getMes = () => {
-    return localStorage.getItem("mes");
+    dispatch(getAllEvent());
+    localStorage.setItem("filtro", "sin filtro");
   };
 
-  //--------------------------------------------------------------------
-
-  function handleEventType(e) {
-    e.preventDefault();
-    const genero = e.target.value;
-    setFilterGenero(genero);
-    window.localStorage.setItem("genero", genero);
-    dispatch(Action.byEventType(localStorage.getItem("genero")));
-    window.localStorage.setItem("filtro", "genero");
-  }
-
-  const saveGenero = () => {
-    localStorage.setItem("genero", filterGenero);
-  };
-
-  const getGenero = () => {
-    return localStorage.getItem("genero");
-  };
-
-  useEffect(() => {
-    setFilterCity(getGenero());
-  }, []);
-  // -----------------------------------------
-  function handleStates(e) {
-    e.preventDefault();
+  const handleStates = (e) => {
     const city = e.target.value;
     setFilterCity(city);
-    window.localStorage.setItem("nombre", city);
-    dispatch(Action.getState(localStorage.getItem("nombre")));
-    window.localStorage.setItem("filtro", "ciudad");
-  }
-
-  const saveData = () => {
-    localStorage.setItem("nombre", filterCity);
+    localStorage.setItem("nombre", city);
+    localStorage.setItem("filtro", "ciudad");
+    dispatch(Action.getState(city));
   };
 
-  const getData = () => {
-    return localStorage.getItem("nombre");
+  const handleEventType = (e) => {
+    const genero = e.target.value;
+    setFilterGenero(genero);
+    localStorage.setItem("genero", genero);
+    localStorage.setItem("filtro", "genero");
+    dispatch(Action.byEventType(genero));
   };
 
-  useEffect(() => {
-    setFilterCity(getData());
-     dispatch(getAllEvent());
-  }, []);
-  //----------------------------------------------------
-
-  /* function handleDate(e) {
-      e.preventDefault();
-      dispatch(Action.byFilterDate(e.target.value));
-  
-      
-    } */
- function handleClick(e) {
-   e.preventDefault();
-   dispatch(getAllEvent());
- }
+  const handleDate = (e) => {
+    const mes = e.target.value;
+    setFilterMes(mes); // Nota: filterMes no se usaba en el render, solo set
+    localStorage.setItem("mes", mes);
+    localStorage.setItem("filtro", "mes");
+    dispatch(Action.byFilterDate(mes));
+  };
 
   return (
-    <Container >
-  <Row>
-    <Col> <Navbar bg="dark" expand="lg">
-      <Container fluid>
-        <Navbar.Brand
-          bg="warning"
-          variant="warning"
-          style={{ color: " #f0ad4e", fontWeight: "bold", width: "auto" }}
-          
-        >
-          {" "}
+    <div className={styles.selectorContainer}>
+      <Container>
+        <Navbar expand="lg" variant="dark" className={styles.selectorNavbar}>
+          <Container fluid className="p-0">
+            
+            <Navbar.Toggle aria-controls="filter-navbar-scroll" className="mb-2" />
+            
+            <Navbar.Collapse id="filter-navbar-scroll">
+              <Nav className="w-100 d-flex justify-content-between align-items-lg-center flex-column flex-lg-row">
+                
+                {/* Título Clickable para Resetear Filtros */}
+                <div 
+                  className={styles.brandLink} 
+                  onClick={handleClick}
+                  title="Click para ver todos los eventos"
+                >
+                  Filtros
+                </div>
 
-          
-          <Nav.Link   style={{ color: " #f0ad4e", fontWeight: "bold", width: "auto" }} onClick={(e) => { handleClick(e) }} >UnderEventsApp</Nav.Link>
-        </Navbar.Brand >
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
-            <Form.Select
-                    variant="warning"
-                    bg="warning"
-                    style={{
-                      width: "150px",
-                      height: "37px",
-                      background: "#f0ad4e",
-                      borderColor: "black",
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                    }}
-                    size="sm"
-                    onChange={handleStates}
-                  >
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "14px" }}
-                      value="All"
-                      key="All"
-                    >
-                      Ciudades
-                    </option>
-                    {cities?.map((item) => (
-                      <option
-                        style={{ fontWeight: "bolder", fontSize: "12px" }}
-                        onClick={saveData()}
-                        key={item}
-                        value={item}
-                      >
-                        {item}
-                      </option>
-                    ))}
-                  </Form.Select>
+                {/* Grupo de Selects */}
+                <div className={styles.filterGroup}>
+                  {/* Filtro Ciudades */}
                   <Form.Select
-                    style={{
-                      width: "150px",
-                      height: "37px",
-                      background: "#f0ad4e",
-                      borderColor: "black",
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                    }}
-                    size="sm"
-                    onChange={handleEventType}
+                    className={styles.filterSelect}
+                    value={filterCity}
+                    onChange={handleStates}
+                    aria-label="Filtrar por ciudad"
                   >
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "14px" }}
-                      value="All"
-                      key="All"
-                    >
-                      Generos
-                    </option>
-                    {generos?.map((item) => (
-                      <option
-                        style={{ fontWeight: "bolder", fontSize: "12px" }}
-                        onClick={getGenero()}
-                        key={item}
-                        value={item}
-                      >
-                        {item}
-                      </option>
+                    <option value="All">Todas las Ciudades</option>
+                    {cities?.map((item) => (
+                      <option key={item} value={item}>{item}</option>
                     ))}
                   </Form.Select>
-                     <Form.Select
-                    style={{
-                      width: "150px",
-                      height: "37px",
-                      background: "#f0ad4e",
-                      borderColor: "black",
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                    }}
-                    size="sm"
-                    onChange={handleDate}
+
+                  {/* Filtro Géneros */}
+                  <Form.Select
+                    className={styles.filterSelect}
+                    value={filterGenero}
+                    onChange={handleEventType}
+                    aria-label="Filtrar por género"
                   >
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "14px" }}
-                      onClick={() => getMes()}
-                      value="All"
-                      key="All"
-                    >
-                      Por mes
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Enero"
-                    >
-                      Enero de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Febrero"
-                    >
-                      Febrero de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Marzo"
-                    >
-                      Marzo de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Abril"
-                    >
-                      Abril de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Mayo"
-                    >
-                      Mayo de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Junio"
-                    >
-                      Junio de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Julio"
-                    >
-                      Julio de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Agosto"
-                    >
-                      Agosto de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Septiembre"
-                    >
-                      Septiembre de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Octubre"
-                    >
-                      Octubre de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Noviembre"
-                    >
-                      Noviembre de 2022
-                    </option>
-                    <option
-                      style={{ fontWeight: "bolder", fontSize: "12px" }}
-                      onClick={() => getMes()}
-                      value="Diciembre"
-                    >
-                      Diciembre de 2022
-                    </option>
+                    <option value="All">Todos los Géneros</option>
+                    {generos?.map((item) => (
+                      <option key={item} value={item}>{item}</option>
+                    ))}
                   </Form.Select>
-         
-          </Nav>
-         <Searchbar/>
-        </Navbar.Collapse>
+
+                  {/* Filtro Meses */}
+                  <Form.Select
+                    className={styles.filterSelect}
+                    onChange={handleDate}
+                    aria-label="Filtrar por mes"
+                  >
+                    <option value="All">Todos los Meses</option>
+                    <option value="Enero">Enero 2022</option>
+                    <option value="Febrero">Febrero 2022</option>
+                    <option value="Marzo">Marzo 2022</option>
+                    <option value="Abril">Abril 2022</option>
+                    <option value="Mayo">Mayo 2022</option>
+                    <option value="Junio">Junio 2022</option>
+                    <option value="Julio">Julio 2022</option>
+                    <option value="Agosto">Agosto 2022</option>
+                    <option value="Septiembre">Septiembre 2022</option>
+                    <option value="Octubre">Octubre 2022</option>
+                    <option value="Noviembre">Noviembre 2022</option>
+                    <option value="Diciembre">Diciembre 2022</option>
+                  </Form.Select>
+                </div>
+
+                {/* Barra de Búsqueda */}
+                <div className="mt-3 mt-lg-0">
+                  <Searchbar />
+                </div>
+
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
       </Container>
-    </Navbar></Col>
-  </Row>
-</Container>
-   
+    </div>
   );
 }
-

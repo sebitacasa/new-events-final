@@ -1,14 +1,67 @@
-.responsive-select {
-  width: 150px;
-  min-width: 120px;
-  background: #f0ad4e;
-  border-color: black;
+/* Nav.module.css */
+
+.nav {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+/* --- Estilos para la barra de Filtros (Selector) --- */
+
+.selectorContainer {
+  background-color: #212529; /* Fondo oscuro para que coincida con el NavTop */
+  padding: 10px 0;
+}
+
+.selectorNavbar {
+  padding: 0;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 10px; /* Espacio entre los filtros */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filterSelect {
+  width: 160px; /* Ancho fijo en escritorio */
+  height: 38px;
+  background-color: #f0ad4e;
+  border: 1px solid black;
   font-weight: bold;
+  cursor: pointer;
+  color: black;
+}
+
+.brandLink {
+  color: #f0ad4e !important;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-decoration: none;
+  margin-right: 15px;
   cursor: pointer;
 }
 
-@media (max-width: 576px) {
-  .responsive-select {
+/* --- RESPONSIVE (Celulares y Tablets pequeñas) --- */
+@media (max-width: 991px) {
+  .filterGroup {
+    flex-direction: column; /* Apila los filtros verticalmente */
     width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .filterSelect {
+    width: 100%; /* Ocupa todo el ancho en celular */
+  }
+
+  .brandLink {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Ajuste para el Searchbar en móvil */
+  .selectorNavbar .navbar-collapse {
+    padding-top: 10px;
   }
 }
