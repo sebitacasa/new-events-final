@@ -113,10 +113,7 @@ export default function Home() {
                 {/* xs={12} ocupa todo en celular. lg={3} ocupa 25% en PC */}
                 <Col xs={12} lg={3} className="d-flex flex-column align-items-center mb-4" style={{marginTop: "20px"}}>
                   
-                  {/* Calendario */}
-                  <div className={styles.calendarContainer}>
-                    <CalendarioMejorado />
-                  </div>
+                 
 
                   {/* Tarjeta Lateral Extra */}
                   <div className={styles.cardSecondContainer}>
