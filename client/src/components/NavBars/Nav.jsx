@@ -52,29 +52,48 @@ export default function NavTop() {
     }
   }, [isAuthenticated, dispatch, user, getAccessTokenSilently]);
 
-  // --- 2. Lógica de Filtros (Fusionada aquí) ---
+  // --- 2. Lógica de Filtros ---
   const cities = useSelector((state) => state.allCities);
   const generos = useSelector((state) => state.allGeneros);
 
   const [filterCity, setFilterCity] = useState("");
   const [filterGenero, setFilterGenero] = useState("");
 
+  // ESTE ES EL EFECTO QUE LIMPIA LA CACHÉ DEL CALENDARIO VIEJO
   useEffect(() => {
+    // 1. Cargar las listas necesarias del backend
     dispatch(byFilterDate());
     dispatch(getAllCities());
     dispatch(getAllGeneros());
     
-    // Recuperar filtros al cargar
+    // 2. Recuperar qué filtro estaba usando el usuario en su última visita
     const filtroGuardado = localStorage.getItem("filtro");
     const nombre = localStorage.getItem("nombre");
     const genero = localStorage.getItem("genero");
+    const mes = localStorage.getItem("mes");
     
-    if (filtroGuardado === "ciudad" && nombre) setFilterCity(nombre);
-    if (filtroGuardado === "genero" && genero) setFilterGenero(genero);
+    // 3. Lógica de "Limpieza de Fantasmas"
+    // Si el filtro guardado NO es uno de los válidos actuales (ciudad, genero, mes),
+    // asumimos que es basura del calendario viejo y reseteamos todo.
+    if (filtroGuardado !== "ciudad" && filtroGuardado !== "genero" && filtroGuardado !== "mes") {
+        console.log("🧹 Limpiando filtros viejos/inválidos...");
+        localStorage.setItem("filtro", "sin filtro");
+        dispatch(getAllEvent()); // Trae todos los eventos por defecto
+    } 
+    // 4. Si es un filtro válido, lo aplicamos
+    else if (filtroGuardado === "ciudad" && nombre) {
+        setFilterCity(nombre);
+        dispatch(Action.getState(nombre));
+    } else if (filtroGuardado === "genero" && genero) {
+        setFilterGenero(genero);
+        dispatch(Action.byEventType(genero));
+    } else if (filtroGuardado === "mes" && mes) {
+        dispatch(Action.byFilterDate(mes));
+    }
 
   }, [dispatch]);
 
-  // Handlers de Filtros
+  // --- Handlers de Filtros ---
   const handleReset = () => {
     dispatch(getAllEvent());
     localStorage.setItem("filtro", "sin filtro");
@@ -154,7 +173,7 @@ export default function NavTop() {
                 <Form.Select className={styles.navSelect} onChange={handleDate}>
                   <option value="All">Meses</option>
                   {["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"].map(m => (
-                     <option key={m} value={m}>{m} 2022</option>
+                      <option key={m} value={m}>{m} 2022</option>
                   ))}
                 </Form.Select>
 
