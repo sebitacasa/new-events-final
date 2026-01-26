@@ -109,10 +109,6 @@
       "goShop": "Veranstaltungen suchen",
       "generalTicket": "Allgemeiner Eintritt",
       "remove": "Entfernen",
-      "pricePrefix": "Preis",
-      "checkPrice": "Preis auf Anfrage",
-      "addToCart": "In den Warenkorb",
-      "viewDetail": "Details anzeigen",
       "table": {
         "event": "Veranstaltung",
         "image": "Bild",
@@ -125,6 +121,12 @@
         "success": "Zahlung erfolgreich",
         "failure": "Zahlung fehlgeschlagen"
       }
+    },
+    "card": {
+      "pricePrefix": "Preis",
+      "checkPrice": "Preis auf Anfrage",
+      "addToCart": "In den Warenkorb",
+      "viewDetail": "Details anzeigen"
     }
   }
 }

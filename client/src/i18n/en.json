@@ -109,10 +109,6 @@
       "goShop": "Go find events",
       "generalTicket": "General Admission",
       "remove": "Remove",
-      "pricePrefix": "Price",
-      "checkPrice": "Check price",
-      "addToCart": "Add to Cart",
-      "viewDetail": "View Details",
       "table": {
         "event": "Event",
         "image": "Image",
@@ -125,6 +121,12 @@
         "success": "Payment Successful",
         "failure": "Payment Failed"
       }
+    },
+    "card": {
+      "pricePrefix": "Price",
+      "checkPrice": "Check price",
+      "addToCart": "Add to Cart",
+      "viewDetail": "View Details"
     }
   }
 }
