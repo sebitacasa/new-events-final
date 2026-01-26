@@ -10,7 +10,12 @@ import { useCart } from "react-use-cart";
 import style from "./Card.module.css";
 import image2 from "../images/imagen-set.jpg";
 
+// 1. IMPORTAR HOOK
+import { useTranslation } from "react-i18next";
+
 export default function Cardi({ id, title, imagen, date, place, price }) {
+  // 2. INICIALIZAR HOOK
+  const { t } = useTranslation();
   
   const { addItem } = useCart();
 
@@ -19,13 +24,12 @@ export default function Cardi({ id, title, imagen, date, place, price }) {
       {
         id: id,
         name: title,
+        // Conversión de precio segura
         price: typeof price === 'string' ? Number(price.replace(".", "")) : Number(price), 
         image: imagen,
       },
       1
     );
-    // Un pequeño alert o console.log opcional
-    // alert("¡Evento agregado al carrito!"); 
   };
 
   return (
@@ -57,30 +61,31 @@ export default function Cardi({ id, title, imagen, date, place, price }) {
         <ListGroupItem style={{ background: "#292b2c", color: "#f0ad4e", fontWeight: "bold", textAlign: "center" }}>
           {place}
         </ListGroupItem>
-        {/* Mostramos el precio si existe */}
+        
+        {/* Precio Traducido */}
         <ListGroupItem style={{ background: "#292b2c", color: "white", textAlign: "center", fontSize: "0.9rem" }}>
-           {price ? `Valor: $${price}` : "Consultar precio"}
+            {price ? `${t('card.pricePrefix')}: $${price}` : t('card.checkPrice')}
         </ListGroupItem>
       </ListGroup>
 
       <Card.Body className="p-0 d-flex flex-column"> 
         
-        {/* Botón 1: AGREGAR AL CARRITO (Amarillo) */}
+        {/* Botón 1: AGREGAR AL CARRITO (Traducido) */}
         <Button
           className={`${style.btn} ${style.btnCart}`}
           variant="warning" 
           onClick={handleAddToCart}
         >
-          Agregar al Carrito
+          {t('card.addToCart')}
         </Button>
 
-        {/* Botón 2: VER DETALLE (Amarillo) */}
+        {/* Botón 2: VER DETALLE (Traducido) */}
         <LinkContainer to={`/${id}`}>
           <Button
             className={`${style.btn} ${style.btnDetail}`}
             variant="warning"
           >
-            Ver detalle
+            {t('card.viewDetail')}
           </Button>
         </LinkContainer>
 

@@ -14,6 +14,9 @@ import {
 import { FaCalendar } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
 
+// 1. IMPORTAR HOOK
+import { useTranslation } from "react-i18next";
+
 import { getDetail, getTickets, addReviews } from "../redux/actions/actions.jsx";
 import NavTop from "./NavBars/Nav.jsx";
 import Footer from "./Footer/Footer.jsx";
@@ -22,6 +25,9 @@ import styles from "./Detail.module.css";
 import image2 from "../images/imagen-set.jpg";
 
 const Detail = () => {
+  // 2. INICIALIZAR HOOK
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const { addItem } = useCart();
@@ -51,7 +57,7 @@ const Detail = () => {
     e.preventDefault();
     if(detalles?.id) {
         dispatch(addReviews(input, detalles.id));
-        alert("¡Comentario enviado!");
+        alert(t('detail.modal.sentAlert')); // TRADUCCIÓN ALERTA
         setInput({ name: "", description: "", rating: "" });
         handleClose();
     }
@@ -62,7 +68,8 @@ const Detail = () => {
     return (
         <div className={styles.containerGeneral}>
              <NavTop />
-             <div className="text-white text-center mt-5">Cargando evento...</div>
+             {/* TRADUCCIÓN CARGANDO */}
+             <div className="text-white text-center mt-5">{t('detail.loading')}</div>
         </div>
     );
   }
@@ -86,7 +93,7 @@ const Detail = () => {
                 onError={(e) => { e.target.onerror = null; e.target.src = image2; }}
               />
 
-              {/* Título y Descripción */}
+              {/* Título y Descripción (Vienen de DB, no se traducen) */}
               <h1 className={styles.title}>{detalles.title}</h1>
               <p className={styles.description}>{detalles.description}</p>
 
@@ -96,21 +103,24 @@ const Detail = () => {
               <div className={styles.infoItem}>
                 <FaCalendar className={styles.infoIcon} /> 
                 <span>
-                    <strong>Fecha:</strong> {detalles.date}
+                    {/* TRADUCCIÓN FECHA */}
+                    <strong>{t('detail.date')}:</strong> {detalles.date}
                 </span>
               </div>
               
               <div className={styles.infoItem}>
                 <GoLocation className={styles.infoIcon} /> 
                 <span>
-                    <strong>Lugar:</strong> {detalles.place}
+                    {/* TRADUCCIÓN LUGAR */}
+                    <strong>{t('detail.place')}:</strong> {detalles.place}
                 </span>
               </div>
 
               <div className={styles.infoItem}>
                  <GoLocation className={styles.infoIcon} /> 
                  <span>
-                    <strong>Dirección:</strong> {detalles.address || "Dirección no especificada"}
+                    {/* TRADUCCIÓN DIRECCIÓN */}
+                    <strong>{t('detail.address')}:</strong> {detalles.address || t('detail.noAddress')}
                  </span>
               </div>
 
@@ -122,11 +132,13 @@ const Detail = () => {
             
             {/* Tarjeta de Compra */}
             <div className={styles.glassCard}>
-                <h3 className="text-center text-white mb-3">Adquirir Tickets</h3>
+                {/* TRADUCCIÓN TÍTULO COMPRA */}
+                <h3 className="text-center text-white mb-3">{t('detail.buyTickets')}</h3>
                 
                 <div className={styles.ticketSummary}>
                     <div className="d-flex justify-content-between text-white">
-                        <span>Precio por entrada:</span>
+                        {/* TRADUCCIÓN PRECIO TEXTO */}
+                        <span>{t('detail.pricePerTicket')}</span>
                         <span className="text-warning fw-bold">${detalles.cost}</span>
                     </div>
                     
@@ -135,7 +147,8 @@ const Detail = () => {
                     </div>
                     
                     <div className={styles.stockTag}>
-                        Disponibles: {detalles.stock}
+                        {/* TRADUCCIÓN DISPONIBLES */}
+                        {t('detail.available')} {detalles.stock}
                     </div>
                 </div>
 
@@ -149,23 +162,26 @@ const Detail = () => {
                             price: Number(detalles.cost.replace(".", "")),
                             image: detalles.imagen,
                         }, 1);
-                        alert("¡Agregado al carrito!");
+                        alert(t('detail.addedAlert')); // TRADUCCIÓN ALERTA
                     }}
                 >
-                    AGREGAR AL CARRITO
+                    {/* TRADUCCIÓN BOTÓN AGREGAR */}
+                    {t('detail.addToCart')}
                 </Button>
             </div>
 
             {/* Tarjeta de Comentarios */}
             <div className={styles.glassCard}>
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h4 className="text-white m-0">Comentarios</h4>
+                    {/* TRADUCCIÓN TÍTULO REVIEWS */}
+                    <h4 className="text-white m-0">{t('detail.reviews')}</h4>
                     <Button 
                         variant="outline-warning" 
                         size="sm" 
                         onClick={handleShow}
                     >
-                        Dejar Reseña
+                        {/* TRADUCCIÓN BOTÓN DEJAR RESEÑA */}
+                        {t('detail.leaveReview')}
                     </Button>
                 </div>
 
@@ -181,7 +197,8 @@ const Detail = () => {
                             </div>
                         ))
                     ) : (
-                        <p className="text-muted text-center">Sé el primero en comentar.</p>
+                        // TRADUCCIÓN SIN COMENTARIOS
+                        <p className="text-muted text-center">{t('detail.noReviews')}</p>
                     )}
                 </div>
             </div>
@@ -193,12 +210,14 @@ const Detail = () => {
       {/* --- MODAL PARA COMENTARIOS --- */}
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header style={{ background: "#f0ad4e", border: 'none' }} closeButton>
-          <Modal.Title className="text-dark fw-bold">Tu Opinión Cuenta</Modal.Title>
+          {/* TRADUCCIÓN TÍTULO MODAL */}
+          <Modal.Title className="text-dark fw-bold">{t('detail.modal.title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ background: "#212529", color: 'white' }}>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label className="text-warning">Nombre</Form.Label>
+              {/* TRADUCCIÓN LABEL NOMBRE */}
+              <Form.Label className="text-warning">{t('detail.modal.name')}</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
@@ -208,7 +227,8 @@ const Detail = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label className="text-warning">Comentario</Form.Label>
+              {/* TRADUCCIÓN LABEL COMENTARIO */}
+              <Form.Label className="text-warning">{t('detail.modal.comment')}</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -219,8 +239,9 @@ const Detail = () => {
               />
             </Form.Group>
             <div className="d-grid">
+                {/* TRADUCCIÓN BOTÓN ENVIAR */}
                 <Button variant="warning" type="submit" className="fw-bold">
-                    ENVIAR COMENTARIO
+                    {t('detail.modal.submit')}
                 </Button>
             </div>
           </Form>

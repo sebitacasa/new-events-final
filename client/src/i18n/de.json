@@ -74,6 +74,28 @@
         "success": "Veranstaltung erfolgreich erstellt!"
       }
     },
+    "detail": {
+      "loading": "Veranstaltung wird geladen...",
+      "date": "Datum",
+      "place": "Ort",
+      "address": "Adresse",
+      "noAddress": "Keine Adresse angegeben",
+      "buyTickets": "Tickets kaufen",
+      "pricePerTicket": "Preis pro Ticket:",
+      "available": "Verfügbar:",
+      "addToCart": "IN DEN WARENKORB",
+      "addedAlert": "Zum Warenkorb hinzugefügt!",
+      "reviews": "Bewertungen",
+      "leaveReview": "Bewertung schreiben",
+      "noReviews": "Schreiben Sie den ersten Kommentar.",
+      "modal": {
+        "title": "Ihre Meinung zählt",
+        "name": "Name",
+        "comment": "Kommentar",
+        "submit": "KOMMENTAR SENDEN",
+        "sentAlert": "Kommentar gesendet!"
+      }
+    },
     "cart": {
       "title": "Ihr Warenkorb",
       "subtitle": "Sie haben <1>{{count}}</1> ausgewählte Veranstaltungen",
@@ -87,6 +109,10 @@
       "goShop": "Veranstaltungen suchen",
       "generalTicket": "Allgemeiner Eintritt",
       "remove": "Entfernen",
+      "pricePrefix": "Preis",
+      "checkPrice": "Preis auf Anfrage",
+      "addToCart": "In den Warenkorb",
+      "viewDetail": "Details anzeigen",
       "table": {
         "event": "Veranstaltung",
         "image": "Bild",

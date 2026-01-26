@@ -74,6 +74,28 @@
         "success": "Event created successfully!"
       }
     },
+    "detail": {
+      "loading": "Loading event...",
+      "date": "Date",
+      "place": "Place",
+      "address": "Address",
+      "noAddress": "Address not specified",
+      "buyTickets": "Get Tickets",
+      "pricePerTicket": "Price per ticket:",
+      "available": "Available:",
+      "addToCart": "ADD TO CART",
+      "addedAlert": "Added to cart!",
+      "reviews": "Reviews",
+      "leaveReview": "Leave Review",
+      "noReviews": "Be the first to comment.",
+      "modal": {
+        "title": "Your Opinion Matters",
+        "name": "Name",
+        "comment": "Comment",
+        "submit": "SEND COMMENT",
+        "sentAlert": "Comment sent!"
+      }
+    },
     "cart": {
       "title": "Your Cart",
       "subtitle": "You have <1>{{count}}</1> selected events",
@@ -87,6 +109,10 @@
       "goShop": "Go find events",
       "generalTicket": "General Admission",
       "remove": "Remove",
+      "pricePrefix": "Price",
+      "checkPrice": "Check price",
+      "addToCart": "Add to Cart",
+      "viewDetail": "View Details",
       "table": {
         "event": "Event",
         "image": "Image",
