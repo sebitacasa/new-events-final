@@ -113,3 +113,9 @@
     height: 300px; /* Un poco más chico en celular */
   }
 }
+
+
+:global(.leaflet-container) {
+  width: 100%;
+  height: 100%;
+}

@@ -24,6 +24,7 @@ import NavTop from "./NavBars/Nav";
 import Footer from "./Footer/Footer";
 import UploadImg from "./UploadImg/UploadImg";
 import Loading from "./Loading";
+import "leaflet/dist/leaflet.css";
 
 // Iconos de Leaflet (para que no se rompan)
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
