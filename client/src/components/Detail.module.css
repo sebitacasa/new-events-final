@@ -3,20 +3,27 @@
 .containerGeneral {
   min-height: 100vh;
   width: 100%;
+  
+  /* --- 🔥 FLEXBOX PARA EL STICKY FOOTER --- */
+  display: flex;
+  flex-direction: column;
+  /* -------------------------------------- */
+
   background-color: #D0D3D4;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  /* El mismo fondo del Home para consistencia */
   background-image: 
     linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)),
     url('../images/pexels-thibault-trillet-167636.jpg');
-  padding-bottom: 50px;
 }
 
 .contentWrapper {
   margin-top: 30px;
+  /* --- 🔥 ESTO EMPUJA EL FOOTER ABAJO --- */
+  flex: 1; 
+  width: 100%;
 }
 
 /* --- TARJETA PRINCIPAL (ESTILO GLOW) --- */
@@ -27,7 +34,7 @@
   padding: 20px;
   margin-bottom: 25px;
   color: white;
-  box-shadow: 0 0 10px rgba(240, 173, 78, 0.3); /* Brillo suave */
+  box-shadow: 0 0 10px rgba(240, 173, 78, 0.3);
 }
 
 /* Imagen del evento */
@@ -58,7 +65,7 @@
   text-align: justify;
 }
 
-/* --- LISTA DE INFO (Fecha, Lugar) --- */
+/* --- LISTA DE INFO --- */
 .infoItem {
   background-color: #2c3034;
   color: white;
@@ -76,7 +83,7 @@
   font-size: 1.3rem;
 }
 
-/* --- SECCIÓN DE TICKETS Y PRECIO --- */
+/* --- SECCIÓN TICKETS --- */
 .ticketSummary {
   background-color: #2c3034;
   padding: 20px;
@@ -109,8 +116,10 @@
   transition: all 0.3s ease;
 }
 
+/* --- FOOTER --- */
 .footer {
-  margin-top: 50px;
+  margin-top: 50px; /* Separación del contenido */
+  width: 100%;      /* Asegura que ocupe todo el ancho */
 }
 
 /* --- RESPONSIVE --- */
@@ -118,11 +127,9 @@
   .title {
     font-size: 1.5rem;
   }
-  
   .eventImage {
     max-height: 250px;
   }
-  
   .priceTag {
     font-size: 2rem;
   }
