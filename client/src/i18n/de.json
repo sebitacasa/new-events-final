@@ -1,6 +1,11 @@
 {
   "translation": {
+    "common": {
+      "error": "Fehler"
+    },
     "nav": {
+        "noEventsTitle": "Keine Veranstaltungen gefunden",
+      "noEventsBody": "Versuchen Sie, die Filter zu ändern oder ein anderes Datum zu suchen.",
       "home": "Startseite",
       "cities": "Städte",
       "genres": "Genres",

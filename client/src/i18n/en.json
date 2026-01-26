@@ -1,6 +1,10 @@
 {
   "translation": {
+    "common": {
+      "error": "Error" },
     "nav": {
+        "noEventsTitle": "No events match your search",
+      "noEventsBody": "Try changing filters or searching another date.",
       "home": "Home",
       "cities": "Cities",
       "genres": "Genres",

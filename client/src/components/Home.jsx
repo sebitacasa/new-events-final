@@ -1,21 +1,9 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../redux/actions/actions";
 import styles from "./Home.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
-
-import Footer from "./Footer/Footer";
-import Carousely from "./Carousel";
-import Cardi from "./Cardi";
 import { SpinnerCircularFixed } from "spinners-react";
-import { Selector } from "./NavBars/Nav";
-import NavTop from "./NavBars/Nav";
-import CalendarioMejorado from "./CalendarioMejorado";
-import img from "../images/pexels-darya-sannikova-3824763.jpg";
-import imagen from "../images/pexels-wendy-wei-1918159.jpg";
-import altaImage from "../images/3a0a91fa-5eee-4c96-bd33-78ad5ef6c1c4.jpg";
-
 import {
   Container,
   Col,
@@ -27,12 +15,27 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 
+// 1. IMPORTAR EL HOOK DE TRADUCCIÓN
+import { useTranslation } from "react-i18next";
+
+import Footer from "./Footer/Footer";
+import Carousely from "./Carousel";
+import Cardi from "./Cardi";
+import NavTop from "./NavBars/Nav";
+
+// Imágenes
+import img from "../images/pexels-darya-sannikova-3824763.jpg";
+import imagen from "../images/pexels-wendy-wei-1918159.jpg";
+import altaImage from "../images/3a0a91fa-5eee-4c96-bd33-78ad5ef6c1c4.jpg";
+
 export default function Home() {
+  // 2. INICIALIZAR EL HOOK
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventosDb || []);
-  console.log(events);
   const [carga, setCarga] = useState(true);
-  const { error } = useAuth0(); // Eliminé variables no usadas para limpiar warnings
+  const { error } = useAuth0();
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
@@ -87,7 +90,8 @@ export default function Home() {
               className="rounded me-2"
               alt=""
             />
-            <strong className="me-auto">Error</strong>
+            {/* 3. TRADUCIR EL TÍTULO DEL ERROR */}
+            <strong className="me-auto">{t('common.error')}</strong>
           </Toast.Header>
           <Toast.Body>{error?.message}</Toast.Body>
         </Toast>
@@ -98,29 +102,20 @@ export default function Home() {
       <div style={{ marginTop: "15px" }}>
         <Carousely />
 
-       
-
         {/* --- INICIO SECCIÓN PRINCIPAL (FONDO) --- */}
         <div className={styles.background}>
           <div className={styles.cardsContainer}>
             <div className={styles.Date}></div>
 
             <Container fluid>
-              {/* Usamos Row para dividir la pantalla en dos columnas grandes */}
               <Row className="justify-content-center">
                 
-                {/* --- COLUMNA IZQUIERDA: CALENDARIO Y SIDE CARD --- */}
-                {/* xs={12} ocupa todo en celular. lg={3} ocupa 25% en PC */}
+                {/* --- COLUMNA IZQUIERDA --- */}
                 <Col xs={12} lg={3} className="d-flex flex-column align-items-center mb-4" style={{marginTop: "20px"}}>
-                  
-                 
-
-                  {/* Tarjeta Lateral Extra */}
                   <div className={styles.cardSecondContainer}>
                     <Card style={{ width: "100%", background: "#292b2c" }}>
                       <Card.Img variant="top" src={img} />
                       <Card.Body>
-                        {/* Contenido vacio por ahora */}
                       </Card.Body>
                       <Card.Img src={imagen} />
                       <ListGroupItem style={{ background: "#292b2c", border: "none" }}>
@@ -131,7 +126,6 @@ export default function Home() {
                 </Col>
 
                 {/* --- COLUMNA DERECHA: LISTA DE EVENTOS --- */}
-                {/* xs={12} ocupa todo en celular. lg={9} ocupa 75% en PC */}
                 <Col xs={12} lg={9}>
                   <div className={styles.cards}>
                     {Array.isArray(events) && events.length ? (
@@ -165,11 +159,13 @@ export default function Home() {
                         variant="light"
                       >
                         <Alert.Heading>
-                          No hay eventos que coincidan con tu búsqueda
+                          {/* 4. TRADUCIR TÍTULO DE NO EVENTOS */}
+                          {t('home.noEventsTitle')}
                         </Alert.Heading>
                         <hr />
                         <p className="mb-0">
-                          Prueba cambiando los filtros o buscando en otra fecha.
+                          {/* 5. TRADUCIR CUERPO DE NO EVENTOS */}
+                          {t('home.noEventsBody')}
                         </p>
                       </Alert>
                     )}
