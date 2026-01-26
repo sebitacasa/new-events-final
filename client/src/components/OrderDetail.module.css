@@ -5,7 +5,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #a8980a;
+  background-color: #D0D3D4;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -21,35 +21,38 @@
   padding-bottom: 40px;
 }
 
-/* Tarjeta Principal */
-.orderCard {
-  background-color: #212529; /* Fondo Oscuro */
-  border: 2px solid #f0ad4e; /* Borde Dorado */
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 0 15px rgba(240, 173, 78, 0.2);
-  color: white;
-}
-
+/* TÍTULO AMARILLO */
 .title {
-  color: #f0ad4e;
+  color: #f0ad4e; /* Amarillo */
   text-transform: uppercase;
   font-weight: 800;
   text-align: center;
   margin-bottom: 30px;
   letter-spacing: 1px;
+  text-shadow: 2px 2px 4px black; /* Sombra para que resalte del fondo */
 }
 
-/* Tabla Estilizada */
+/* --- CUADRO PRINCIPAL (AMARILLO) --- */
+.yellowCard {
+  background-color: #f0ad4e; /* 🔥 FONDO AMARILLO */
+  color: black;              /* 🔥 LETRAS NEGRAS */
+  border: 2px solid #d8a602; /* Borde un poco más oscuro */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(240, 173, 78, 0.3);
+  overflow-x: auto; /* Para que la tabla no rompa en celular */
+}
+
+/* --- ESTILOS DE LA TABLA DENTRO DEL AMARILLO --- */
 .tableCustom {
-  color: #e0e0e0;
-  border-color: #444;
+  color: black !important;
+  border-color: black !important;
 }
 
 .tableCustom thead th {
-  background-color: #f0ad4e !important;
-  color: black !important;
-  font-weight: bold;
+  background-color: black !important; /* Encabezado Negro */
+  color: #f0ad4e !important;          /* Letra Amarilla */
+  font-weight: 900;
   text-transform: uppercase;
   border-bottom: 2px solid black;
   text-align: center;
@@ -58,22 +61,13 @@
 
 .tableCustom tbody td {
   background-color: transparent !important;
-  color: white !important;
-  border-bottom: 1px solid #444;
+  color: black !important;            /* Datos en Negro */
+  border-bottom: 1px solid rgba(0,0,0,0.2) !important;
   vertical-align: middle;
   text-align: center;
+  font-weight: 600;
 }
 
 .tableCustom tbody tr:hover td {
-  background-color: rgba(240, 173, 78, 0.1) !important; /* Brillo al pasar mouse */
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .orderCard {
-    padding: 15px;
-  }
-  .title {
-    font-size: 1.5rem;
-  }
+  background-color: rgba(0, 0, 0, 0.05) !important; /* Sutil oscurecimiento al pasar mouse */
 }

@@ -4,13 +4,13 @@ import { getAllOrders, getAllEvent } from "../redux/actions/actions";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import NavTop from "./NavBars/Nav";
 import Footer from "./Footer/Footer";
-import styles from "./OrderDetail.module.css"; // Asegúrate de que el nombre coincida
+import styles from "./OrderDetail.module.css";
 import Carousely from "./Carousel";
 
 export default function OrderDetail() {
   const dispatch = useDispatch();
 
-  // 1. Traer datos con seguridad (Arrays vacíos si falla)
+  // 1. Traer datos con seguridad
   const allOrders = useSelector((state) => state.allOrders?.orders || []);
   const allEvents = useSelector((state) => state.eventosBack || []);
 
@@ -19,29 +19,29 @@ export default function OrderDetail() {
     dispatch(getAllEvent());
   }, [dispatch]);
 
-  // 2. Mapa de Eventos para búsqueda rápida (Optimización)
+  // 2. Mapa de eventos para acceso rápido
   const eventMap = new Map(allEvents.map((e) => [e.id, e]));
 
-  // 3. Aplanar datos CORRECTAMENTE
-  // Recorremos las órdenes primero para saber DE QUIÉN es el ticket
+  // 3. Preparar las filas (Lógica segura para Vercel)
   const rows = allOrders.flatMap((order) => {
-    const ownerId = order.userId || "Desc."; // Guardamos el dueño de esta orden
-    
-    // Si la orden no tiene tickets, devolvemos array vacío para que no rompa
+    // Si la orden no tiene tickets, ignoramos
     if (!order.Tickets || order.Tickets.length === 0) return [];
+    
+    // Obtenemos el dueño de la orden
+    const ownerId = order.userId || "Sin usuario";
 
     return order.Tickets.map((ticket) => {
       const eventData = eventMap.get(ticket.EventId);
       return {
+        uniqueKey: ticket.id, // Clave única para React
         ticketId: ticket.id,
-        eventId: ticket.EventId,
-        eventName: eventData?.title || "Evento no disponible",
-        city: eventData?.city || "N/A",
-        place: eventData?.place || "N/A",
-        date: eventData?.date || "N/A",
-        time: eventData?.time || "N/A",
+        eventName: eventData?.title || "Evento no encontrado",
+        city: eventData?.city || "-",
+        place: eventData?.place || "-",
+        date: eventData?.date || "-",
+        time: eventData?.time || "-",
         cost: eventData?.cost || 0,
-        ownerId: ownerId, // Aquí asignamos el ID correcto a cada fila
+        ownerId: ownerId,
       };
     });
   });
@@ -55,19 +55,21 @@ export default function OrderDetail() {
           <Row className="justify-content-center">
             <Col lg={12}>
               
-              <div className={styles.orderCard}>
-                <h2 className={styles.title}>Historial de Órdenes</h2>
-                
-                {/* Tabla Responsive */}
+              {/* Título Amarillo */}
+              <h2 className={styles.title}>Detalle de la Orden</h2>
+
+              {/* Tarjeta Amarilla con Letras Negras */}
+              <div className={styles.yellowCard}>
                 <Table responsive hover className={styles.tableCustom}>
                   <thead>
                     <tr>
                       <th>#</th>
                       <th>ID Ticket</th>
                       <th>Evento</th>
-                      <th>Fecha / Hora</th>
-                      <th>Lugar</th>
                       <th>Ciudad</th>
+                      <th>Lugar</th>
+                      <th>Fecha</th>
+                      <th>Hora</th>
                       <th>Costo</th>
                       <th>ID Usuario</th>
                     </tr>
@@ -75,27 +77,24 @@ export default function OrderDetail() {
                   <tbody>
                     {rows.length > 0 ? (
                       rows.map((row, index) => (
-                        <tr key={row.ticketId || index}>
+                        <tr key={row.uniqueKey || index}>
                           <td>{index + 1}</td>
                           <td>
-                            <span className="text-warning fw-bold">
-                              {row.ticketId.toString().slice(0, 8)}...
-                            </span>
+                            <strong>{row.ticketId.toString().slice(0, 8)}...</strong>
                           </td>
-                          <td className="fw-bold text-white">{row.eventName}</td>
-                          <td>{row.date} <br/> <small>{row.time}</small></td>
-                          <td>{row.place}</td>
+                          <td style={{fontWeight: 'bold', textTransform: 'uppercase'}}>{row.eventName}</td>
                           <td>{row.city}</td>
-                          <td className="text-warning fw-bold">${row.cost}</td>
-                          <td>
-                             <small className="text-muted">{row.ownerId}</small>
-                          </td>
+                          <td>{row.place}</td>
+                          <td>{row.date}</td>
+                          <td>{row.time}</td>
+                          <td>${row.cost}</td>
+                          <td style={{fontSize: '0.85rem'}}>{row.ownerId}</td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="8" className="text-center py-4">
-                          No se encontraron órdenes registradas.
+                        <td colSpan="9" className="text-center py-4">
+                          <h5>No hay órdenes registradas</h5>
                         </td>
                       </tr>
                     )}
