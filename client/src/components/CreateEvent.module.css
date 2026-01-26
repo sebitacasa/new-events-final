@@ -119,3 +119,28 @@
   width: 100%;
   height: 100%;
 }
+
+/* En CreateEvent.module.css agrega esto al final */
+
+/* En CreateEvent.module.css agrega esto al final */
+
+:global(.leaflet-control-geosearch form) {
+    background: #2c3034;
+    border: 1px solid #f0ad4e;
+    color: white;
+}
+
+:global(.leaflet-control-geosearch input) {
+    color: white;
+}
+
+:global(.leaflet-control-geosearch .results) {
+    background: #2c3034;
+    color: white;
+}
+
+:global(.leaflet-control-geosearch .results > *):hover {
+    background-color: #f0ad4e;
+    color: black;
+    cursor: pointer;
+}
