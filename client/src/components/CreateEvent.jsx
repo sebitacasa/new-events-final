@@ -1,12 +1,7 @@
-import { React, useState, useEffect } from "react";
-import { connect } from "formik";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createEvent } from "../redux/actions/actions";
-import styles from "./CreateEvent.module.css";
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import {
   MapContainer,
   TileLayer,
@@ -14,55 +9,39 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import Loading from "./Loading";
-
-
 import L from "leaflet";
 import {
   Button,
-  FormControl,
   Col,
-  ListGroupItem,
   Row,
   Container,
   Form,
-  InputGroup,
-  SplitButton,
-  Dropdown,
 } from "react-bootstrap";
-import Footer from "./Footer/Footer";
-import * as Action from "../redux/actions/actions";
 
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import * as Action from "../redux/actions/actions";
+import styles from "./CreateEvent.module.css";
 import NavTop from "./NavBars/Nav";
-import imagen from "../images/pexels-darya-sannikova-3824763.jpg";
+import Footer from "./Footer/Footer";
 import UploadImg from "./UploadImg/UploadImg";
+import Loading from "./Loading";
+
+// Iconos de Leaflet (para que no se rompan)
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
 export function CreateEvent() {
-  const stateInitialForms = {
-    title: "",
-    imagen: "",
-    city: "",
-    place: "",
-    description: "",
-    genero: "",
-    date: "",
-    time: "",
-    stock: "",
-    cost: "",
-    month: "",
-    address: "",
-    location: "",
-  };
   const navigate = useNavigate();
-  const [pos, setPos] = useState(null);
-  const { user, isLoading } = useAuth0();
-  const [input, setInput] = useState(stateInitialForms);
-  const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
+  const { user } = useAuth0();
   const userLoged = useSelector((state) => state.userLoged);
   const genres = useSelector((state) => state.allGeneros);
   const city = useSelector((state) => state.allCities);
+
+  const [pos, setPos] = useState(null);
+  const [validated, setValidated] = useState(false);
   const [urlImg, setUrlImg] = useState("");
+
   const [eventData, setEventData] = useState({
     title: "",
     imagen: "",
@@ -87,34 +66,11 @@ export function CreateEvent() {
     dispatch(Action.getAllCities());
   }, [dispatch]);
 
-  // const leafletIcon = L.icon({
-  //   iconUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  //   iconSize: [20, 30],
-  // });
-
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      dispatch(createEvent({...eventData, imagen: urlImg}, userLoged.externalId)).then((res) => {
-        navigate(`/${res.payload.newEvent.id}`);
-
-      });
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-  };
-
   const handleChange = (event) => {
     setEventData({
       ...eventData,
       [event.target.name]: event.target.value,
     });
-    console.log("data", eventData);
   };
 
   const handleChangePoint = (pos) => {
@@ -123,506 +79,311 @@ export function CreateEvent() {
       lat: pos.lat,
       long: pos.lng,
     });
-    console.log("data", eventData);
   };
 
-  const date = new Date();
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (form.checkValidity() === true) {
+      dispatch(Action.createEvent({...eventData, imagen: urlImg}, userLoged.externalId))
+      .then((res) => {
+        if(res.payload && res.payload.newEvent) {
+            alert("¡Evento creado con éxito!");
+            navigate(`/${res.payload.newEvent.id}`);
+        }
+      });
+    }
+    setValidated(true);
+  };
+
+  // Fecha mínima (hoy)
+  const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className={styles.container1}>
+    <div className={styles.containerGeneral}>
       <NavTop />
-      <Container>
-        <Row>
-          <Col xs>
-            <div className={styles.container1}>
-              <div style={{ marginTop: "85px" }}>
+      
+      <div className={styles.contentWrapper}>
+        <Container>
+          <Row className="justify-content-center">
+            {/* Usamos una columna centrada de ancho 8 (o 10 en pantallas med) */}
+            <Col lg={8} md={10} xs={12}>
+              <div className={styles.formCard}>
+                
+                <h2 className={styles.formTitle}>Crear Nuevo Evento</h2>
+                
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                  <div>
-                    <h5
-                      style={{
-                        color: " #f0ad4e ",
-                        borderColor: "black",
-                        marginLeft: "130px",
-                      
-                        
-                      }}
-                    >
-                      INGRESA LOS DATOS DE TU EVENTO
-                    </h5>
-                  </div>
-
-                  <Form.Group controlId="validationCustom01">
-                    <Form.Label
-                      style={{
-                        color: " #f0ad4e ",
-                        marginTop: "18px",
-                      }}
-                    >
-                      Nombre del evento
-                    </Form.Label>
-                    <Form.Control
-                      required
-                      type="text"
-                      name="title"
-                      value={eventData?.title}
-                      onChange={handleChange}
-                      style={{ background: " #f0ad4e ", borderColor: "black" }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please provide a valid name.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <Form.Group controlId="validationCustom02">
-                    <Form.Label
-                      style={{
-                        color: " #f0ad4e ",
-                       
-                        marginTop: "18px",
-                      }}
-                    >
-                      Genero Musical
-                    </Form.Label>
-                    <Form.Select
-                      style={{ background: " #f0ad4e ", borderColor: "black",
-                      
-                      
-                      cursor: "pointer", }}
-                      required
-                      name="genero"
-                      defaultValue={eventData?.genero}
-                      onChange={handleChange}
-                      
-                    >
-                      <option>Seleccion tu Genero</option>
-                      {genres?.map((dl) => (
-                        <option key={dl} value={dl}>{dl}</option>
-                      ))}
-                    </Form.Select>
-                    <Form.Control.Feedback type="invalid">
-                      Please select genre.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <Form.Group controlId="validationCustom03">
-                    <Form.Label
-                      style={{
-                        color: " #f0ad4e ",
-                        
-                        marginTop: "18px",
-                      }}
-                    >
-                      Escribe detalle del evento
-                    </Form.Label>
-                    <FormControl
-                      as="textarea"
-                      name="description"
-                      type="text"
-                      value={eventData?.description}
-                      onChange={handleChange}
-                      required
-                      style={{
-                        background: " #f0ad4e ",
-                        borderColor: "black",
-                      }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please provide a valid detail.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <Row style={{ alignItems: "center" }}>
-                    <Form.Group controlId="validationCustom04">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                        
-                          marginTop: "18px",
-                        }}
-                      >
-                        Seleccione ubicacion del evento
-                      </Form.Label>
-                      <ListGroupItem
-                        style={{
-                          height: "380px",
-                          width: "100%",
-                          marginLeft: "auto",
-                          marginRight: "auto",
-                          marginBottom: "20px",
-                          borderColor: "black",
-                          borderWidth: "4px",
-                          background: " #f0ad4e ",
-                        }}
-                      >
-                        <MapContainer
-                          style={{ height: "100%", width: "100wh" }}
-                          center={[-38.169114135560854, -65.75208708742923]}
-                          zoom={5}
-                          scrollWheelZoom={false}
-                        >
-                          <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          />
-                          <LocationMarker
-                            handleChange={handleChangePoint}
-                            setPos={setPos}
-                          />
-                        </MapContainer>
-                      </ListGroupItem>
-                    </Form.Group>
-                  </Row>
-                  <Row className="mb-3">
-                    <Form.Group as={Col} controlId="validationCustom01">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                         
-                          marginTop: "18px",
-                        }}
-                      >
-                        Latitude
-                      </Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="lat"
-                        required
-                        value={pos?.lat}
-                        placeholder="Latitude"
-                        defaultValue={""}
-                        onChangeCapture={handleChange}
-                        disabled={true}
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="validationCustom02">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                         
-                          marginTop: "18px",
-                        }}
-                      >
-                        Longitude
-                      </Form.Label>
-                      <Form.Control
-                        name="long"
-                        required
-                        type="number"
-                        placeholder="Longitude"
-                        value={pos?.lng}
-                        onChange={handleChange}
-                        disabled={true}
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Form.Group controlId="validationCustom04">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                         
-                          marginTop: "18px",
-                        }}
-                      >
-                        Fecha de inicio de evento
-                      </Form.Label>
-                      <Form.Control
-                        as={"input"}
-                        name="date"
-                        value={eventData?.date}
-                        type="date"
-                        min={`${date.getFullYear()}-${
-                          date.getMonth() + 1 < 10 ? "0" : ""
-                        }${date.getMonth() + 1}-${date.getDate()}`}
-                        onChange={handleChange}
-                        required
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide a valid date.
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  </Row>
-
-                  <Row>
-                    <Form.Group controlId="validationCustom05">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                         
-                          marginTop: "18px",
-                        }}
-                      >
-                        Fecha de inicio de evento
-                      </Form.Label>
-                      <Form.Control
-                        name="time"
-                        value={eventData?.time}
-                        type="time"
-                        onChange={handleChange}
-                        required
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide time.
-                      </Form.Control.Feedback>{" "}
-                    </Form.Group>
-
-                    <Form.Group controlId="validationCustom06">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                        
-                          marginTop: "18px",
-                        }}
-                      >
-                        Mes de Evento
-                      </Form.Label>
-                      <Form.Control
-                        name="month"
-                        value={eventData?.month}
-                        type="text"
-                        onChange={handleChange}
-                        required
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Please select month.
-                      </Form.Control.Feedback>{" "}
-                    </Form.Group>
-                  </Row>
-
-                  <Form.Group controlId="validationCustom07">
-                    <Form.Label
-                      style={{
-                        color: " #f0ad4e ",
-                       
-                        marginTop: "18px",
-                      }}
-                    >
-                      Provincia
-                    </Form.Label>
-
-                    <Form.Select
-                      name="city"
-                      style={{  borderColor: "black",background: "#f0ad4e",
-                     
-                   
-                      cursor: "pointer" }}
-                        
-                      
-                      required
-                      defaultValue={eventData?.city}
-                      onChange={handleChange}
-                    >
-                      <option>Selecciona tu Provincia</option>
-                      {city?.map((dl) => (
-                        <option value={dl}>{dl}</option>
-                      ))}
-                    </Form.Select>
-
-                    <Form.Control.Feedback type="invalid">
-                      Please select state.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <Form.Group controlId="validationCustom08">
-                    <Form.Label
-                      style={{
-                        color: " #f0ad4e ",
-                      
-                        marginTop: "18px",
-                      }}
-                    >
-                      Localidad
-                    </Form.Label>
-                    <Form.Control
-                      name="location"
-                      value={eventData?.location}
-                      type="text"
-                      onChange={handleChange}
-                      required
-                      style={{
-                        background: " #f0ad4e ",
-                        borderColor: "black",
-                      }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please select city.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <>
-                    <Form.Group controlId="validationCustom09">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                       
-                          marginTop: "18px",
-                        }}
-                      >
-                        Direccion
-                      </Form.Label>
-                      <Form.Control
-                        name="address"
-                        value={eventData?.address}
-                        type="text"
-                        onChange={handleChange}
-                        required
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide a valid direcction.
-                      </Form.Control.Feedback>
-                    </Form.Group>
-
-                    <Form.Group controlId="validationCustom10">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                         
-                          marginTop: "18px",
-                        }}
-                      >
-                        Lugar del evento
-                      </Form.Label>
-                      <Form.Control
-                        name="place"
-                        value={eventData?.place}
-                        type="text"
-                        onChange={handleChange}
-                        required
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide a valid place.
-                      </Form.Control.Feedback>
-                    </Form.Group>
-
-                    <Form.Group controlId="validationCustom11">
-
                   
+                  {/* --- 1. INFORMACIÓN BÁSICA --- */}
+                  <Row className="mb-3">
+                    <Col md={12}>
+                        <Form.Group controlId="title">
+                            <Form.Label className={styles.label}>Nombre del Evento</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                name="title"
+                                placeholder="Ej: Rock Fest 2024"
+                                value={eventData.title}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                    </Col>
+                  </Row>
 
-                    </Form.Group>
+                  <Row className="mb-3">
+                    <Col md={6}>
+                        <Form.Group controlId="genero">
+                            <Form.Label className={styles.label}>Género Musical</Form.Label>
+                            <Form.Select
+                                required
+                                name="genero"
+                                value={eventData.genero}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            >
+                                <option value="">Selecciona un género</option>
+                                {genres?.map((g) => (
+                                    <option key={g} value={g}>{g}</option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                        <Form.Group controlId="stock">
+                            <Form.Label className={styles.label}>Capacidad (Stock)</Form.Label>
+                            <Form.Control
+                                required
+                                type="number"
+                                name="stock"
+                                min="1"
+                                value={eventData.stock}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                    </Col>
+                  </Row>
 
-                    <Form.Group controlId="validationCustom12">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                         
-                          marginTop: "18px",
-                        }}
-                      >
-                        Cost
-                      </Form.Label>
-                      <Form.Control
-                        name="cost"
-                        value={eventData?.cost}
-                        type="number"
-                        min="0"
-                        onChange={handleChange}
+                  <Form.Group className="mb-3" controlId="description">
+                    <Form.Label className={styles.label}>Descripción</Form.Label>
+                    <Form.Control
                         required
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide a valid cost.
-                      </Form.Control.Feedback>
-                    </Form.Group>
-
-                    <Form.Group controlId="validationCustom13">
-                      <Form.Label
-                        style={{
-                          color: " #f0ad4e ",
-                         
-                          marginTop: "18px",
-                        }}
-                      >
-                        Stock
-                      </Form.Label>
-                      <Form.Control
-                        as={"input"}
-                        name="stock"
-                        min={0}
-                        value={eventData?.stock}
-                        type={"number"}
+                        as="textarea"
+                        rows={3}
+                        name="description"
+                        value={eventData.description}
                         onChange={handleChange}
-                        required
-                        style={{
-                          background: " #f0ad4e ",
-                          borderColor: "black",
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide a valid stock.
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                          <div style={{marginTop: "15px", fontWeight: "bold"}}>
+                        className={styles.inputDark}
+                    />
+                  </Form.Group>
 
-                    < UploadImg  setimgUp={setUrlImg} />
-                                  {urlImg && <img src= {urlImg} width="100" height="150" />}
-                          </div>
-                  </>
+                  {/* --- 2. FECHAS Y COSTOS --- */}
+                  <Row className="mb-3">
+                    <Col md={4}>
+                        <Form.Group controlId="date">
+                            <Form.Label className={styles.label}>Fecha</Form.Label>
+                            <Form.Control
+                                required
+                                type="date"
+                                name="date"
+                                min={today}
+                                value={eventData.date}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4}>
+                         <Form.Group controlId="time">
+                            <Form.Label className={styles.label}>Hora</Form.Label>
+                            <Form.Control
+                                required
+                                type="time"
+                                name="time"
+                                value={eventData.time}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4}>
+                        <Form.Group controlId="cost">
+                            <Form.Label className={styles.label}>Precio ($)</Form.Label>
+                            <Form.Control
+                                required
+                                type="number"
+                                name="cost"
+                                min="0"
+                                value={eventData.cost}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                    </Col>
+                  </Row>
+                  
+                  {/* El mes se puede auto-calcular o pedir, lo dejo pedido como estaba */}
+                  <Row className="mb-3">
+                     <Col md={12}>
+                        <Form.Group controlId="month">
+                            <Form.Label className={styles.label}>Mes (Texto)</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                placeholder="Ej: Enero"
+                                name="month"
+                                value={eventData.month}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                     </Col>
+                  </Row>
 
-                  <div className="d-grid gap-2">
-                    <Button
-                      style={{ fontWeight: "bolder", marginTop: "25px" }}
-                      variant="outline-warning"
-                      size="lg"
-                      type="submit"
-                    >
-                      Crea tu Evento
-                    </Button>
+                  {/* --- 3. UBICACIÓN --- */}
+                  <hr style={{borderColor: '#f0ad4e', margin: '30px 0'}} />
+                  <h4 className="text-white text-center mb-3">Ubicación</h4>
+
+                  <Row className="mb-3">
+                     <Col md={6}>
+                        <Form.Group controlId="city">
+                            <Form.Label className={styles.label}>Provincia</Form.Label>
+                            <Form.Select
+                                required
+                                name="city"
+                                value={eventData.city}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            >
+                                <option value="">Selecciona Provincia</option>
+                                {city?.map((c) => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                     </Col>
+                     <Col md={6}>
+                        <Form.Group controlId="location">
+                            <Form.Label className={styles.label}>Localidad / Ciudad</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                name="location"
+                                value={eventData.location}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                     </Col>
+                  </Row>
+
+                  <Row className="mb-3">
+                    <Col md={6}>
+                        <Form.Group controlId="place">
+                            <Form.Label className={styles.label}>Nombre del Lugar (Venue)</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                placeholder="Ej: Estadio Obras"
+                                name="place"
+                                value={eventData.place}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                        <Form.Group controlId="address">
+                            <Form.Label className={styles.label}>Dirección Exacta</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                name="address"
+                                value={eventData.address}
+                                onChange={handleChange}
+                                className={styles.inputDark}
+                            />
+                        </Form.Group>
+                    </Col>
+                  </Row>
+
+                  {/* --- 4. MAPA --- */}
+                  <div className="mt-4">
+                     <Form.Label className={styles.label}>Geolocalización (Opcional)</Form.Label>
+                     <p className={styles.mapInstruction}>
+                        * Haz click en el mapa para fijar la ubicación exacta del evento.
+                     </p>
+                     
+                     <div className={styles.mapContainer}>
+                        <MapContainer
+                            style={{ height: "100%", width: "100%" }}
+                            center={[-34.6037, -58.3816]} // Buenos Aires default
+                            zoom={4}
+                            scrollWheelZoom={true}
+                        >
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            <LocationMarker
+                                handleChange={handleChangePoint}
+                                setPos={setPos}
+                            />
+                        </MapContainer>
+                     </div>
+
+                     <Row className="mb-3">
+                         <Col>
+                            <Form.Control placeholder="Latitud" value={pos?.lat || ''} disabled className={styles.inputDark} />
+                         </Col>
+                         <Col>
+                            <Form.Control placeholder="Longitud" value={pos?.lng || ''} disabled className={styles.inputDark} />
+                         </Col>
+                     </Row>
                   </div>
+
+                  {/* --- 5. IMAGEN --- */}
+                  <hr style={{borderColor: '#f0ad4e', margin: '30px 0'}} />
+                  
+                  <Form.Group className="mb-3">
+                    <Form.Label className={styles.label}>Imagen del Evento</Form.Label>
+                    <div className="d-flex flex-column align-items-center p-3" style={{border: '1px dashed #f0ad4e', borderRadius: '5px'}}>
+                        <UploadImg setimgUp={setUrlImg} />
+                        {urlImg && (
+                            <img 
+                                src={urlImg} 
+                                alt="Preview" 
+                                style={{maxWidth: '200px', marginTop: '15px', borderRadius: '5px', border: '2px solid white'}} 
+                            />
+                        )}
+                    </div>
+                  </Form.Group>
+
+                  <Button
+                    variant="warning"
+                    type="submit"
+                    className={styles.btnSubmit}
+                  >
+                    CREAR EVENTO
+                  </Button>
+
                 </Form>
               </div>
-            </div>
-          </Col>
-          <Col xs={{ order: 12 }}>
-            <div className={styles.divImg}>
-              <img
-                className={styles.img}
-                src={imagen}
-                width="420px"
-                height="auto"
-                alt="imagen"
-              />
-            </div>
-          </Col>
-        </Row>
-      </Container>
-      <div className={styles.footer}>
-        <Footer />
+            </Col>
+          </Row>
+        </Container>
       </div>
+
+      <Footer />
     </div>
   );
 }
 
+// Componente interno del marcador
 function LocationMarker({ setPos, handleChange }) {
   const [position, setPosition] = useState(null);
 
@@ -636,18 +397,18 @@ function LocationMarker({ setPos, handleChange }) {
 
   return position === null ? null : (
     <Marker
-    icon={L.icon({
-      iconUrl: markerIcon,
-      iconRetinaUrl: markerIcon2x,
-      shadowUrl: markerShadow,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    })}
+      icon={L.icon({
+        iconUrl: markerIcon,
+        iconRetinaUrl: markerIcon2x,
+        shadowUrl: markerShadow,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      })}
       position={position}
     >
-      <Popup>You are here</Popup>
+      <Popup>Ubicación seleccionada</Popup>
     </Marker>
   );
 }
