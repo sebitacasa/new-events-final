@@ -158,11 +158,7 @@ export function UserProfile() {
 
           {/* --- SECCIÓN DE EVENTOS CREADOS --- */}
           {/* Aquí podrías agregar un título si el componente no lo tiene */}
-          <div style={{marginTop: '50px'}}>
-             <h3 className="text-center text-warning mb-4 fw-bold text-uppercase">Tus Eventos Creados</h3>
-             <EventosCreadosPorElUsuario />
-          </div>
-
+        
         </Container>
       </div>
     </div>
