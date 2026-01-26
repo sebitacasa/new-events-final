@@ -1,0 +1,44 @@
+{
+  "translation": {
+    "nav": {
+      "home": "Startseite",
+      "cities": "Städte",
+      "genres": "Genres",
+      "months": "Monate",
+      "search": "Suchen",
+      "options": "Optionen",
+      "login": "Anmelden",
+      "logout": "Abmelden",
+      "profile": "Profil"
+    },
+    "createEvent": {
+      "title": "Neue Veranstaltung erstellen",
+      "labels": {
+        "name": "Veranstaltungsname",
+        "genre": "Musikgenre",
+        "stock": "Kapazität (Bestand)",
+        "description": "Beschreibung",
+        "date": "Datum",
+        "time": "Uhrzeit",
+        "price": "Preis ($)",
+        "month": "Monat (Text)",
+        "province": "Provinz",
+        "city": "Stadt / Ortschaft",
+        "venue": "Name des Veranstaltungsortes",
+        "address": "Genaue Adresse",
+        "map": "Geolokalisierung (Optional)",
+        "image": "Veranstaltungsbild"
+      },
+      "placeholders": {
+        "name": "Bsp: Rock Fest 2024",
+        "selectGenre": "Wählen Sie ein Genre",
+        "month": "Bsp: Januar",
+        "selectProvince": "Provinz wählen",
+        "searchMap": "Auf der Karte suchen..."
+      },
+      "buttons": {
+        "submit": "Veranstaltung erstellen"
+      }
+    }
+  }
+}

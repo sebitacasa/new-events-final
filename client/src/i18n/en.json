@@ -1,0 +1,44 @@
+{
+  "translation": {
+    "nav": {
+      "home": "Home",
+      "cities": "Cities",
+      "genres": "Genres",
+      "months": "Months",
+      "search": "Search",
+      "options": "Options",
+      "login": "Log In",
+      "logout": "Log Out",
+      "profile": "Profile"
+    },
+    "createEvent": {
+      "title": "Create New Event",
+      "labels": {
+        "name": "Event Name",
+        "genre": "Musical Genre",
+        "stock": "Capacity (Stock)",
+        "description": "Description",
+        "date": "Date",
+        "time": "Time",
+        "price": "Price ($)",
+        "month": "Month (Text)",
+        "province": "Province",
+        "city": "City / Locality",
+        "venue": "Venue Name",
+        "address": "Exact Address",
+        "map": "Geolocation (Optional)",
+        "image": "Event Image"
+      },
+      "placeholders": {
+        "name": "Ex: Rock Fest 2024",
+        "selectGenre": "Select a genre",
+        "month": "Ex: January",
+        "selectProvince": "Select Province",
+        "searchMap": "Search on map..."
+      },
+      "buttons": {
+        "submit": "Create Event"
+      }
+    }
+  }
+}
