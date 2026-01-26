@@ -1,46 +1,79 @@
-.Container{
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background:  #1C2833  ; 
-    height: 100%;
-     
+/* OrderDetail.module.css */
+
+.Container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #D0D3D4;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)),
+    url('../images/pexels-thibault-trillet-167636.jpg');
 }
 
-.divImg{
-    margin-left: 100px; 
-    cursor: pointer;
+.contentWrapper {
+  flex: 1;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
-
-
-.img{
-    margin-top: 150px;
-    
-    border-style:double;
-    border-color: #1C2833 ;
-    border-width: 5px;
-    box-shadow: 0 0 3px rgb(190, 190, 190), 0 0 6px rgb(193, 193, 193),
-    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
-    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
+/* Tarjeta Principal */
+.orderCard {
+  background-color: #212529; /* Fondo Oscuro */
+  border: 2px solid #f0ad4e; /* Borde Dorado */
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 0 15px rgba(240, 173, 78, 0.2);
+  color: white;
 }
 
-.img:hover{
-    transform: scale(1.1);
-    transition: all 0.5s;
-    z-index: 1000;
-    position: relative; 
-    box-shadow: 0 0 3px rgb(251, 234, 0), 0 0 6px rgb(193, 193, 193),
-    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(235, 200, 3),
-    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
+.title {
+  color: #f0ad4e;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
 }
 
-
-
-.container{
-    background: #f0ad4e;
-    height: 100vh;
+/* Tabla Estilizada */
+.tableCustom {
+  color: #e0e0e0;
+  border-color: #444;
 }
 
+.tableCustom thead th {
+  background-color: #f0ad4e !important;
+  color: black !important;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 2px solid black;
+  text-align: center;
+  vertical-align: middle;
+}
 
+.tableCustom tbody td {
+  background-color: transparent !important;
+  color: white !important;
+  border-bottom: 1px solid #444;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.tableCustom tbody tr:hover td {
+  background-color: rgba(240, 173, 78, 0.1) !important; /* Brillo al pasar mouse */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .orderCard {
+    padding: 15px;
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+}
