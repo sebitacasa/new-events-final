@@ -9,31 +9,32 @@ import {
   Button,
   ToastContainer,
 } from "react-bootstrap";
-import NavTop from "./NavBars/Nav";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser, getUserByExternalId } from "../redux/actions/actions";
+
+import NavTop from "./NavBars/Nav";
 import EventosCreadosPorElUsuario from "./EventosCreadosPorElUsuario";
+import styles from "./UserProfile.module.css"; // Importamos los estilos nuevos
+import Loading from "./Loading";
 
 export function UserProfile() {
   const dispatch = useDispatch();
   const { user } = useAuth0();
-  const [validated, setValidated] = useState(false);
   const userLoged = useSelector((state) => state.userLoged);
+  
+  const [validated, setValidated] = useState(false);
   const [userData, setUserData] = useState({});
   const [showToast, setShowToast] = useState(false);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      console.log("formulario no valido");
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (form.checkValidity() === true) {
       dispatch(updateUser(userData, user.sub));
       dispatch(getUserByExternalId(user.sub));
       setShowToast(true);
-      event.preventDefault();
-      event.stopPropagation();
     }
     setValidated(true);
   };
@@ -45,11 +46,11 @@ export function UserProfile() {
     });
   };
 
-  console.log(userLoged);
-
   return (
-    <>
-      <ToastContainer className="p-3 py-5 mt-5" position={"bottom-end"}>
+    <div className={styles.containerGeneral}>
+      
+      {/* Toast de Notificación */}
+      <ToastContainer className="p-3" position="top-end" style={{zIndex: 9999, marginTop: '80px'}}>
         <Toast
           bg="success"
           onClose={() => setShowToast(false)}
@@ -58,145 +59,116 @@ export function UserProfile() {
           autohide
         >
           <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Success</strong>
+            <strong className="me-auto">Éxito</strong>
           </Toast.Header>
-          <Toast.Body>Profile Updated Successfully!</Toast.Body>
+          <Toast.Body className="text-white">¡Perfil actualizado correctamente!</Toast.Body>
         </Toast>
       </ToastContainer>
+
       <NavTop />
-      <div style={{ background: "#1C2833" }}>
-        <Container style={{ background: "" }} bg="dark" mt={5} mb={5}>
-          <Row>
-            <Col md={5} className="border-right">
-              <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+
+      <div className={styles.contentWrapper}>
+        <Container>
+          
+          {/* --- TARJETA DE PERFIL --- */}
+          <div className={styles.profileCard}>
+            <Row className="g-0"> {/* g-0 quita el espaciado entre columnas para que los bordes peguen */}
+              
+              {/* COLUMNA IZQUIERDA: FOTO */}
+              <Col md={4} className={styles.leftColumn}>
                 <img
-                  class="rounded-circle mt-5"
-                  width="150px"
                   src={userLoged?.picture}
-                  alt="profile"
+                  alt="Profile"
+                  className={styles.profileImage}
                 />
-                <span
-                  style={{
-                    color: "#f0ad4e",
-                    fontWeight: "bold",
-                    marginTop: "15px",
-                  }}
-                  class="font-weight-bold"
-                >{`${userLoged?.name} ${userLoged?.lastName}`}</span>
-                <span
-                  style={{
-                    color: "#f0ad4e",
-                    fontWeight: "bold",
-                    marginTop: "15px",
-                  }}
-                >
+                <span className={styles.userName}>
+                  {userLoged?.name} {userLoged?.lastName}
+                </span>
+                <span className={styles.userEmail}>
                   {userLoged?.email}
                 </span>
-                <span> </span>
-              </div>
-            </Col>
-            <Col style={{ background: "#1C2833" }} md={5} border-right>
-              <div class="p-1 py-5">
-                <div class="d-flex justify-content-center align-items-center mb-3">
-                  <h4
-                    style={{
-                      color: "#f0ad4e",
-                      fontWeight: "bold",
-                      fontSize: "25px",
-                    }}
-                    class="text-right"
-                  >
-                    Profile Settings
-                  </h4>
-                </div>
+              </Col>
+
+              {/* COLUMNA DERECHA: FORMULARIO */}
+              <Col md={8} className={styles.rightColumn}>
+                <h4 className={styles.formTitle}>Editar Perfil</h4>
 
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                   <Row className="mb-3">
-                    <Form.Group as={Col} controlId="validationCustom01">
-                      <Form.Label
-                        style={{ color: "#f0ad4e", fontWeight: "bold" }}
-                      >
-                        First name
-                      </Form.Label>
+                    <Form.Group as={Col} md="6" controlId="validationCustom01">
+                      <Form.Label className={styles.label}>Nombre</Form.Label>
                       <Form.Control
+                        required
                         type="text"
                         name="name"
-                        required
-                        placeholder="First name"
+                        placeholder="Nombre"
                         defaultValue={userLoged?.name}
                         onChange={handleChange}
+                        className={styles.inputDark}
                       />
                     </Form.Group>
-                    <Form.Group as={Col} controlId="validationCustom02">
-                      <Form.Label
-                        style={{ color: "#f0ad4e", fontWeight: "bold" }}
-                      >
-                        Last name
-                      </Form.Label>
+                    
+                    <Form.Group as={Col} md="6" controlId="validationCustom02">
+                      <Form.Label className={styles.label}>Apellido</Form.Label>
                       <Form.Control
-                        name="lastName"
                         required
                         type="text"
-                        placeholder="Last name"
+                        name="lastName"
+                        placeholder="Apellido"
                         defaultValue={userLoged?.lastName}
                         onChange={handleChange}
+                        className={styles.inputDark}
                       />
                     </Form.Group>
                   </Row>
+
                   <Row className="mb-3">
                     <Form.Group as={Col} md="6" controlId="validationCustom03">
-                      <Form.Label
-                        style={{ color: "#f0ad4e", fontWeight: "bold" }}
-                      >
-                        City
-                      </Form.Label>
+                      <Form.Label className={styles.label}>Ciudad</Form.Label>
                       <Form.Control
-                        name="city"
                         type="text"
-                        placeholder="City"
+                        name="city"
+                        placeholder="Ciudad"
                         defaultValue={userLoged?.city}
                         onChange={handleChange}
+                        className={styles.inputDark}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide a valid city.
-                      </Form.Control.Feedback>
                     </Form.Group>
+                    
                     <Form.Group as={Col} md="6" controlId="validationCustom04">
-                      <Form.Label
-                        style={{ color: "#f0ad4e", fontWeight: "bold" }}
-                      >
-                        Province
-                      </Form.Label>
+                      <Form.Label className={styles.label}>Provincia</Form.Label>
                       <Form.Control
-                        name="province"
                         type="text"
-                        placeholder="Province"
+                        name="province"
+                        placeholder="Provincia"
                         defaultValue={userLoged?.province}
                         onChange={handleChange}
+                        className={styles.inputDark}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        Please provide a valid state.
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Row>
-                  <Button type="submit" variant="warning">
-                    Save Profile
+
+                  <Button type="submit" className={styles.btnSave}>
+                    Guardar Cambios
                   </Button>
                 </Form>
-              </div>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          </div>
+
+          {/* --- SECCIÓN DE EVENTOS CREADOS --- */}
+          {/* Aquí podrías agregar un título si el componente no lo tiene */}
+          <div style={{marginTop: '50px'}}>
+             <h3 className="text-center text-warning mb-4 fw-bold text-uppercase">Tus Eventos Creados</h3>
+             <EventosCreadosPorElUsuario />
+          </div>
+
         </Container>
       </div>
-
-      <EventosCreadosPorElUsuario />
-    </>
+    </div>
   );
 }
 
-export default withAuthenticationRequired(UserProfile);
+export default withAuthenticationRequired(UserProfile, {
+  onRedirecting: () => <Loading />,
+});
