@@ -158,7 +158,10 @@ export function UserProfile() {
 
           {/* --- SECCIÓN DE EVENTOS CREADOS --- */}
           {/* Aquí podrías agregar un título si el componente no lo tiene */}
-        
+          <div style={{marginTop: '50px'}}>
+             <EventosCreadosPorElUsuario />
+          </div>
+
         </Container>
       </div>
     </div>
