@@ -2,69 +2,92 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import { FaTrash } from "react-icons/fa";
-import { Image, Form } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Image } from "react-bootstrap";
 
 export default function CartItem() {
-  const { addItem, removeItem, updateItemQuantity, items, totalUniqueItems } =
-    useCart();
-  console.log(items);
+  const { removeItem, updateItemQuantity, items } = useCart();
+
+  if (items.length === 0) {
+    return (
+      <tr>
+        <td colSpan="4" className="text-center py-4 text-white">
+          <h5>Tu carrito está vacío 😢</h5>
+          <Link to="/" style={{ color: "#f0ad4e" }}>Ir a buscar eventos</Link>
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <>
       {items.map((item) => {
         return (
-          <tr key={item.id}>
-            <td data-th="Tickets">
-              <div class="row">
-                <div class="col-md-3 text-left">
-                  <Link to={`/${item.id}`}>
-                    <Image
-                      style={{ width: "170px", height: "100px" }}
-                      src={item.image}
-                      fluid={true}
-                      thumbnail={true}
-                      alt="img"
-                      class="img-fluid d-none d-md-block rounded mb-2 shadow "
-                    />
-                  </Link>
+          <tr key={item.id} style={{ borderBottom: "1px solid #444" }}>
+            
+            {/* 1. PRODUCTO (Imagen + Nombre) */}
+            <td className="py-4">
+              <div className="d-flex align-items-center">
+                <Link to={`/${item.id}`}>
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    style={{
+                      width: "100px",
+                      height: "70px",
+                      objectFit: "cover",
+                      borderRadius: "5px",
+                      marginRight: "15px",
+                      border: "1px solid #f0ad4e"
+                    }}
+                  />
+                </Link>
+                <div>
+                  <h5 className="mb-0 text-white" style={{fontSize: '1rem', fontWeight: 'bold'}}>
+                    {item.name}
+                  </h5>
+                  <small className="text-muted">Entrada General</small>
                 </div>
+              </div>
+            </td>
 
-                <div class="col-md-9 text-left mt-sm-2">
-                  <h4>{item.name}</h4>
-                  <p style={{fontWeight: "bold"}} class="font-weight-light">Entrada General</p>
-                </div>
+            {/* 2. PRECIO */}
+            <td className="text-center py-4 text-white align-middle fw-bold">
+               ${item.itemTotal}
+            </td>
+
+            {/* 3. CANTIDAD */}
+            <td className="text-center py-4 align-middle">
+              <div className="d-flex flex-column align-items-center">
+                <input
+                    type="number"
+                    className="form-control text-center"
+                    style={{ 
+                        width: "70px", 
+                        background: "#1C2833", 
+                        color: "#f0ad4e",
+                        border: "1px solid #555"
+                    }}
+                    value={item.quantity}
+                    min="1"
+                    // max={item.stock} // Descomenta si traes el stock real
+                    onChange={(e) => {
+                        const val = parseInt(e.target.value);
+                        if(val > 0) updateItemQuantity(item.id, val);
+                    }}
+                />
+                {/* <small className="text-muted mt-1">{item.stock} disp.</small> */}
               </div>
             </td>
-            <td style={{fontWeight: "bold"}} data-th="Price">${item.itemTotal}</td>
-            <td data-th="Quantity">
-              <input
-                type="number"
-                class="form-control form-control-lg text-center"
-                defaultValue={item.quantity}
-                min="1"
-                max={item.stock}
-                value={item.quantity}
-                onChangeCapture={(e) => {
-                  updateItemQuantity(item.id, e.target.value);
-                }}
-              />
-              <Form.Text style={{ color: "black", fontWeight: "bold" }} className="text">
-                {item.stock} available
-              </Form.Text>
-            </td>
-            <td class="actions" data-th="">
-              <div style={{ verticalAlign: "center" }}>
-                <button
-                  onClick={() => {
-                    removeItem(item.id);
-                    console.log("remove item", item.id);
-                  }}
-                  style={{ color: "red" }}
-                  class="btn btn-white bg-#979a9a btn-md mb-2 item-align-end"
-                >
-                  <FaTrash />
-                </button>
-              </div>
+
+            {/* 4. ELIMINAR */}
+            <td className="text-center py-4 align-middle">
+              <button
+                onClick={() => removeItem(item.id)}
+                className="btn btn-outline-danger btn-sm"
+                title="Eliminar"
+              >
+                <FaTrash />
+              </button>
             </td>
           </tr>
         );
