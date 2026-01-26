@@ -4,15 +4,24 @@ import { useCart } from "react-use-cart";
 import { FaTrash } from "react-icons/fa";
 import { Image } from "react-bootstrap";
 
+// 1. IMPORTAR HOOK
+import { useTranslation } from "react-i18next";
+
 export default function CartItem() {
+  // 2. INICIALIZAR HOOK
+  const { t } = useTranslation();
+  
   const { removeItem, updateItemQuantity, items } = useCart();
 
   if (items.length === 0) {
     return (
       <tr>
         <td colSpan="4" className="text-center py-4 text-white">
-          <h5>Tu carrito está vacío 😢</h5>
-          <Link to="/" style={{ color: "#f0ad4e" }}>Ir a buscar eventos</Link>
+          {/* TRADUCCIÓN: Carrito Vacío */}
+          <h5>{t('cart.empty')}</h5>
+          <Link to="/" style={{ color: "#f0ad4e" }}>
+            {t('cart.goShop')}
+          </Link>
         </td>
       </tr>
     );
@@ -42,10 +51,12 @@ export default function CartItem() {
                   />
                 </Link>
                 <div>
+                  {/* El nombre del evento NO se traduce (viene de DB) */}
                   <h5 className="mb-0 text-white" style={{fontSize: '1rem', fontWeight: 'bold'}}>
                     {item.name}
                   </h5>
-                  <small className="text-muted">Entrada General</small>
+                  {/* TRADUCCIÓN: Tipo de entrada */}
+                  <small className="text-muted">{t('cart.generalTicket')}</small>
                 </div>
               </div>
             </td>
@@ -69,13 +80,11 @@ export default function CartItem() {
                     }}
                     value={item.quantity}
                     min="1"
-                    // max={item.stock} // Descomenta si traes el stock real
                     onChange={(e) => {
                         const val = parseInt(e.target.value);
                         if(val > 0) updateItemQuantity(item.id, val);
                     }}
                 />
-                {/* <small className="text-muted mt-1">{item.stock} disp.</small> */}
               </div>
             </td>
 
@@ -84,7 +93,7 @@ export default function CartItem() {
               <button
                 onClick={() => removeItem(item.id)}
                 className="btn btn-outline-danger btn-sm"
-                title="Eliminar"
+                title={t('cart.remove')} // Tooltip traducido
               >
                 <FaTrash />
               </button>

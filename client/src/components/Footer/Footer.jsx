@@ -1,4 +1,7 @@
 import React from "react";
+// 1. IMPORTAR HOOK
+import { useTranslation } from "react-i18next";
+
 import {
   Box,
   Container,
@@ -11,42 +14,67 @@ import {
 import ContactUsFinal from "../ContactUsFinal";
 
 const Footer = () => {
+  // 2. INICIALIZAR HOOK
+  const { t } = useTranslation();
+
   return (
     <Box>
       <Container>
         <Title>UnderEventsApp</Title>
         <Row>
           <Column>
-            <Heading>ACERCA DE NOSOTROS</Heading>
-            <FooterLink href="/aboutUs">Nuestra Historia</FooterLink>
-            <FooterLink href="/terms">Términos y Condiciones</FooterLink>
+            {/* Traducción: ACERCA DE NOSOTROS */}
+            <Heading>{t('footer.about')}</Heading>
+            
+            <FooterLink href="/aboutUs">
+                {t('footer.history')}
+            </FooterLink>
+            
+            <FooterLink href="/terms">
+                {t('footer.terms')}
+            </FooterLink>
           </Column>
 
           <Column>
-            <Heading>SERVICIOS</Heading>
-            <FooterLink href="/cart">Venta de Tickets</FooterLink>
-            <FooterLink href="/createEvent">Publicitar Artistas</FooterLink>
+            {/* Traducción: SERVICIOS */}
+            <Heading>{t('footer.services')}</Heading>
+            
+            <FooterLink href="/cart">
+                {t('footer.tickets')}
+            </FooterLink>
+            
+            <FooterLink href="/createEvent">
+                {t('footer.advertise')}
+            </FooterLink>
           </Column>
 
           <Column>
-            <Heading>CONTÁCTENOS</Heading>
+            {/* Traducción: CONTÁCTENOS */}
+            <Heading>{t('footer.contact')}</Heading>
             <div style={{ color: "white" }}>
-               {/* Asegúrate que ContactUsFinal no tenga márgenes raros */}
+               {/* NOTA: Si ContactUsFinal tiene texto adentro (ej: un botón "Enviar"), 
+                  recuerda abrir ese archivo y traducirlo también.
+               */}
                <ContactUsFinal />
             </div>
           </Column>
 
           <Column>
-            <Heading>REDES SOCIALES</Heading>
+            {/* Traducción: REDES SOCIALES */}
+            <Heading>{t('footer.socials')}</Heading>
+            
             <FooterLink href="https://facebook.com/" target="_blank">
               <i className="fab fa-facebook-f"></i> Facebook
             </FooterLink>
+            
             <FooterLink href="https://instagram.com/" target="_blank">
               <i className="fab fa-instagram"></i> Instagram
             </FooterLink>
+            
             <FooterLink href="https://twitter.com/" target="_blank">
               <i className="fab fa-twitter"></i> Twitter
             </FooterLink>
+            
             <FooterLink href="https://youtube.com/" target="_blank">
               <i className="fab fa-youtube"></i> Youtube
             </FooterLink>

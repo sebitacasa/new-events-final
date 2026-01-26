@@ -14,6 +14,36 @@
       "logout": "Log Out",
       "profile": "Profile"
     },
+    "footer": {
+      "about": "ABOUT US",
+      "history": "Our History",
+      "terms": "Terms & Conditions",
+      "services": "SERVICES",
+      "tickets": "Ticket Sales",
+      "advertise": "Advertise Artists",
+      "contact": "CONTACT US",
+      "socials": "SOCIAL MEDIA"
+    },
+    "cart": {
+      "title": "Your Cart",
+      "subtitle": "You have <1>{{count}}</1> selected events",
+      "summary": "Order Summary",
+      "table": {
+        "event": "Event",
+        "price": "Price",
+        "quantity": "Quantity"
+      },
+      "totalPay": "Total to Pay:",
+      "loginToPay": "Log in to Pay",
+      "payButton": "Pay Now",
+   
+      "empty": "Your cart is empty 😢",
+      "goShop": "Go find events",
+      "generalTicket": "General Admission",
+      "remove": "Remove"
+    
+    },
+    
     "home": {
       "noEventsTitle": "No events match your search",
       "noEventsBody": "Try changing filters or searching another date."

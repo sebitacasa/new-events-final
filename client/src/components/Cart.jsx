@@ -4,6 +4,9 @@ import { useCart } from "react-use-cart";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
+// 1. IMPORTAR HOOK Y TRANS (Para interpolación avanzada si se necesita, aunque t() suele bastar)
+import { useTranslation, Trans } from "react-i18next";
+
 import CartItem from "./CartItem";
 import NavTop from "./NavBars/Nav";
 import Footer from "./Footer/Footer";
@@ -12,12 +15,14 @@ import styles from "./Cart.module.css";
 import Carousely from "./Carousel";
 
 export default function Cart() {
+  // 2. INICIALIZAR HOOK
+  const { t } = useTranslation();
+  
   const navigate = useNavigate();
   const { user, isAuthenticated, loginWithPopup } = useAuth0();
   const { items, cartTotal } = useCart();
   const [totalItems, setTotalItems] = useState(0);
 
-  // Calcular total de items cada vez que cambia el carrito
   useEffect(() => {
     const count = items.reduce((prev, next) => prev + Number(next.quantity), 0);
     setTotalItems(count);
@@ -35,9 +40,17 @@ export default function Cart() {
               {/* --- TARJETA PRINCIPAL --- */}
               <div className={styles.cartCard}>
                 <div className="text-center">
-                    <h2 className={styles.cartTitle}>Tu Carrito</h2>
+                    {/* TÍTULO TRADUCIDO */}
+                    <h2 className={styles.cartTitle}>{t('cart.title')}</h2>
+                    
+                    {/* SUBTÍTULO CON NÚMERO VARIABLE */}
                     <p className={styles.cartSubtitle}>
-                        Tienes <span className="text-warning fw-bold">{totalItems}</span> eventos seleccionados
+                        {/* Trans permite mezclar texto traducido con HTML (span).
+                           Busca la clave "cart.subtitle" y reemplaza {{count}} por totalItems.
+                        */}
+                        <Trans i18nKey="cart.subtitle" count={totalItems}>
+                            Tienes <span className="text-warning fw-bold">{{count: totalItems}}</span> eventos seleccionados
+                        </Trans>
                     </p>
                 </div>
 
@@ -46,9 +59,16 @@ export default function Cart() {
                   <Table borderless responsive="sm">
                     <thead>
                       <tr>
-                        <th className={`${styles.tableHeader} ${styles.textLeft}`} style={{width: '50%'}}>Evento</th>
-                        <th className={styles.tableHeader} style={{width: '20%'}}>Precio</th>
-                        <th className={styles.tableHeader} style={{width: '20%'}}>Cantidad</th>
+                        {/* ENCABEZADOS TRADUCIDOS */}
+                        <th className={`${styles.tableHeader} ${styles.textLeft}`} style={{width: '50%'}}>
+                            {t('cart.table.event')}
+                        </th>
+                        <th className={styles.tableHeader} style={{width: '20%'}}>
+                            {t('cart.table.price')}
+                        </th>
+                        <th className={styles.tableHeader} style={{width: '20%'}}>
+                            {t('cart.table.quantity')}
+                        </th>
                         <th className={styles.tableHeader} style={{width: '10%'}}></th>
                       </tr>
                     </thead>
@@ -63,7 +83,8 @@ export default function Cart() {
                     <Row className="mt-4">
                         <Col md={{ span: 6, offset: 6 }}>
                             <div className={styles.summaryContainer}>
-                                <span className={styles.totalLabel}>Total a Pagar:</span>
+                                {/* TOTAL A PAGAR */}
+                                <span className={styles.totalLabel}>{t('cart.totalPay')}</span>
                                 <span className={styles.totalPrice}>${cartTotal}</span>
                                 
                                 <div className="mt-3 w-100 d-flex justify-content-end">
@@ -72,7 +93,8 @@ export default function Cart() {
                                             className={styles.btnLogin}
                                             onClick={() => loginWithPopup()}
                                         >
-                                            Inicia Sesión para Pagar
+                                            {/* BOTÓN LOGIN */}
+                                            {t('cart.loginToPay')}
                                         </Button>
                                     ) : (
                                         <div style={{width: '100%'}}>
@@ -99,7 +121,6 @@ export default function Cart() {
             </Col>
           </Row>
 
-          {/* Carrusel opcional abajo */}
           <div className="mt-5">
              <Carousely />
           </div>
