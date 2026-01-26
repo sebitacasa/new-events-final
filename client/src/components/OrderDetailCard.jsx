@@ -40,33 +40,6 @@ export default function OrderDetail() {
     });
   });
 
-  // --- ESTILOS EN LÍNEA (INLINE STYLES) ---
-  const containerStyle = {
-    backgroundColor: "#f0ad4e", // Fondo Amarillo
-    borderRadius: "10px",
-    padding: "20px",
-    border: "3px solid #d8a602", // Borde un poco más oscuro
-    boxShadow: "0 0 15px rgba(0,0,0,0.5)"
-  };
-
-  const headerStyle = {
-    backgroundColor: "black",
-    color: "#f0ad4e", // Letra Amarilla
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    textAlign: "center",
-    border: "none"
-  };
-
-  const cellStyle = {
-    backgroundColor: "#f0ad4e", // Fondo Amarillo
-    color: "black",             // Letra Negra
-    fontWeight: "600",
-    textAlign: "center",
-    borderBottom: "1px solid rgba(0,0,0,0.2)", // Línea separadora sutil
-    verticalAlign: "middle"
-  };
-
   return (
     <div className={styles.Container}>
       <NavTop />
@@ -76,52 +49,96 @@ export default function OrderDetail() {
           <Row className="justify-content-center">
             <Col lg={12}>
               
-              <h2 className={styles.title}>Detalle de la Orden</h2>
+              {/* --- TÍTULO --- */}
+              <h2 
+                style={{
+                  color: "#f0ad4e",
+                  textTransform: "uppercase",
+                  fontWeight: "800",
+                  textAlign: "center",
+                  marginBottom: "30px",
+                  letterSpacing: "1px",
+                  textShadow: "3px 3px 0px black",
+                  fontSize: "2.5rem"
+                }}
+              >
+                Detalle de la Orden
+              </h2>
 
-              {/* CONTENEDOR AMARILLO (Inline Style) */}
-              <div style={containerStyle}>
+              {/* --- CONTENEDOR DE LA TARJETA (AMARILLO) --- */}
+              <div 
+                style={{
+                  backgroundColor: "#f0ad4e",      // Fondo Amarillo
+                  borderRadius: "15px",            // Bordes Redondeados
+                  padding: "25px",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                  border: "2px solid #d8a602",
+                  overflow: "hidden"
+                }}
+              >
                 
-                {/* Tabla sin clases de Bootstrap que molesten */}
+                {/* Tabla sin bordes de Bootstrap */}
                 <Table responsive borderless>
                   <thead>
                     <tr>
-                      <th style={headerStyle}>#</th>
-                      <th style={headerStyle}>ID Ticket</th>
-                      <th style={headerStyle}>Evento</th>
-                      <th style={headerStyle}>Ciudad</th>
-                      <th style={headerStyle}>Lugar</th>
-                      <th style={headerStyle}>Fecha</th>
-                      <th style={headerStyle}>Hora</th>
-                      <th style={headerStyle}>Costo</th>
-                      <th style={headerStyle}>ID Usuario</th>
+                      {/* Encabezados Negros con letra Dorada */}
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px", borderTopLeftRadius: "10px"}}>#</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px"}}>ID Ticket</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px"}}>Evento</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px"}}>Ciudad</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px"}}>Lugar</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px"}}>Fecha</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px"}}>Hora</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px"}}>Costo</th>
+                      <th style={{backgroundColor: "black", color: "#f0ad4e", textAlign: "center", padding: "15px", borderTopRightRadius: "10px"}}>ID Usuario</th>
                     </tr>
                   </thead>
                   <tbody>
                     {rows.length > 0 ? (
                       rows.map((row, index) => (
                         <tr key={row.uniqueKey || index}>
-                          <td style={cellStyle}>{index + 1}</td>
-                          <td style={cellStyle}>
+                          
+                          {/* Celdas Amarillas con letra Negra */}
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)", fontWeight: "600"}}>
+                            {index + 1}
+                          </td>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)"}}>
                             <strong>{row.ticketId.toString().slice(0, 8)}...</strong>
                           </td>
-                          <td style={{...cellStyle, textTransform: 'uppercase', fontWeight:'800'}}>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)", textTransform: "uppercase", fontWeight: "800"}}>
                             {row.eventName}
                           </td>
-                          <td style={cellStyle}>{row.city}</td>
-                          <td style={cellStyle}>{row.place}</td>
-                          <td style={cellStyle}>{row.date}</td>
-                          <td style={cellStyle}>{row.time}</td>
-                          <td style={{...cellStyle, fontSize:'1.1rem', fontWeight:'bold'}}>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)"}}>
+                            {row.city}
+                          </td>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)"}}>
+                            {row.place}
+                          </td>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)"}}>
+                            {row.date}
+                          </td>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)"}}>
+                            {row.time}
+                          </td>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)", fontSize: "1.2rem", fontWeight: "bold"}}>
                             ${row.cost}
                           </td>
-                          <td style={{...cellStyle, fontSize:'0.85rem', wordBreak: 'break-all'}}>
+                          
+                          <td style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", verticalAlign: "middle", borderBottom: "1px solid rgba(0,0,0,0.1)", fontSize: "0.8rem", wordBreak: "break-all"}}>
                             {row.ownerId}
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="9" style={{...cellStyle, padding: '30px'}}>
+                        <td colSpan="9" style={{backgroundColor: "#f0ad4e", color: "black", textAlign: "center", padding: "40px"}}>
                           <h5>No hay órdenes registradas</h5>
                         </td>
                       </tr>
