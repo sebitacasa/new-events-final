@@ -10,7 +10,7 @@ import Carousely from "./Carousel";
 export default function OrderDetail() {
   const dispatch = useDispatch();
 
-  // 1. Traer datos con seguridad
+  // 1. Traer datos
   const allOrders = useSelector((state) => state.allOrders?.orders || []);
   const allEvents = useSelector((state) => state.eventosBack || []);
 
@@ -19,12 +19,11 @@ export default function OrderDetail() {
     dispatch(getAllEvent());
   }, [dispatch]);
 
-  // 2. Mapa de eventos para acceso rápido
+  // 2. Mapa de eventos
   const eventMap = new Map(allEvents.map((e) => [e.id, e]));
 
-  // 3. Preparar las filas (Lógica segura para Vercel)
+  // 3. Aplanar datos (FlatMap)
   const rows = allOrders.flatMap((order) => {
-    // Si la orden no tiene tickets, ignoramos
     if (!order.Tickets || order.Tickets.length === 0) return [];
     
     // Obtenemos el dueño de la orden
@@ -33,7 +32,7 @@ export default function OrderDetail() {
     return order.Tickets.map((ticket) => {
       const eventData = eventMap.get(ticket.EventId);
       return {
-        uniqueKey: ticket.id, // Clave única para React
+        uniqueKey: ticket.id,
         ticketId: ticket.id,
         eventName: eventData?.title || "Evento no encontrado",
         city: eventData?.city || "-",
@@ -58,9 +57,11 @@ export default function OrderDetail() {
               {/* Título Amarillo */}
               <h2 className={styles.title}>Detalle de la Orden</h2>
 
-              {/* Tarjeta Amarilla con Letras Negras */}
+              {/* CONTENEDOR AMARILLO */}
               <div className={styles.yellowCard}>
-                <Table responsive hover className={styles.tableCustom}>
+                
+                {/* 🔥 IMPORTANTE: Aquí quité "striped bordered hover" para que no sea blanca */}
+                <Table responsive className={styles.tableCustom}>
                   <thead>
                     <tr>
                       <th>#</th>

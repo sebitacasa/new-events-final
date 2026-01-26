@@ -21,53 +21,55 @@
   padding-bottom: 40px;
 }
 
-/* TÍTULO AMARILLO */
 .title {
-  color: #f0ad4e; /* Amarillo */
+  color: #f0ad4e;
   text-transform: uppercase;
   font-weight: 800;
   text-align: center;
   margin-bottom: 30px;
-  letter-spacing: 1px;
-  text-shadow: 2px 2px 4px black; /* Sombra para que resalte del fondo */
+  text-shadow: 2px 2px 4px black;
 }
 
-/* --- CUADRO PRINCIPAL (AMARILLO) --- */
+/* --- TARJETA AMARILLA --- */
 .yellowCard {
-  background-color: #f0ad4e; /* 🔥 FONDO AMARILLO */
-  color: black;              /* 🔥 LETRAS NEGRAS */
-  border: 2px solid #d8a602; /* Borde un poco más oscuro */
+  background-color: #f0ad4e !important; /* FORZAR AMARILLO */
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 0 20px rgba(240, 173, 78, 0.3);
-  overflow-x: auto; /* Para que la tabla no rompa en celular */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  overflow-x: auto;
+  border: 2px solid #d8a602;
 }
 
-/* --- ESTILOS DE LA TABLA DENTRO DEL AMARILLO --- */
+/* --- TABLA --- */
+/* Quitamos cualquier fondo blanco de la tabla */
 .tableCustom {
-  color: black !important;
-  border-color: black !important;
+  margin-bottom: 0;
+  background-color: transparent !important;
 }
 
+/* Encabezados (Negros con letra amarilla) */
 .tableCustom thead th {
-  background-color: black !important; /* Encabezado Negro */
-  color: #f0ad4e !important;          /* Letra Amarilla */
+  background-color: #111 !important;
+  color: #f0ad4e !important;
+  border-bottom: 2px solid black !important;
+  text-align: center;
+  vertical-align: middle;
   font-weight: 900;
   text-transform: uppercase;
-  border-bottom: 2px solid black;
-  text-align: center;
-  vertical-align: middle;
 }
 
+/* Celdas (Letras negras sobre el fondo amarillo del contenedor) */
 .tableCustom tbody td {
-  background-color: transparent !important;
-  color: black !important;            /* Datos en Negro */
-  border-bottom: 1px solid rgba(0,0,0,0.2) !important;
-  vertical-align: middle;
+  background-color: transparent !important; /* Transparente para ver el amarillo de fondo */
+  color: black !important;
+  border-bottom: 1px solid rgba(0,0,0,0.3) !important; /* Línea separadora sutil */
   text-align: center;
+  vertical-align: middle;
   font-weight: 600;
 }
 
+/* Efecto Hover (Oscurece un poco al pasar el mouse) */
 .tableCustom tbody tr:hover td {
-  background-color: rgba(0, 0, 0, 0.05) !important; /* Sutil oscurecimiento al pasar mouse */
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  cursor: default;
 }
