@@ -10,7 +10,6 @@ import Carousely from "./Carousel";
 export default function OrderDetail() {
   const dispatch = useDispatch();
 
-  // 1. Traer datos
   const allOrders = useSelector((state) => state.allOrders?.orders || []);
   const allEvents = useSelector((state) => state.eventosBack || []);
 
@@ -19,14 +18,10 @@ export default function OrderDetail() {
     dispatch(getAllEvent());
   }, [dispatch]);
 
-  // 2. Mapa de eventos
   const eventMap = new Map(allEvents.map((e) => [e.id, e]));
 
-  // 3. Aplanar datos (FlatMap)
   const rows = allOrders.flatMap((order) => {
     if (!order.Tickets || order.Tickets.length === 0) return [];
-    
-    // Obtenemos el dueño de la orden
     const ownerId = order.userId || "Sin usuario";
 
     return order.Tickets.map((ticket) => {
@@ -45,6 +40,33 @@ export default function OrderDetail() {
     });
   });
 
+  // --- ESTILOS EN LÍNEA (INLINE STYLES) ---
+  const containerStyle = {
+    backgroundColor: "#f0ad4e", // Fondo Amarillo
+    borderRadius: "10px",
+    padding: "20px",
+    border: "3px solid #d8a602", // Borde un poco más oscuro
+    boxShadow: "0 0 15px rgba(0,0,0,0.5)"
+  };
+
+  const headerStyle = {
+    backgroundColor: "black",
+    color: "#f0ad4e", // Letra Amarilla
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    textAlign: "center",
+    border: "none"
+  };
+
+  const cellStyle = {
+    backgroundColor: "#f0ad4e", // Fondo Amarillo
+    color: "black",             // Letra Negra
+    fontWeight: "600",
+    textAlign: "center",
+    borderBottom: "1px solid rgba(0,0,0,0.2)", // Línea separadora sutil
+    verticalAlign: "middle"
+  };
+
   return (
     <div className={styles.Container}>
       <NavTop />
@@ -54,47 +76,52 @@ export default function OrderDetail() {
           <Row className="justify-content-center">
             <Col lg={12}>
               
-              {/* Título Amarillo */}
               <h2 className={styles.title}>Detalle de la Orden</h2>
 
-              {/* CONTENEDOR AMARILLO */}
-              <div className={styles.yellowCard}>
+              {/* CONTENEDOR AMARILLO (Inline Style) */}
+              <div style={containerStyle}>
                 
-                {/* 🔥 IMPORTANTE: Aquí quité "striped bordered hover" para que no sea blanca */}
-                <Table responsive className={styles.tableCustom}>
+                {/* Tabla sin clases de Bootstrap que molesten */}
+                <Table responsive borderless>
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>ID Ticket</th>
-                      <th>Evento</th>
-                      <th>Ciudad</th>
-                      <th>Lugar</th>
-                      <th>Fecha</th>
-                      <th>Hora</th>
-                      <th>Costo</th>
-                      <th>ID Usuario</th>
+                      <th style={headerStyle}>#</th>
+                      <th style={headerStyle}>ID Ticket</th>
+                      <th style={headerStyle}>Evento</th>
+                      <th style={headerStyle}>Ciudad</th>
+                      <th style={headerStyle}>Lugar</th>
+                      <th style={headerStyle}>Fecha</th>
+                      <th style={headerStyle}>Hora</th>
+                      <th style={headerStyle}>Costo</th>
+                      <th style={headerStyle}>ID Usuario</th>
                     </tr>
                   </thead>
                   <tbody>
                     {rows.length > 0 ? (
                       rows.map((row, index) => (
                         <tr key={row.uniqueKey || index}>
-                          <td>{index + 1}</td>
-                          <td>
+                          <td style={cellStyle}>{index + 1}</td>
+                          <td style={cellStyle}>
                             <strong>{row.ticketId.toString().slice(0, 8)}...</strong>
                           </td>
-                          <td style={{fontWeight: 'bold', textTransform: 'uppercase'}}>{row.eventName}</td>
-                          <td>{row.city}</td>
-                          <td>{row.place}</td>
-                          <td>{row.date}</td>
-                          <td>{row.time}</td>
-                          <td>${row.cost}</td>
-                          <td style={{fontSize: '0.85rem'}}>{row.ownerId}</td>
+                          <td style={{...cellStyle, textTransform: 'uppercase', fontWeight:'800'}}>
+                            {row.eventName}
+                          </td>
+                          <td style={cellStyle}>{row.city}</td>
+                          <td style={cellStyle}>{row.place}</td>
+                          <td style={cellStyle}>{row.date}</td>
+                          <td style={cellStyle}>{row.time}</td>
+                          <td style={{...cellStyle, fontSize:'1.1rem', fontWeight:'bold'}}>
+                            ${row.cost}
+                          </td>
+                          <td style={{...cellStyle, fontSize:'0.85rem', wordBreak: 'break-all'}}>
+                            {row.ownerId}
+                          </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="9" className="text-center py-4">
+                        <td colSpan="9" style={{...cellStyle, padding: '30px'}}>
                           <h5>No hay órdenes registradas</h5>
                         </td>
                       </tr>
