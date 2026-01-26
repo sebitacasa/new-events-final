@@ -1,25 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useCart } from "react-use-cart";
-import { FaTrash } from "react-icons/fa";
-import { Image } from "react-bootstrap";
-
-// 1. IMPORTAR HOOK
-import { useTranslation } from "react-i18next";
+// ... imports
 
 export default function CartItem() {
-  // 2. INICIALIZAR HOOK
   const { t } = useTranslation();
-  
-  const { removeItem, updateItemQuantity, items } = useCart();
+  // ... hooks
 
   if (items.length === 0) {
     return (
       <tr>
-        <td colSpan="4" className="text-center py-4 text-white">
-          {/* TRADUCCIÓN: Carrito Vacío */}
+        {/* Cambié text-white por text-dark para que se vea en el fondo amarillo */}
+        <td colSpan="4" className="text-center py-4 text-dark">
           <h5>{t('cart.empty')}</h5>
-          <Link to="/" style={{ color: "#f0ad4e" }}>
+          <Link to="/" className="btn btn-dark mt-2" style={{ color: "#f0ad4e" }}>
             {t('cart.goShop')}
           </Link>
         </td>
@@ -31,9 +22,9 @@ export default function CartItem() {
     <>
       {items.map((item) => {
         return (
-          <tr key={item.id} style={{ borderBottom: "1px solid #444" }}>
+          <tr key={item.id} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}> {/* Borde sutil negro */}
             
-            {/* 1. PRODUCTO (Imagen + Nombre) */}
+            {/* 1. PRODUCTO */}
             <td className="py-4">
               <div className="d-flex align-items-center">
                 <Link to={`/${item.id}`}>
@@ -44,25 +35,24 @@ export default function CartItem() {
                       width: "100px",
                       height: "70px",
                       objectFit: "cover",
-                      borderRadius: "5px",
+                      borderRadius: "10px", // Bordes redondeados en la foto también
                       marginRight: "15px",
-                      border: "1px solid #f0ad4e"
+                      border: "2px solid #212529" // Borde negro a la foto
                     }}
                   />
                 </Link>
                 <div>
-                  {/* El nombre del evento NO se traduce (viene de DB) */}
-                  <h5 className="mb-0 text-white" style={{fontSize: '1rem', fontWeight: 'bold'}}>
+                  {/* QUITE 'text-white' y puse color negro explícito */}
+                  <h5 className="mb-0" style={{fontSize: '1rem', fontWeight: 'bold', color: '#212529'}}>
                     {item.name}
                   </h5>
-                  {/* TRADUCCIÓN: Tipo de entrada */}
-                  <small className="text-muted">{t('cart.generalTicket')}</small>
+                  <small className="text-muted" style={{color: '#444 !important'}}>{t('cart.generalTicket')}</small>
                 </div>
               </div>
             </td>
 
-            {/* 2. PRECIO */}
-            <td className="text-center py-4 text-white align-middle fw-bold">
+            {/* 2. PRECIO (Texto negro) */}
+            <td className="text-center py-4 align-middle fw-bold" style={{color: '#212529', fontSize: '1.2rem'}}>
                ${item.itemTotal}
             </td>
 
@@ -72,11 +62,13 @@ export default function CartItem() {
                 <input
                     type="number"
                     className="form-control text-center"
+                    // Input oscuro para contraste elegante
                     style={{ 
                         width: "70px", 
-                        background: "#1C2833", 
+                        background: "#212529", 
                         color: "#f0ad4e",
-                        border: "1px solid #555"
+                        border: "1px solid #555",
+                        fontWeight: 'bold'
                     }}
                     value={item.quantity}
                     min="1"
@@ -92,10 +84,11 @@ export default function CartItem() {
             <td className="text-center py-4 align-middle">
               <button
                 onClick={() => removeItem(item.id)}
-                className="btn btn-outline-danger btn-sm"
-                title={t('cart.remove')} // Tooltip traducido
+                className="btn btn-danger btn-sm" // Botón rojo sólido se ve mejor aquí
+                title={t('cart.remove')}
+                style={{borderRadius: '50%', width: '35px', height: '35px', padding: 0, display:'flex', alignItems:'center', justifyContent:'center'}}
               >
-                <FaTrash />
+                <FaTrash color="white"/>
               </button>
             </td>
           </tr>
