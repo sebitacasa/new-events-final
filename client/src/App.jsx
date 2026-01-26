@@ -25,6 +25,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import StripeWrapper from "./components/StripeWrapper";
 
 import PaymentForm from "./components/Payment";
+import './i18n/i18n';
 
 const stripePromise = loadStripe("pk_test_51RKdqp2fTJ6qDYdqcOOqhecPicoUO3MqH20KwTkQgMjMMNpF7oiFnLMQ6rM5FuOG9D5ZvWnCN6nBbevCuQpwTjJ100hXDFI0SZ");
 
