@@ -10,7 +10,7 @@ import history from "./utils/history.js";
 import { getConfig } from "./config.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CartProvider } from "react-use-cart";
-import './i18n/i18n';
+import './i18n/i18n.js';
 
 
 const onRedirectCallback = (appState) => {
