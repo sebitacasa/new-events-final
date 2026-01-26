@@ -1,57 +1,46 @@
-/* OrderCard.module.css */
-
-.card {
-  background-color: #212529 !important; /* Fondo Oscuro */
-  border: 2px solid #f0ad4e !important; /* Borde Dorado */
-  border-radius: 10px !important;
-  width: 100%;
-  max-width: 25rem; /* Un poco más ancha que 18rem */
-  box-shadow: 0 0 10px rgba(240, 173, 78, 0.3); /* Brillo dorado */
-  margin-bottom: 20px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
+.Container{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background:  #1C2833  ; 
+    height: 100%;
+     
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(240, 173, 78, 0.5);
+.divImg{
+    margin-left: 100px; 
+    cursor: pointer;
 }
 
-.header {
-  background-color: #f0ad4e !important;
-  color: black !important;
-  font-weight: 800;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 1.1rem;
-  padding: 10px;
+
+
+.img{
+    margin-top: 150px;
+    
+    border-style:double;
+    border-color: #1C2833 ;
+    border-width: 5px;
+    box-shadow: 0 0 3px rgb(190, 190, 190), 0 0 6px rgb(193, 193, 193),
+    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
+    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
 }
 
-/* Items de la lista */
-.listItem {
-  background-color: transparent !important;
-  border-bottom: 1px solid rgba(240, 173, 78, 0.3) !important;
-  color: white !important;
-  padding: 15px !important;
-  display: flex;
-  flex-direction: column;
+.img:hover{
+    transform: scale(1.1);
+    transition: all 0.5s;
+    z-index: 1000;
+    position: relative; 
+    box-shadow: 0 0 3px rgb(251, 234, 0), 0 0 6px rgb(193, 193, 193),
+    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(235, 200, 3),
+    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
 }
 
-.listItem:last-child {
-  border-bottom: none !important;
+
+
+.container{
+    background: #f0ad4e;
+    height: 100vh;
 }
 
-/* Etiquetas (Email:, ID:) */
-.label {
-  color: #f0ad4e;
-  font-size: 0.9rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-  text-transform: uppercase;
-}
 
-.value {
-  font-size: 1rem;
-  word-break: break-all; /* Para que el ID o Email largo no rompa la tarjeta */
-}
