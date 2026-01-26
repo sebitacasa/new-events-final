@@ -1,10 +1,9 @@
 {
   "translation": {
     "common": {
-      "error": "Error" },
+      "error": "Error"
+    },
     "nav": {
-        "noEventsTitle": "No events match your search",
-      "noEventsBody": "Try changing filters or searching another date.",
       "home": "Home",
       "cities": "Cities",
       "genres": "Genres",
@@ -14,6 +13,24 @@
       "login": "Log In",
       "logout": "Log Out",
       "profile": "Profile"
+    },
+    "home": {
+      "noEventsTitle": "No events match your search",
+      "noEventsBody": "Try changing filters or searching another date."
+    },
+    "monthsList": {
+      "enero": "January",
+      "febrero": "February",
+      "marzo": "March",
+      "abril": "April",
+      "mayo": "May",
+      "junio": "June",
+      "julio": "July",
+      "agosto": "August",
+      "septiembre": "September",
+      "octubre": "October",
+      "noviembre": "November",
+      "diciembre": "December"
     },
     "createEvent": {
       "title": "Create New Event",
@@ -42,7 +59,13 @@
       },
       "buttons": {
         "submit": "Create Event"
+      },
+      "alerts": {
+        "success": "Event created successfully!"
       }
+    },
+    "cart": {
+      "summary": "Order Summary"
     }
   }
 }

@@ -14,6 +14,10 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 
+// --- 1. IMPORTAR TRADUCCIÓN Y EL SWITCHER DE BANDERAS ---
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../LanguageSwitcher";
+
 import {
   getAllEvent,
   byFilterDate,
@@ -25,11 +29,14 @@ import styles from "./Nav.module.css";
 import ShoppingCart from "../shopCart";
 
 export default function NavTop() {
+  // --- 2. INICIALIZAR EL HOOK DE TRADUCCIÓN ---
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // --- 1. Lógica de Auth0 y Usuario ---
-  const { user, isAuthenticated, logout, getAccessTokenSilently } = useAuth0();
+  // --- 3. Auth0 (Agregué loginWithPopup para el botón de Login) ---
+  const { user, isAuthenticated, logout, getAccessTokenSilently, loginWithPopup } = useAuth0();
   const userLoged = useSelector((state) => state.userLoged);
 
   useEffect(() => {
@@ -52,35 +59,34 @@ export default function NavTop() {
     }
   }, [isAuthenticated, dispatch, user, getAccessTokenSilently]);
 
-  // --- 2. Lógica de Filtros ---
+  // --- 4. Filtros ---
   const cities = useSelector((state) => state.allCities);
   const generos = useSelector((state) => state.allGeneros);
 
   const [filterCity, setFilterCity] = useState("");
   const [filterGenero, setFilterGenero] = useState("");
 
-  // ESTE ES EL EFECTO QUE LIMPIA LA CACHÉ DEL CALENDARIO VIEJO
+  // Array de meses original (lo que espera el Backend)
+  const mesesOriginales = [
+    "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+    "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+  ];
+
   useEffect(() => {
-    // 1. Cargar las listas necesarias del backend
     dispatch(byFilterDate());
     dispatch(getAllCities());
     dispatch(getAllGeneros());
     
-    // 2. Recuperar qué filtro estaba usando el usuario en su última visita
     const filtroGuardado = localStorage.getItem("filtro");
     const nombre = localStorage.getItem("nombre");
     const genero = localStorage.getItem("genero");
     const mes = localStorage.getItem("mes");
     
-    // 3. Lógica de "Limpieza de Fantasmas"
-    // Si el filtro guardado NO es uno de los válidos actuales (ciudad, genero, mes),
-    // asumimos que es basura del calendario viejo y reseteamos todo.
+    // Limpieza de filtros viejos
     if (filtroGuardado !== "ciudad" && filtroGuardado !== "genero" && filtroGuardado !== "mes") {
-        console.log("🧹 Limpiando filtros viejos/inválidos...");
         localStorage.setItem("filtro", "sin filtro");
-        dispatch(getAllEvent()); // Trae todos los eventos por defecto
+        dispatch(getAllEvent());
     } 
-    // 4. Si es un filtro válido, lo aplicamos
     else if (filtroGuardado === "ciudad" && nombre) {
         setFilterCity(nombre);
         dispatch(Action.getState(nombre));
@@ -90,10 +96,8 @@ export default function NavTop() {
     } else if (filtroGuardado === "mes" && mes) {
         dispatch(Action.byFilterDate(mes));
     }
-
   }, [dispatch]);
 
-  // --- Handlers de Filtros ---
   const handleReset = () => {
     dispatch(getAllEvent());
     localStorage.setItem("filtro", "sin filtro");
@@ -137,74 +141,77 @@ export default function NavTop() {
       <Navbar collapseOnSelect expand="xl" bg="dark" variant="dark">
         <Container fluid>
           
-          {/* LOGO */}
           <Navbar.Brand onClick={handleReset} className={styles.brand}>
             UnderEventsApp
           </Navbar.Brand>
 
-          {/* TOGGLER (Hamburguesa para Móvil) */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-          {/* CONTENIDO COLAPSIBLE */}
           <Navbar.Collapse id="responsive-navbar-nav">
             
-            {/* GRUPO 1: FILTROS (Al medio en PC, Apilados en Móvil) */}
             <Nav className="me-auto d-flex align-items-center w-100 justify-content-center">
               <div className={styles.filtersContainer}>
                 
-                {/* Botón Reset */}
+                {/* Botón Ver Todo / Home */}
                 <Nav.Link onClick={handleReset} className="text-warning fw-bold">
-                  Ver Todo
+                  {t('nav.home')} 
                 </Nav.Link>
 
-                {/* Select Ciudad */}
+                {/* Filtro Ciudades */}
                 <Form.Select className={styles.navSelect} value={filterCity} onChange={handleStates}>
-                  <option value="All">Ciudades</option>
+                  <option value="All">{t('nav.cities')}</option>
                   {cities?.map((c) => <option key={c} value={c}>{c}</option>)}
                 </Form.Select>
 
-                {/* Select Genero */}
+                {/* Filtro Géneros */}
                 <Form.Select className={styles.navSelect} value={filterGenero} onChange={handleEventType}>
-                  <option value="All">Géneros</option>
+                  <option value="All">{t('nav.genres')}</option>
                   {generos?.map((g) => <option key={g} value={g}>{g}</option>)}
                 </Form.Select>
 
-                {/* Select Mes */}
+                {/* Filtro Meses (TRADUCIDO PERO FUNCIONAL) */}
                 <Form.Select className={styles.navSelect} onChange={handleDate}>
-                  <option value="All">Meses</option>
-                  {["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"].map(m => (
-                      <option key={m} value={m}>{m} 2022</option>
+                  <option value="All">{t('nav.months')}</option>
+                  {mesesOriginales.map(m => (
+                      <option key={m} value={m}>
+                        {/* Muestra la traducción basada en la clave monthsList.enero, etc. */}
+                        {t(`monthsList.${m.toLowerCase()}`)} 2022
+                      </option>
                   ))}
                 </Form.Select>
 
-                {/* Searchbar */}
                 <div style={{minWidth: '200px'}}>
-                   <Searchbar />
+                    <Searchbar />
                 </div>
               </div>
             </Nav>
 
-            {/* GRUPO 2: USUARIO Y CARRITO (A la derecha) */}
             <Nav className={`d-flex align-items-center ${styles.userSection}`}>
               
+              {/* --- 5. SWITCHER DE BANDERAS --- */}
+              <LanguageSwitcher />
+
               {/* Menú Opciones */}
               <NavDropdown 
-                title={<span style={{color:'#f0ad4e', fontWeight:'bold'}}>Opciones</span>} 
+                title={<span style={{color:'#f0ad4e', fontWeight:'bold'}}>{t('nav.options')}</span>} 
                 id="basic-nav-dropdown" 
                 menuVariant="dark"
                 className="me-3"
               >
-                <NavDropdown.Item onClick={() => handleMenuClick("createEvent")}>Crear Evento</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => handleMenuClick("orderDetail")}>Mis Órdenes</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleMenuClick("createEvent")}>
+                    {t('createEvent.title')}
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleMenuClick("orderDetail")}>
+                    {t('cart.summary')}
+                </NavDropdown.Item>
               </NavDropdown>
 
-              {/* Carrito */}
               <div className="me-3">
                 <ShoppingCart />
               </div>
 
-              {/* Avatar Usuario */}
-              {isAuthenticated && (
+              {/* Avatar de Usuario o Login */}
+              {isAuthenticated ? (
                 <Dropdown align="end">
                   <Dropdown.Toggle
                     as="div"
@@ -228,16 +235,31 @@ export default function NavTop() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu align="end" style={{background: '#f0ad4e'}}>
-                    <LinkContainer to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></LinkContainer>
+                    <LinkContainer to="/profile">
+                        <Dropdown.Item>{t('nav.profile')}</Dropdown.Item>
+                    </LinkContainer>
+                    
                     {userLoged?.roll === "Admin" && (
-                        <LinkContainer to="/userManagement"><Dropdown.Item>Admin Usuarios</Dropdown.Item></LinkContainer>
+                        <LinkContainer to="/userManagement">
+                            <Dropdown.Item>Admin</Dropdown.Item>
+                        </LinkContainer>
                     )}
+                    
                     <Dropdown.Divider />
+                    
                     <Dropdown.Item onClick={() => logout({ returnTo: window.location.origin })}>
-                      Cerrar Sesión
+                      {t('nav.logout')}
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
+              ) : (
+                  // Botón Login corregido
+                  <Nav.Link 
+                    className="fw-bold text-white" 
+                    onClick={() => loginWithPopup()} // Usamos loginWithPopup en lugar de logout
+                  >
+                     {t('nav.login')}
+                  </Nav.Link>
               )}
             </Nav>
 

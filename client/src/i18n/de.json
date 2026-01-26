@@ -4,8 +4,6 @@
       "error": "Fehler"
     },
     "nav": {
-        "noEventsTitle": "Keine Veranstaltungen gefunden",
-      "noEventsBody": "Versuchen Sie, die Filter zu ändern oder ein anderes Datum zu suchen.",
       "home": "Startseite",
       "cities": "Städte",
       "genres": "Genres",
@@ -15,6 +13,24 @@
       "login": "Anmelden",
       "logout": "Abmelden",
       "profile": "Profil"
+    },
+    "home": {
+      "noEventsTitle": "Keine Veranstaltungen gefunden",
+      "noEventsBody": "Versuchen Sie, die Filter zu ändern oder ein anderes Datum zu suchen."
+    },
+    "monthsList": {
+      "enero": "Januar",
+      "febrero": "Februar",
+      "marzo": "März",
+      "abril": "April",
+      "mayo": "Mai",
+      "junio": "Juni",
+      "julio": "Juli",
+      "agosto": "August",
+      "septiembre": "September",
+      "octubre": "Oktober",
+      "noviembre": "November",
+      "diciembre": "Dezember"
     },
     "createEvent": {
       "title": "Neue Veranstaltung erstellen",
@@ -43,7 +59,13 @@
       },
       "buttons": {
         "submit": "Veranstaltung erstellen"
+      },
+      "alerts": {
+        "success": "Veranstaltung erfolgreich erstellt!"
       }
+    },
+    "cart": {
+      "summary": "Bestellübersicht"
     }
   }
 }

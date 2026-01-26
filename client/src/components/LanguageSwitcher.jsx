@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
@@ -9,34 +9,36 @@ export default function LanguageSwitcher() {
     i18n.changeLanguage(lng);
   };
 
-  const btnStyle = {
-    fontWeight: 'bold',
-    fontSize: '0.8rem',
-    padding: '5px 10px',
-    border: '1px solid #f0ad4e',
-    margin: '0 5px'
-  };
-
-  // Estilo activo (relleno) vs inactivo (transparente)
-  const activeStyle = { ...btnStyle, background: '#f0ad4e', color: 'black' };
-  const inactiveStyle = { ...btnStyle, background: 'transparent', color: '#f0ad4e' };
+  // Icono de la bandera actual
+  const currentFlag = i18n.language === 'de' ? '🇩🇪' : '🇬🇧';
 
   return (
-    <div className="d-flex align-items-center">
-      <Button 
-        size="sm" 
-        style={i18n.language === 'en' ? activeStyle : inactiveStyle}
-        onClick={() => changeLanguage('en')}
+    <Dropdown className="d-inline mx-2">
+      <Dropdown.Toggle 
+        variant="outline-warning" 
+        id="dropdown-flags" 
+        size="sm"
+        style={{border: 'none', fontSize: '1.2rem', padding: '0 5px'}}
       >
-        EN
-      </Button>
-      <Button 
-        size="sm" 
-        style={i18n.language === 'de' ? activeStyle : inactiveStyle}
-        onClick={() => changeLanguage('de')}
-      >
-        DE
-      </Button>
-    </div>
+        {currentFlag}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu style={{minWidth: 'auto', background: '#212529', border: '1px solid #f0ad4e'}}>
+        <Dropdown.Item 
+          onClick={() => changeLanguage('en')} 
+          style={{color: '#f0ad4e'}}
+          className="d-flex align-items-center gap-2"
+        >
+          <span>🇬🇧</span> English
+        </Dropdown.Item>
+        <Dropdown.Item 
+          onClick={() => changeLanguage('de')} 
+          style={{color: '#f0ad4e'}}
+          className="d-flex align-items-center gap-2"
+        >
+          <span>🇩🇪</span> Deutsch
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 }
