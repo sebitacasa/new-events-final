@@ -11,12 +11,17 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import CartitaDeCarrito from "./CartitaDeCarrito";
 import SumaTotalTotal from "./SumaTotalTotal";
-const stripeKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
 
+// 1. IMPORTAR HOOK
+import { useTranslation } from "react-i18next";
 
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
 const MySwal = withReactContent(Swal);
 
 function Carrito() {
+  // 2. INICIALIZAR HOOK
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const ticketsDisponibles = useSelector((state) => state.tickets);
@@ -42,7 +47,7 @@ function Carrito() {
   const handleSuccess = () => {
     MySwal.fire({
       icon: "success",
-      title: "Pago exitoso",
+      title: t('cart.alerts.success'), // TRADUCCIÓN ALERTA
       timer: 4000,
     });
   };
@@ -50,7 +55,7 @@ function Carrito() {
   const handleFailure = () => {
     MySwal.fire({
       icon: "error",
-      title: "Pago fallido",
+      title: t('cart.alerts.failure'), // TRADUCCIÓN ALERTA
       timer: 4000,
     });
   };
@@ -88,11 +93,12 @@ function Carrito() {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Producto</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Remover</th>
+                    {/* ENCABEZADOS DE TABLA TRADUCIDOS */}
+                    <th>{t('cart.table.image')}</th>
+                    <th>{t('cart.table.name')}</th>
+                    <th>{t('cart.table.price')}</th>
+                    <th>{t('cart.table.quantity')}</th>
+                    <th>{t('cart.table.remove')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -114,15 +120,17 @@ function Carrito() {
 
             <div className="row">
               <div className="col text-center">
-                <h4>TOTAL: ${priceForStripe / 100}</h4>
+                {/* TOTAL TRADUCIDO */}
+                <h4>{t('cart.total')}: ${priceForStripe / 100}</h4>
+                
                 <StripeCheckout
                   stripeKey={stripeKey}
-                  label="Pagar ahora"
-                  name="Compra en Under Event"
+                  label={t('cart.payButton')}           // Texto del botón
+                  name={t('cart.purchaseTitle')}        // Título del modal
                   billingAddress
                   shippingAddress
                   amount={priceForStripe}
-                  description={`Total a pagar: $${priceForStripe / 100}`}
+                  description={`${t('cart.totalPay')}: $${priceForStripe / 100}`} // Descripción traducida
                   token={payNow}
                 />
               </div>

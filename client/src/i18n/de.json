@@ -24,23 +24,6 @@
       "contact": "KONTAKT",
       "socials": "SOZIALE MEDIEN"
     },
-    "cart": {
-      "title": "Ihr Warenkorb",
-      "subtitle": "Sie haben <1>{{count}}</1> ausgewählte Veranstaltungen",
-      "summary": "Bestellübersicht",
-      "table": {
-        "event": "Veranstaltung",
-        "price": "Preis",
-        "quantity": "Menge",
-        "empty": "Ihr Warenkorb ist leer 😢",
-      "goShop": "Veranstaltungen suchen",
-      "generalTicket": "Allgemeiner Eintritt",
-      "remove": "Entfernen"
-      },
-      "totalPay": "Gesamtbetrag:",
-      "loginToPay": "Zum Bezahlen anmelden",
-      "payButton": "Jetzt bezahlen"
-    },
     "home": {
       "noEventsTitle": "Keine Veranstaltungen gefunden",
       "noEventsBody": "Versuchen Sie, die Filter zu ändern oder ein anderes Datum zu suchen."
@@ -92,7 +75,30 @@
       }
     },
     "cart": {
-      "summary": "Bestellübersicht"
+      "title": "Ihr Warenkorb",
+      "subtitle": "Sie haben <1>{{count}}</1> ausgewählte Veranstaltungen",
+      "summary": "Bestellübersicht",
+      "total": "GESAMT",
+      "totalPay": "Gesamtbetrag",
+      "payButton": "Jetzt bezahlen",
+      "loginToPay": "Zum Bezahlen anmelden",
+      "purchaseTitle": "Einkauf bei Under Event",
+      "empty": "Ihr Warenkorb ist leer 😢",
+      "goShop": "Veranstaltungen suchen",
+      "generalTicket": "Allgemeiner Eintritt",
+      "remove": "Entfernen",
+      "table": {
+        "event": "Veranstaltung",
+        "image": "Bild",
+        "name": "Name",
+        "price": "Preis",
+        "quantity": "Menge",
+        "remove": "Entfernen"
+      },
+      "alerts": {
+        "success": "Zahlung erfolgreich",
+        "failure": "Zahlung fehlgeschlagen"
+      }
     }
   }
 }
