@@ -35,7 +35,7 @@ export default function OrderDetail() {
       <Container>
         <Row>
           <Col className={styles.container}>
-            <h3 style={{ margin: "20px 0" }}>Detalle de la Orden</h3>
+            <h3 style={{ margin: "20px 0", color: "yellow" }}>Detalle de la Orden</h3>
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
