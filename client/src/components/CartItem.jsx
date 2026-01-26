@@ -1,13 +1,22 @@
-// ... imports
+import React from "react";
+import { Link } from "react-router-dom";
+import { useCart } from "react-use-cart";
+import { FaTrash } from "react-icons/fa";
+import { Image } from "react-bootstrap";
+
+// 🔥 ESTA ES LA LÍNEA QUE FALTABA Y ROMPÍA TODO:
+import { useTranslation } from "react-i18next";
 
 export default function CartItem() {
+  // Inicializamos el hook
   const { t } = useTranslation();
-  // ... hooks
+  
+  const { removeItem, updateItemQuantity, items } = useCart();
 
   if (items.length === 0) {
     return (
       <tr>
-        {/* Cambié text-white por text-dark para que se vea en el fondo amarillo */}
+        {/* Texto oscuro para que se vea en fondo amarillo */}
         <td colSpan="4" className="text-center py-4 text-dark">
           <h5>{t('cart.empty')}</h5>
           <Link to="/" className="btn btn-dark mt-2" style={{ color: "#f0ad4e" }}>
@@ -22,7 +31,7 @@ export default function CartItem() {
     <>
       {items.map((item) => {
         return (
-          <tr key={item.id} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}> {/* Borde sutil negro */}
+          <tr key={item.id} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}> 
             
             {/* 1. PRODUCTO */}
             <td className="py-4">
@@ -35,18 +44,20 @@ export default function CartItem() {
                       width: "100px",
                       height: "70px",
                       objectFit: "cover",
-                      borderRadius: "10px", // Bordes redondeados en la foto también
+                      borderRadius: "10px", 
                       marginRight: "15px",
-                      border: "2px solid #212529" // Borde negro a la foto
+                      border: "2px solid #212529" 
                     }}
                   />
                 </Link>
                 <div>
-                  {/* QUITE 'text-white' y puse color negro explícito */}
+                  {/* Color negro explícito para el nombre */}
                   <h5 className="mb-0" style={{fontSize: '1rem', fontWeight: 'bold', color: '#212529'}}>
                     {item.name}
                   </h5>
-                  <small className="text-muted" style={{color: '#444 !important'}}>{t('cart.generalTicket')}</small>
+                  <small className="text-muted" style={{color: '#444', fontWeight: 'bold'}}>
+                    {t('cart.generalTicket')}
+                  </small>
                 </div>
               </div>
             </td>
@@ -84,9 +95,17 @@ export default function CartItem() {
             <td className="text-center py-4 align-middle">
               <button
                 onClick={() => removeItem(item.id)}
-                className="btn btn-danger btn-sm" // Botón rojo sólido se ve mejor aquí
+                className="btn btn-danger btn-sm"
                 title={t('cart.remove')}
-                style={{borderRadius: '50%', width: '35px', height: '35px', padding: 0, display:'flex', alignItems:'center', justifyContent:'center'}}
+                style={{
+                    borderRadius: '50%', 
+                    width: '35px', 
+                    height: '35px', 
+                    padding: 0, 
+                    display:'flex', 
+                    alignItems:'center', 
+                    justifyContent:'center'
+                }}
               >
                 <FaTrash color="white"/>
               </button>
