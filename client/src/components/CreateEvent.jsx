@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from "react-leaflet";
 import L from "leaflet";
+import 'leaflet/dist/leaflet.css';
 import { Button, Col, Row, Container, Form } from "react-bootstrap";
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import 'leaflet-geosearch/dist/geosearch.css';

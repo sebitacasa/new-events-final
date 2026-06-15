@@ -6,6 +6,7 @@ import { Image } from "react-bootstrap";
 
 // 🔥 ESTA ES LA LÍNEA QUE FALTABA Y ROMPÍA TODO:
 import { useTranslation } from "react-i18next";
+import fallbackImage from "../images/imagen-set.jpg";
 
 export default function CartItem() {
   // Inicializamos el hook
@@ -40,13 +41,14 @@ export default function CartItem() {
                   <Image
                     src={item.image}
                     alt={item.name}
+                    onError={(e) => { e.target.onerror = null; e.target.src = fallbackImage; }}
                     style={{
                       width: "100px",
                       height: "70px",
                       objectFit: "cover",
-                      borderRadius: "10px", 
+                      borderRadius: "10px",
                       marginRight: "15px",
-                      border: "2px solid #212529" 
+                      border: "2px solid #212529"
                     }}
                   />
                 </Link>
