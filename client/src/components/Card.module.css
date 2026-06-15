@@ -81,7 +81,8 @@
 /* Botón de arriba (Agregar al Carrito) */
 .btnCart {
   border-radius: 0;
-  border-bottom: 2px solid #000;
+  margin-bottom: 6px;
+  border-bottom: 3px solid #000;
 }
 
 /* Botón de abajo (Ver detalle) */

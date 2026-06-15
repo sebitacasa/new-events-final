@@ -11,16 +11,19 @@ import {
   Table,
   Spinner
 } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 import ClientEvent from "./ClientEvent.jsx";
 import styles from "./EventosCreados.module.css"; // Importar CSS nuevo
 
 export default function EventosCreadosPorElUsuario() {
+  const { t } = useTranslation();
   const objeto = useSelector((state) => state.eventClient);
   const loginUser = useSelector((state) => state.userLoged);
-  
+
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [loaded, setLoaded] = useState(false);
   const { user } = useAuth0();
   const dispatch = useDispatch();
 
@@ -28,31 +31,38 @@ export default function EventosCreadosPorElUsuario() {
     if(user?.sub) {
         dispatch(getUserByExternalId(user.sub));
     }
+  }, [user, dispatch]);
+
+  useEffect(() => {
     if(loginUser?.id) {
-        dispatch(getEventClient(loginUser.id));
+        dispatch(getEventClient(loginUser.id)).finally(() => setLoaded(true));
+        return;
     }
-  }, [user, loginUser?.id, dispatch]);
+    // Si tras unos segundos no hay usuario logueado, dejamos de mostrar el spinner.
+    const timeout = setTimeout(() => setLoaded(true), 8000);
+    return () => clearTimeout(timeout);
+  }, [loginUser?.id, dispatch]);
 
   return (
     <div className={styles.containerTable}>
       <Container>
         
         {/* Título Estilizado */}
-        <h2 className={styles.title}>Eventos que has creado</h2>
-        
+        <h2 className={styles.title}>{t('profile.createdEvents')}</h2>
+
         {/* Tarjeta Oscura Contenedora */}
         <div className={styles.tableCard}>
             <Table responsive hover className={styles.customTable}>
             <thead>
                 <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Ciudad</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Stock</th>
-                <th>Precio</th>
-                <th>Acciones</th>
+                <th>{t('profile.table.number')}</th>
+                <th>{t('profile.table.name')}</th>
+                <th>{t('profile.table.city')}</th>
+                <th>{t('profile.table.date')}</th>
+                <th>{t('profile.table.time')}</th>
+                <th>{t('profile.table.stock')}</th>
+                <th>{t('profile.table.price')}</th>
+                <th>{t('profile.table.actions')}</th>
                 </tr>
             </thead>
             <tbody>
@@ -75,22 +85,16 @@ export default function EventosCreadosPorElUsuario() {
                                     setModalData(data);
                                 }}
                             >
-                                Modificar
+                                {t('profile.edit')}
                             </Button>
                         </td>
-                        
-                        {/* El componente ClientEvent debe estar fuera del loop o controlado */}
-                        {/* NOTA: ClientEvent (el modal) debería renderizarse una sola vez fuera del map, 
-                            pasándole 'modalData'. Si lo pones aquí, renderizas N modales invisibles.
-                            Lo moveré abajo del Table para optimizar.
-                        */}
                         </tr>
                     ))
                 ) : (
                     <tr>
                         <td colSpan="8" className="text-center py-5">
-                            {objeto ? (
-                                <h5 className="text-muted">Aún no has creado eventos.</h5>
+                            {loaded ? (
+                                <h5 className="text-muted">{t('profile.noEvents')}</h5>
                             ) : (
                                 <div className={styles.spinnerContainer}>
                                     <Spinner animation="border" variant="warning" />

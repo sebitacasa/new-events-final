@@ -137,7 +137,20 @@
       "province": "Provinz",
       "saveChanges": "Änderungen speichern",
       "success": "Erfolg",
-      "updateSuccess": "Profil erfolgreich aktualisiert!"
+      "updateSuccess": "Profil erfolgreich aktualisiert!",
+      "createdEvents": "Von Ihnen erstellte Veranstaltungen",
+      "noEvents": "Sie haben noch keine Veranstaltungen erstellt.",
+      "edit": "Bearbeiten",
+      "table": {
+        "number": "#",
+        "name": "Name",
+        "city": "Stadt",
+        "date": "Datum",
+        "time": "Uhrzeit",
+        "stock": "Bestand",
+        "price": "Preis",
+        "actions": "Aktionen"
+      }
     },
     "contact": {
       "title": "Kontaktieren Sie uns",

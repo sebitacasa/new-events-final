@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { updateUser, getUserByExternalId } from "../redux/actions/actions";
 
 import NavTop from "./NavBars/Nav";
+import Footer from "./Footer/Footer";
 import EventosCreadosPorElUsuario from "./EventosCreadosPorElUsuario";
 import styles from "./UserProfile.module.css"; // Importamos los estilos nuevos
 import Loading from "./Loading";
@@ -79,7 +80,7 @@ export function UserProfile() {
               {/* COLUMNA IZQUIERDA: FOTO */}
               <Col md={4} className={styles.leftColumn}>
                 <img
-                  src={userLoged?.picture}
+                  src={userLoged?.picture || user?.picture}
                   alt="Profile"
                   className={styles.profileImage}
                 />
@@ -166,6 +167,8 @@ export function UserProfile() {
 
         </Container>
       </div>
+
+      <Footer />
     </div>
   );
 }

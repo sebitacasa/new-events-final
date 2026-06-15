@@ -137,7 +137,20 @@
       "province": "Province",
       "saveChanges": "Save Changes",
       "success": "Success",
-      "updateSuccess": "Profile updated successfully!"
+      "updateSuccess": "Profile updated successfully!",
+      "createdEvents": "Events you created",
+      "noEvents": "You haven't created any events yet.",
+      "edit": "Edit",
+      "table": {
+        "number": "#",
+        "name": "Name",
+        "city": "City",
+        "date": "Date",
+        "time": "Time",
+        "stock": "Stock",
+        "price": "Price",
+        "actions": "Actions"
+      }
     },
     "contact": {
       "title": "Contact Us",
