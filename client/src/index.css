@@ -15,3 +15,21 @@ code {
 html {
   scroll-behavior: smooth;
 }
+
+:root {
+  --gold: #f0ad4e;
+  --gold-dark: #d8a602;
+  --bg-dark: #1a1d20;
+  --card-dark: #20242a;
+  --card-dark-alt: #2c3034;
+
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --border-soft: 1px solid rgba(240, 173, 78, 0.25);
+
+  --transition: 0.25s ease;
+}

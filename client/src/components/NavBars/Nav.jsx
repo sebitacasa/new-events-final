@@ -226,7 +226,7 @@ export default function NavTop() {
                     }}
                   >
                     <Image
-                      src={userLoged?.picture}
+                      src={userLoged?.picture || user?.picture}
                       alt="User"
                       width="100%"
                       height="100%"
@@ -254,9 +254,9 @@ export default function NavTop() {
                 </Dropdown>
               ) : (
                   // Botón Login corregido
-                  <Nav.Link 
-                    className="fw-bold text-white" 
-                    onClick={() => loginWithPopup()} // Usamos loginWithPopup en lugar de logout
+                  <Nav.Link
+                    className="fw-bold text-white"
+                    onClick={() => loginWithPopup().catch((err) => console.error("Auth0 loginWithPopup error:", err))}
                   >
                      {t('nav.login')}
                   </Nav.Link>

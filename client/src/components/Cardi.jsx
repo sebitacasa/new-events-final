@@ -2,8 +2,6 @@ import React from "react";
 import {
   Card,
   Button,
-  ListGroup,
-  ListGroupItem,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useCart } from "react-use-cart"; 
@@ -46,29 +44,23 @@ export default function Cardi({ id, title, imagen, date, place, price }) {
           className={style.cardImage}
           onError={(e) => { e.target.onerror = null; e.target.src = image2; }}
         />
+        <div className={style.imgFade} />
+        <span className={style.priceBadge}>
+          {price ? `$${price}` : t('card.checkPrice')}
+        </span>
       </div>
 
       <Card.Body className="d-flex flex-column">
-        <Card.Title style={{ fontWeight: "bold", color: "#f0ad4e", textAlign: "center" }}>
+        <Card.Title style={{ fontWeight: "bold", color: "#f0ad4e", textAlign: "center", marginBottom: "10px" }}>
             {title}
         </Card.Title>
+        <div className="d-flex justify-content-between text-secondary" style={{ fontSize: "0.85rem" }}>
+          <span>📅 {date}</span>
+          <span>📍 {place}</span>
+        </div>
       </Card.Body>
 
-      <ListGroup className="list-group-flush">
-        <ListGroupItem style={{ background: "#292b2c", color: "#f0ad4e", fontWeight: "bold", textAlign: "center" }}>
-          {date}
-        </ListGroupItem>
-        <ListGroupItem style={{ background: "#292b2c", color: "#f0ad4e", fontWeight: "bold", textAlign: "center" }}>
-          {place}
-        </ListGroupItem>
-        
-        {/* Precio Traducido */}
-        <ListGroupItem style={{ background: "#292b2c", color: "white", textAlign: "center", fontSize: "0.9rem" }}>
-            {price ? `${t('card.pricePrefix')}: $${price}` : t('card.checkPrice')}
-        </ListGroupItem>
-      </ListGroup>
-
-      <Card.Body className="p-0 d-flex flex-column"> 
+      <Card.Body className="p-0 d-flex flex-column">
         
         {/* Botón 1: AGREGAR AL CARRITO (Traducido) */}
         <Button

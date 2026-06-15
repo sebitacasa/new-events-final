@@ -32,12 +32,12 @@
 
 /* --- TARJETA AMARILLA --- */
 .yellowCard {
-  background-color: #f0ad4e !important; /* FORZAR AMARILLO */
-  border-radius: 8px;
+  background-color: var(--gold) !important;
+  border-radius: var(--radius-lg);
   padding: 20px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-soft);
   overflow-x: auto;
-  border: 2px solid #d8a602;
+  border: none;
 }
 
 /* --- TABLA --- */

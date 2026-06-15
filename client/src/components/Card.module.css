@@ -1,26 +1,58 @@
 /* Card.module.css */
 
 .cards {
-  box-shadow: 0 0 3px rgb(17, 15, 15), 0 0 6px rgb(193, 193, 193),
-    0 0 9px rgb(225, 174, 7), 0 0 12px rgb(119, 118, 119),
-    0 0 15px rgb(77, 77, 78), 0 0 18px rgb(225, 174, 7);
-  
-  border: none;
-  transition: transform 0.3s ease;
+  border: var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .cards:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(240, 173, 78, 0.3);
+}
+
+.imgContainer {
+  position: relative;
 }
 
 .cardImage {
   width: 100%;
-  height: 200px; 
-  object-fit: cover; 
+  height: 200px;
+  object-fit: cover;
   object-position: center;
+  transition: transform 0.6s ease;
+}
+
+.cards:hover .cardImage {
+  transform: scale(1.06);
+}
+
+/* Badge de precio sobre la imagen */
+.priceBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(20, 22, 25, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.imgFade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(32,36,42,0.95) 100%);
+  pointer-events: none;
 }
 
 /* --- ESTILOS DE LOS BOTONES --- */
@@ -30,17 +62,18 @@
   font-weight: bold;
   border: none;
   padding: 12px;
-  transition: all 0.3s ease;
+  transition: all var(--transition);
   /* Color Amarillo de la marca */
-  background-color: #f0ad4e; 
+  background-color: var(--gold);
   color: black; /* Letra Negra */
   text-transform: uppercase;
   font-size: 0.9rem;
+  letter-spacing: 0.5px;
 }
 
 .btn:hover {
   /* Un amarillo un poco más oscuro al pasar el mouse */
-  background-color: #d8a602; 
+  background-color: var(--gold-dark);
   color: black;
   z-index: 2;
 }
@@ -49,10 +82,17 @@
 .btnCart {
   border-radius: 0;
   /* Una línea sutil para separarlo del botón de abajo */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15); 
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 /* Botón de abajo (Ver detalle) */
 .btnDetail {
-  border-radius: 0 0 4px 4px; /* Redondeado solo abajo */
+  background-color: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+.btnDetail:hover {
+  background-color: var(--gold);
+  color: black;
 }

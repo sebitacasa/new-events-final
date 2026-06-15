@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Box = styled.div`
   padding: 50px 20px;
-  background: #1C2833; /* Fondo oscuro */
+  background: var(--bg-dark);
+  border-top: var(--border-soft);
   width: 100%;
   margin-top: auto; /* Empuja el footer al fondo si hay poco contenido */
 `;
@@ -13,9 +14,11 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  color: #f0ad4e;
+  color: var(--gold);
   text-align: center;
-  font-weight: bold;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   font-size: 32px;
   margin-bottom: 40px;
 `;
@@ -52,11 +55,13 @@ export const Column = styled.div`
 
 export const Heading = styled.p`
   font-size: 18px;
-  color: #f0ad4e; /* Dorado */
+  color: var(--gold);
   margin-bottom: 20px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
+  border-bottom: 2px solid rgba(240, 173, 78, 0.25);
+  padding-bottom: 10px;
 `;
 
 export const FooterLink = styled.a`
@@ -65,12 +70,12 @@ export const FooterLink = styled.a`
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: var(--transition);
 
   &:hover {
-    color: #f0ad4e; /* Brillo dorado al pasar el mouse */
+    color: var(--gold);
   }
-  
+
   /* Iconos de redes sociales */
   i {
     margin-right: 10px;

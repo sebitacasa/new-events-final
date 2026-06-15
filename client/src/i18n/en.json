@@ -25,6 +25,7 @@
       "socials": "SOCIAL MEDIA"
     },
     "home": {
+      "upcomingEvents": "Upcoming Events",
       "noEventsTitle": "No events match your search",
       "noEventsBody": "Try changing filters or searching another date."
     },

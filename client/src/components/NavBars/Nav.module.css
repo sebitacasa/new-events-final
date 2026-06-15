@@ -10,25 +10,31 @@
 
 /* Estilos para los Selects dentro del Navbar */
 .navSelect {
-  background-color: #343a40; /* Fondo oscuro */
-  color: #f0ad4e; /* Texto dorado */
-  border: 1px solid #f0ad4e;
+  background-color: var(--card-dark-alt);
+  color: var(--gold);
+  border: 1px solid rgba(240, 173, 78, 0.4);
+  border-radius: var(--radius-sm);
   font-weight: 500;
   cursor: pointer;
   height: 38px;
   min-width: 140px;
+  transition: var(--transition);
+}
+
+.navSelect:hover {
+  border-color: var(--gold);
 }
 
 .navSelect:focus {
   background-color: #495057;
   color: #fff;
-  border-color: #f0ad4e;
-  box-shadow: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.15);
 }
 
 /* Link del Brand */
 .brand {
-  color: #f0ad4e !important;
+  color: var(--gold) !important;
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;

@@ -23,44 +23,46 @@
 
 /* --- TARJETA DEL FORMULARIO --- */
 .formCard {
-  background-color: #212529; /* Fondo Oscuro */
-  border: 2px solid #f0ad4e; /* Borde Dorado */
-  border-radius: 8px;
+  background-color: var(--card-dark);
+  border: var(--border-soft);
+  border-radius: var(--radius-lg);
   padding: 40px;
-  box-shadow: 0 0 20px rgba(240, 173, 78, 0.2);
+  box-shadow: var(--shadow-card);
   color: white;
 }
 
 .formTitle {
-  color: #f0ad4e;
+  color: var(--gold);
   font-weight: 800;
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 30px;
-  border-bottom: 2px solid #f0ad4e;
+  border-bottom: 2px solid rgba(240, 173, 78, 0.25);
   padding-bottom: 15px;
   letter-spacing: 1px;
 }
 
 /* --- ESTILOS DE LOS INPUTS --- */
 .label {
-  color: #f0ad4e;
+  color: var(--gold);
   font-weight: bold;
   margin-top: 10px;
 }
 
 .inputDark {
-  background-color: #2c3034 !important;
-  border: 1px solid #555 !important;
+  background-color: var(--card-dark-alt) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: var(--radius-sm) !important;
   color: white !important;
   font-weight: 500;
+  transition: var(--transition) !important;
 }
 
 .inputDark:focus {
   background-color: #1c1f23 !important;
-  border-color: #f0ad4e !important;
-  box-shadow: 0 0 5px rgba(240, 173, 78, 0.5) !important;
-  color: #f0ad4e !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.15) !important;
+  color: var(--gold) !important;
 }
 
 /* Para que el placeholder no se vea oscuro */
@@ -72,8 +74,8 @@
 .mapContainer {
   height: 400px;
   width: 100%;
-  border: 2px solid #f0ad4e;
-  border-radius: 5px;
+  border: var(--border-soft);
+  border-radius: var(--radius-md);
   overflow: hidden;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -94,13 +96,14 @@
   font-weight: bold;
   text-transform: uppercase;
   font-size: 1.2rem;
+  border-radius: var(--radius-sm);
   margin-top: 20px;
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .btnSubmit:hover {
   transform: scale(1.02);
-  box-shadow: 0 0 15px rgba(240, 173, 78, 0.4);
+  box-shadow: var(--shadow-soft);
 }
 
 /* --- RESPONSIVE --- */

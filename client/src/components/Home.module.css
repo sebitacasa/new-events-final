@@ -51,20 +51,34 @@
 .cardSecondContainer {
   width: 100%;
   /* 🔥 Igual aquí: tope máximo de ancho */
-  max-width: 320px; 
+  max-width: 320px;
   margin-top: 20px;
-  
-  border: 4px double #d8a602;
-  box-shadow: 0 0 10px rgba(225, 174, 7, 0.5);
-  background: #292b2c;
+
+  border: var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  background: var(--card-dark);
+  overflow: hidden;
 }
 
 /* Asegura que las imágenes dentro del sidebar no se desborden */
-.cardSecondContainer img, 
+.cardSecondContainer img,
 .cardSecondContainer .card-img-top {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* --- TITULO DE SECCIÓN --- */
+.sectionTitle {
+  color: var(--gold);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.4rem;
+  margin: 0 0 20px 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(240, 173, 78, 0.25);
 }
 
 /* --- GRID DE EVENTOS --- */
@@ -72,8 +86,8 @@
   display: grid;
   width: 100%;
   /* Grid inteligente: se adapta solo */
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
   justify-content: center;
   padding: 10px;
 }

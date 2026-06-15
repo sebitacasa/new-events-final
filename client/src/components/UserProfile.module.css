@@ -23,18 +23,18 @@
 
 /* --- TARJETA DE PERFIL --- */
 .profileCard {
-  background-color: #212529; /* Fondo Oscuro */
-  border: 2px solid #f0ad4e; /* Borde Dorado */
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(240, 173, 78, 0.2);
+  background-color: var(--card-dark);
+  border: var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
   overflow: hidden; /* Para que el contenido respete los bordes */
   margin-bottom: 40px;
 }
 
 /* Columna Izquierda (Foto) */
 .leftColumn {
-  background-color: #1a1d20;
-  border-right: 1px solid #f0ad4e;
+  background-color: var(--bg-dark);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,10 +46,10 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 4px solid #f0ad4e; /* Anillo dorado */
+  border: 3px solid var(--gold);
   object-fit: cover;
   margin-bottom: 20px;
-  box-shadow: 0 0 15px rgba(240, 173, 78, 0.4);
+  box-shadow: var(--shadow-soft);
 }
 
 .userName {
@@ -73,49 +73,52 @@
 }
 
 .formTitle {
-  color: #f0ad4e;
+  color: var(--gold);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 30px;
-  border-bottom: 2px solid #444;
+  border-bottom: 2px solid rgba(240, 173, 78, 0.25);
   padding-bottom: 10px;
 }
 
 .label {
-  color: #f0ad4e;
+  color: var(--gold);
   font-weight: bold;
   margin-bottom: 5px;
 }
 
 /* Inputs Oscuros */
 .inputDark {
-  background-color: #2c3034 !important;
-  border: 1px solid #555 !important;
+  background-color: var(--card-dark-alt) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: var(--radius-sm) !important;
   color: white !important;
+  transition: var(--transition) !important;
 }
 
 .inputDark:focus {
   background-color: #1c1f23 !important;
-  border-color: #f0ad4e !important;
-  box-shadow: 0 0 5px rgba(240, 173, 78, 0.5) !important;
-  color: #f0ad4e !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.15) !important;
+  color: var(--gold) !important;
 }
 
 .btnSave {
-  background-color: #f0ad4e;
+  background-color: var(--gold);
   color: black;
   font-weight: bold;
   border: none;
+  border-radius: var(--radius-sm);
   padding: 10px 30px;
   text-transform: uppercase;
   margin-top: 20px;
-  transition: all 0.3s;
+  transition: var(--transition);
   width: 100%;
 }
 
 .btnSave:hover {
-  background-color: #d8a602;
+  background-color: var(--gold-dark);
   transform: scale(1.02);
 }
 
@@ -123,7 +126,7 @@
 @media (max-width: 768px) {
   .leftColumn {
     border-right: none;
-    border-bottom: 1px solid #f0ad4e;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   .formTitle {
     text-align: center;

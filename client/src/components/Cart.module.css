@@ -23,12 +23,12 @@
 
 /* --- TARJETA PRINCIPAL DEL CARRITO --- */
 .cartCard {
-  background-color: #f0ad4e; /* 🔥 Fondo Amarillo */
-  color: #212529;            /* 🔥 Texto Negro/Gris Oscuro */
-  border-radius: 20px;       /* 🔥 Bordes Redondeados */
+  background-color: var(--gold);
+  color: #212529;
+  border-radius: var(--radius-lg);
   padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
-  border: 3px solid #d8a602; /* Borde amarillo más oscuro */
+  box-shadow: var(--shadow-soft);
+  border: none;
 }
 
 .cartTitle {
@@ -48,7 +48,7 @@
 .tableContainer {
   margin-top: 30px;
   background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil para la tabla */
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   padding: 20px;
 }
 
@@ -66,12 +66,12 @@
 
 /* --- RESUMEN DE PAGO --- */
 .summaryContainer {
-  background-color: #212529; /* Fondo Oscuro para el resumen (Contraste) */
-  color: #f0ad4e;            /* Letras Amarillas dentro del oscuro */
+  background-color: var(--card-dark);
+  color: var(--gold);
   padding: 25px;
-  border-radius: 15px;
-  border: 2px solid #f0ad4e;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border-radius: var(--radius-lg);
+  border: var(--border-soft);
+  box-shadow: var(--shadow-card);
 }
 
 .totalLabel {
@@ -89,16 +89,18 @@
 }
 
 .btnLogin {
-  background-color: #f0ad4e;
+  background-color: var(--gold);
   color: black;
   font-weight: bold;
   width: 100%;
   border: none;
+  border-radius: var(--radius-sm);
   padding: 10px;
   text-transform: uppercase;
+  transition: var(--transition);
 }
 
 .btnLogin:hover {
-  background-color: #d8a602;
+  background-color: var(--gold-dark);
   color: black;
 }

@@ -12,7 +12,6 @@ import {
   Toast,
   Alert,
   Card,
-  ListGroupItem,
 } from "react-bootstrap";
 
 // 1. IMPORTAR EL HOOK DE TRADUCCIÓN
@@ -113,20 +112,17 @@ export default function Home() {
                 {/* --- COLUMNA IZQUIERDA --- */}
                 <Col xs={12} lg={3} className="d-flex flex-column align-items-center mb-4" style={{marginTop: "20px"}}>
                   <div className={styles.cardSecondContainer}>
-                    <Card style={{ width: "100%", background: "#292b2c" }}>
+                    <Card style={{ width: "100%", background: "var(--card-dark)", border: "none" }}>
                       <Card.Img variant="top" src={img} />
-                      <Card.Body>
-                      </Card.Body>
                       <Card.Img src={imagen} />
-                      <ListGroupItem style={{ background: "#292b2c", border: "none" }}>
-                        <Card.Img src={altaImage} />
-                      </ListGroupItem>
+                      <Card.Img src={altaImage} />
                     </Card>
                   </div>
                 </Col>
 
                 {/* --- COLUMNA DERECHA: LISTA DE EVENTOS --- */}
                 <Col xs={12} lg={9}>
+                  <h2 className={styles.sectionTitle}>{t('home.upcomingEvents', 'Próximos eventos')}</h2>
                   <div className={styles.cards}>
                     {Array.isArray(events) && events.length ? (
                       events.map((e) => {

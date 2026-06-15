@@ -18,11 +18,11 @@
 
 /* Tarjeta contenedora de la tabla */
 .tableCard {
-  background-color: #212529; /* Fondo Oscuro */
-  border: 2px solid #f0ad4e; /* Borde Dorado */
-  border-radius: 10px;
+  background-color: var(--card-dark);
+  border: var(--border-soft);
+  border-radius: var(--radius-lg);
   padding: 20px;
-  box-shadow: 0 0 15px rgba(240, 173, 78, 0.2);
+  box-shadow: var(--shadow-card);
   overflow-x: auto;
 }
 
@@ -33,12 +33,12 @@
 }
 
 .customTable thead th {
-  background-color: #f0ad4e !important; /* Cabecera Amarilla */
-  color: black !important;              /* Letra Negra */
+  background-color: var(--gold) !important;
+  color: black !important;
   font-weight: 800;
   text-transform: uppercase;
   text-align: center;
-  border-bottom: 2px solid black;
+  border-bottom: none;
   vertical-align: middle;
 }
 
@@ -47,22 +47,23 @@
   color: #e0e0e0 !important;
   text-align: center;
   vertical-align: middle;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Botón Modificar */
 .btnEdit {
   background-color: transparent;
-  border: 1px solid #f0ad4e;
-  color: #f0ad4e;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-sm);
+  color: var(--gold);
   font-weight: bold;
   text-transform: uppercase;
   padding: 5px 15px;
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .btnEdit:hover {
-  background-color: #f0ad4e;
+  background-color: var(--gold);
   color: black;
 }
 
