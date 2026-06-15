@@ -128,6 +128,26 @@
       "checkPrice": "Check price",
       "addToCart": "Add to Cart",
       "viewDetail": "View Details"
+    },
+    "profile": {
+      "editProfile": "Edit Profile",
+      "name": "First Name",
+      "lastName": "Last Name",
+      "city": "City",
+      "province": "Province",
+      "saveChanges": "Save Changes",
+      "success": "Success",
+      "updateSuccess": "Profile updated successfully!"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send",
+      "lookGood": "Looks good!",
+      "messageRequired": "Please write a message.",
+      "emailSent": "Email sent"
     }
   }
 }

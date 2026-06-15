@@ -48,7 +48,9 @@
   border-radius: 50%;
   border: 3px solid var(--gold);
   object-fit: cover;
-  margin-bottom: 20px;
+  object-position: center;
+  display: block;
+  margin: 0 auto 20px auto;
   box-shadow: var(--shadow-soft);
 }
 

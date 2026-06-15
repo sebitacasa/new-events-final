@@ -10,6 +10,7 @@ import {
   ToastContainer,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { updateUser, getUserByExternalId } from "../redux/actions/actions";
 
 import NavTop from "./NavBars/Nav";
@@ -18,6 +19,7 @@ import styles from "./UserProfile.module.css"; // Importamos los estilos nuevos
 import Loading from "./Loading";
 
 export function UserProfile() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useAuth0();
   const userLoged = useSelector((state) => state.userLoged);
@@ -59,9 +61,9 @@ export function UserProfile() {
           autohide
         >
           <Toast.Header>
-            <strong className="me-auto">Éxito</strong>
+            <strong className="me-auto">{t('profile.success')}</strong>
           </Toast.Header>
-          <Toast.Body className="text-white">¡Perfil actualizado correctamente!</Toast.Body>
+          <Toast.Body className="text-white">{t('profile.updateSuccess')}</Toast.Body>
         </Toast>
       </ToastContainer>
 
@@ -91,30 +93,30 @@ export function UserProfile() {
 
               {/* COLUMNA DERECHA: FORMULARIO */}
               <Col md={8} className={styles.rightColumn}>
-                <h4 className={styles.formTitle}>Editar Perfil</h4>
+                <h4 className={styles.formTitle}>{t('profile.editProfile')}</h4>
 
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                   <Row className="mb-3">
                     <Form.Group as={Col} md="6" controlId="validationCustom01">
-                      <Form.Label className={styles.label}>Nombre</Form.Label>
+                      <Form.Label className={styles.label}>{t('profile.name')}</Form.Label>
                       <Form.Control
                         required
                         type="text"
                         name="name"
-                        placeholder="Nombre"
+                        placeholder={t('profile.name')}
                         defaultValue={userLoged?.name}
                         onChange={handleChange}
                         className={styles.inputDark}
                       />
                     </Form.Group>
-                    
+
                     <Form.Group as={Col} md="6" controlId="validationCustom02">
-                      <Form.Label className={styles.label}>Apellido</Form.Label>
+                      <Form.Label className={styles.label}>{t('profile.lastName')}</Form.Label>
                       <Form.Control
                         required
                         type="text"
                         name="lastName"
-                        placeholder="Apellido"
+                        placeholder={t('profile.lastName')}
                         defaultValue={userLoged?.lastName}
                         onChange={handleChange}
                         className={styles.inputDark}
@@ -124,23 +126,23 @@ export function UserProfile() {
 
                   <Row className="mb-3">
                     <Form.Group as={Col} md="6" controlId="validationCustom03">
-                      <Form.Label className={styles.label}>Ciudad</Form.Label>
+                      <Form.Label className={styles.label}>{t('profile.city')}</Form.Label>
                       <Form.Control
                         type="text"
                         name="city"
-                        placeholder="Ciudad"
+                        placeholder={t('profile.city')}
                         defaultValue={userLoged?.city}
                         onChange={handleChange}
                         className={styles.inputDark}
                       />
                     </Form.Group>
-                    
+
                     <Form.Group as={Col} md="6" controlId="validationCustom04">
-                      <Form.Label className={styles.label}>Provincia</Form.Label>
+                      <Form.Label className={styles.label}>{t('profile.province')}</Form.Label>
                       <Form.Control
                         type="text"
                         name="province"
-                        placeholder="Provincia"
+                        placeholder={t('profile.province')}
                         defaultValue={userLoged?.province}
                         onChange={handleChange}
                         className={styles.inputDark}
@@ -149,7 +151,7 @@ export function UserProfile() {
                   </Row>
 
                   <Button type="submit" className={styles.btnSave}>
-                    Guardar Cambios
+                    {t('profile.saveChanges')}
                   </Button>
                 </Form>
               </Col>

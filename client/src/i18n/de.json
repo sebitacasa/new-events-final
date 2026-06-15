@@ -128,6 +128,26 @@
       "checkPrice": "Preis auf Anfrage",
       "addToCart": "In den Warenkorb",
       "viewDetail": "Details anzeigen"
+    },
+    "profile": {
+      "editProfile": "Profil bearbeiten",
+      "name": "Vorname",
+      "lastName": "Nachname",
+      "city": "Stadt",
+      "province": "Provinz",
+      "saveChanges": "Änderungen speichern",
+      "success": "Erfolg",
+      "updateSuccess": "Profil erfolgreich aktualisiert!"
+    },
+    "contact": {
+      "title": "Kontaktieren Sie uns",
+      "name": "Name",
+      "email": "E-Mail",
+      "message": "Nachricht",
+      "send": "Senden",
+      "lookGood": "Sieht gut aus!",
+      "messageRequired": "Bitte schreiben Sie eine Nachricht.",
+      "emailSent": "E-Mail gesendet"
     }
   }
 }

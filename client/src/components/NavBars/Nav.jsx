@@ -230,7 +230,7 @@ export default function NavTop() {
                       alt="User"
                       width="100%"
                       height="100%"
-                      style={{objectFit: 'cover'}}
+                      style={{objectFit: 'cover', objectPosition: 'center'}}
                     />
                   </Dropdown.Toggle>
 
