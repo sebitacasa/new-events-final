@@ -10,7 +10,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)),
     url('../images/pexels-thibault-trillet-167636.jpg');
 }
@@ -27,27 +27,29 @@
   font-weight: 800;
   text-align: center;
   margin-bottom: 30px;
-  text-shadow: 2px 2px 4px black;
+  letter-spacing: 1px;
+  text-shadow: 3px 3px 0px black;
+  font-size: 2.5rem;
 }
 
 /* --- TARJETA AMARILLA --- */
 .yellowCard {
-  background-color: var(--gold) !important;
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-soft);
+  background-color: #f0ad4e;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 2px solid #d8a602;
+  overflow: hidden;
   overflow-x: auto;
-  border: none;
 }
 
 /* --- TABLA --- */
-/* Quitamos cualquier fondo blanco de la tabla */
 .tableCustom {
   margin-bottom: 0;
   background-color: transparent !important;
 }
 
-/* Encabezados (Negros con letra amarilla) */
+/* Encabezados (Negros con letra dorada) */
 .tableCustom thead th {
   background-color: #111 !important;
   color: #f0ad4e !important;
@@ -56,20 +58,44 @@
   vertical-align: middle;
   font-weight: 900;
   text-transform: uppercase;
+  padding: 15px !important;
+}
+
+.tableCustom thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.tableCustom thead th:last-child {
+  border-top-right-radius: 10px;
 }
 
 /* Celdas (Letras negras sobre el fondo amarillo del contenedor) */
 .tableCustom tbody td {
-  background-color: transparent !important; /* Transparente para ver el amarillo de fondo */
+  background-color: transparent !important;
   color: black !important;
-  border-bottom: 1px solid rgba(0,0,0,0.3) !important; /* Línea separadora sutil */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
   text-align: center;
   vertical-align: middle;
   font-weight: 600;
+  padding: 12px !important;
 }
 
-/* Efecto Hover (Oscurece un poco al pasar el mouse) */
 .tableCustom tbody tr:hover td {
   background-color: rgba(0, 0, 0, 0.1) !important;
   cursor: default;
+}
+
+.eventName {
+  text-transform: uppercase;
+  font-weight: 800 !important;
+}
+
+.cost {
+  font-size: 1.2rem;
+  font-weight: bold !important;
+}
+
+.ownerId {
+  font-size: 0.8rem;
+  word-break: break-all;
 }
