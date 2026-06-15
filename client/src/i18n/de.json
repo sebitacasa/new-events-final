@@ -121,6 +121,15 @@
       "alerts": {
         "success": "Zahlung erfolgreich",
         "failure": "Zahlung fehlgeschlagen"
+      },
+      "payment": {
+        "loading": "Zahlungsformular wird geladen...",
+        "payButton": "${{amount}} bezahlen",
+        "processing": "Wird verarbeitet...",
+        "successTitle": "Erfolg",
+        "successBody": "Zahlung erfolgreich verarbeitet",
+        "errorTitle": "Fehler",
+        "genericError": "Bei der Zahlung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
       }
     },
     "card": {

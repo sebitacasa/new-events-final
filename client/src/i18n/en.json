@@ -121,6 +121,15 @@
       "alerts": {
         "success": "Payment Successful",
         "failure": "Payment Failed"
+      },
+      "payment": {
+        "loading": "Loading payment form...",
+        "payButton": "Pay ${{amount}}",
+        "processing": "Processing...",
+        "successTitle": "Success",
+        "successBody": "Payment processed successfully",
+        "errorTitle": "Error",
+        "genericError": "Something went wrong while processing the payment. Please try again."
       }
     },
     "card": {
