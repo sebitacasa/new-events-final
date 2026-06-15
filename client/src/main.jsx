@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import { Auth0Provider } from "@auth0/auth0-react";
 import store from "./redux/store/store.jsx";
 import history from "./utils/history.js";
-import { getConfig } from "./config.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CartProvider } from "react-use-cart";
 import './i18n/i18n.js';
@@ -19,26 +18,15 @@ const onRedirectCallback = (appState) => {
   );
 };
 
-const config = getConfig();
-
-const providerConfig = {
-  domain: config.domain,
-  clientId: config.clientId,
-  ...(config.audience ? { audience: config.audience } : null),
-  redirectUri: window.location.origin,
-  useRefreshTokens: true,
-  onRedirectCallback,
-  cacheLocation: "localstorage",
-};
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  
+
   <Auth0Provider
-  domain="dev-jdkm0r3xevm3bopt.us.auth0.com"
-  clientId="bRANPraHT65XU04lmuIIpIv8YGeq8GdE"
-  audience="https://underevents/api"
+  domain={import.meta.env.VITE_AUTH0_DOMAIN}
+  clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+  audience={import.meta.env.VITE_AUTH0_AUDIENCE}
   redirectUri={window.location.origin}
+  onRedirectCallback={onRedirectCallback}
   useRefreshTokens={true}
   cacheLocation="localstorage"
 >
