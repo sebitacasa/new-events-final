@@ -142,7 +142,16 @@ export default function NavTop() {
         <Container fluid>
           
           <Navbar.Brand onClick={handleReset} className={styles.brand}>
-            UnderEventsApp
+            <svg className={styles.logoIcon} viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M13 2L4.5 13.5H11L10 22L20.5 10H14L13 2Z"/>
+            </svg>
+            <div>
+              <span className={styles.logoText}>
+                <span className={styles.logoUnder}>Under</span>
+                <span className={styles.logoEvents}>Events</span>
+              </span>
+              <span className={styles.logoApp}>App</span>
+            </div>
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -253,13 +262,12 @@ export default function NavTop() {
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
-                  // Botón Login corregido
-                  <Nav.Link
-                    className="fw-bold text-white"
-                    onClick={() => loginWithPopup().catch((err) => console.error("Auth0 loginWithPopup error:", err))}
-                  >
-                     {t('nav.login')}
-                  </Nav.Link>
+                <button
+                  className={styles.loginBtn}
+                  onClick={() => loginWithPopup().catch((err) => console.error("Auth0 loginWithPopup error:", err))}
+                >
+                  <span className={styles.loginBtnText}>{t('nav.login')}</span>
+                </button>
               )}
             </Nav>
 

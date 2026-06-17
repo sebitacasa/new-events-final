@@ -5,78 +5,179 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-/* Estilos para los Selects dentro del Navbar */
-.navSelect {
-  background-color: var(--card-dark-alt);
-  color: var(--gold);
-  border: 1px solid rgba(240, 173, 78, 0.4);
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-  cursor: pointer;
-  height: 38px;
-  min-width: 140px;
-  transition: var(--transition);
+/* Override Bootstrap bg-dark */
+.nav :global(.navbar) {
+  background: rgba(20, 23, 26, 0.97) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(240, 173, 78, 0.18);
+  padding: 10px 0;
 }
 
-.navSelect:hover {
-  border-color: var(--gold);
-}
-
-.navSelect:focus {
-  background-color: #495057;
-  color: #fff;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.15);
-}
-
-/* Link del Brand */
+/* Brand / Logo */
 .brand {
-  color: var(--gold) !important;
-  font-size: 22px;
-  font-weight: bold;
+  display: flex !important;
+  align-items: center;
+  gap: 9px;
   cursor: pointer;
+  text-decoration: none !important;
   margin-right: 20px;
 }
 
-/* Contenedor de filtros para alinearlos */
+.logoIcon {
+  color: var(--gold);
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(240, 173, 78, 0.5));
+}
+
+.logoText {
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+
+.logoUnder {
+  color: #ffffff;
+}
+
+.logoEvents {
+  color: var(--gold);
+}
+
+.logoApp {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(240, 173, 78, 0.55);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 1px;
+}
+
+/* Selects */
+.navSelect {
+  background-color: rgba(44, 48, 52, 0.9) !important;
+  color: #e0e0e0 !important;
+  border: 1px solid rgba(240, 173, 78, 0.25) !important;
+  border-radius: 6px !important;
+  font-weight: 500;
+  cursor: pointer;
+  height: 36px;
+  min-width: 130px;
+  transition: var(--transition);
+  font-size: 13.5px;
+}
+
+.navSelect:hover {
+  border-color: rgba(240, 173, 78, 0.6) !important;
+}
+
+.navSelect:focus {
+  background-color: #3a3f45 !important;
+  color: #fff !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.12) !important;
+  outline: none;
+}
+
+.navSelect option {
+  background: #2c3034;
+  color: #e0e0e0;
+}
+
+/* Filters row */
 .filtersContainer {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+/* Login button */
+.loginBtn {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 0.8px;
+  padding: 7px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.28s ease;
+  white-space: nowrap;
+}
+
+.loginBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateX(-102%);
+  transition: transform 0.28s ease;
+  z-index: 0;
+}
+
+.loginBtn:hover::before {
+  transform: translateX(0);
+}
+
+.loginBtn:hover {
+  color: #1a1d20;
+}
+
+.loginBtnText {
+  position: relative;
+  z-index: 1;
+}
+
+/* Shimmer pulse on login button when idle */
+@keyframes loginPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(240, 173, 78, 0); }
+  50%       { box-shadow: 0 0 0 5px rgba(240, 173, 78, 0.15); }
+}
+
+.loginBtn {
+  animation: loginPulse 2.5s ease-in-out infinite;
+}
+
+.loginBtn:hover {
+  animation: none;
+}
+
+/* User section right */
+.userSection {
+  gap: 12px;
 }
 
 /* RESPONSIVE */
-@media (max-width: 991px) {
-  /* ... tus otros estilos ... */
-
+@media (max-width: 1199px) {
   .filtersContainer {
     flex-direction: column;
     width: 100%;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #444;
+    margin: 12px 0;
+    padding-top: 12px;
+    border-top: 1px solid rgba(240, 173, 78, 0.12);
   }
 
   .navSelect {
     width: 100%;
+    min-width: unset;
   }
-  
-  /* 🔥 ESTO ES LO QUE ACOMODA AL USUARIO 🔥 */
+
   .userSection {
-    margin-top: 10px;
-    padding-top: 15px;
-    border-top: 1px solid #444; /* Línea separadora */
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(240, 173, 78, 0.12);
     width: 100%;
-    
-    /* Forzamos que se pongan en fila horizontal */
-    display: flex !important; 
-    flex-direction: row !important; 
-    justify-content: center; /* Centrados al medio */
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
     align-items: center;
-    gap: 20px; /* Espacio entre Opciones, Carrito y Foto */
+    gap: 16px;
   }
 }

@@ -13,14 +13,56 @@ export const Container = styled.div`
   margin: 0 auto; /* Centrado horizontal automático */
 `;
 
-export const Title = styled.h1`
+export const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+`;
+
+export const LogoIcon = styled.svg`
   color: var(--gold);
-  text-align: center;
-  font-weight: 800;
+  filter: drop-shadow(0 0 8px rgba(240, 173, 78, 0.5));
+  flex-shrink: 0;
+`;
+
+export const LogoName = styled.div`
+  line-height: 1.1;
+`;
+
+export const LogoMain = styled.span`
+  display: block;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+
+  .under  { color: #ffffff; }
+  .events { color: var(--gold); }
+`;
+
+export const LogoSub = styled.span`
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(240, 173, 78, 0.5);
+  letter-spacing: 3px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 32px;
+  text-align: center;
+`;
+
+export const Tagline = styled.p`
+  color: rgba(255,255,255,0.35);
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 0.5px;
   margin-bottom: 40px;
+  margin-top: 0;
+`;
+
+/* keep Title for backwards compat but hidden */
+export const Title = styled.h1`
+  display: none;
 `;
 
 export const Row = styled.div`

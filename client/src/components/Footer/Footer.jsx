@@ -9,7 +9,12 @@ import {
   Column,
   FooterLink,
   Heading,
-  Title,
+  LogoWrapper,
+  LogoIcon,
+  LogoName,
+  LogoMain,
+  LogoSub,
+  Tagline,
 } from "./FooterStyles";
 import ContactUsFinal from "../ContactUsFinal";
 
@@ -20,7 +25,19 @@ const Footer = () => {
   return (
     <Box>
       <Container>
-        <Title>UnderEventsApp</Title>
+        <LogoWrapper>
+          <LogoIcon viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+            <path d="M13 2L4.5 13.5H11L10 22L20.5 10H14L13 2Z"/>
+          </LogoIcon>
+          <LogoName>
+            <LogoMain>
+              <span className="under">Under</span>
+              <span className="events">Events</span>
+            </LogoMain>
+            <LogoSub>App</LogoSub>
+          </LogoName>
+        </LogoWrapper>
+        <Tagline>Discover underground events near you</Tagline>
         <Row>
           <Column>
             {/* Traducción: ACERCA DE NOSOTROS */}
