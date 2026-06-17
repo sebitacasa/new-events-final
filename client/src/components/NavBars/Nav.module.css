@@ -162,7 +162,42 @@
   border-left: 1px solid rgba(240, 173, 78, 0.18);
 }
 
-/* RESPONSIVE */
+/* COMPACTO — entre el colapso xl y pantalla llena */
+@media (min-width: 1200px) and (max-width: 1520px) {
+  .brand {
+    margin-right: 10px;
+  }
+
+  .logoText {
+    font-size: 16px;
+  }
+
+  .logoApp {
+    display: none;
+  }
+
+  .navSelect {
+    min-width: 95px !important;
+    font-size: 12px;
+  }
+
+  .filtersContainer {
+    gap: 5px;
+  }
+
+  .userSection {
+    gap: 7px;
+    padding-left: 10px;
+  }
+
+  .loginBtn {
+    padding: 6px 14px;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+  }
+}
+
+/* RESPONSIVE — burger menu */
 @media (max-width: 1199px) {
   .filtersContainer {
     flex-direction: column;
