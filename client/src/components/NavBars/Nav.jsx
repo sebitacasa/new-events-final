@@ -158,7 +158,7 @@ export default function NavTop() {
 
           <Navbar.Collapse id="responsive-navbar-nav">
             
-            <Nav className="me-auto d-flex align-items-center w-100 justify-content-center">
+            <Nav className={`me-auto d-flex align-items-center flex-grow-1 justify-content-center ${styles.filtersNav}`}>
               <div className={styles.filtersContainer}>
                 
                 {/* Botón Ver Todo / Home */}
