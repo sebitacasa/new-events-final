@@ -196,16 +196,12 @@ export default function NavTop() {
             </Nav>
 
             <Nav className={`d-flex align-items-center ${styles.userSection}`}>
-              
-              {/* --- 5. SWITCHER DE BANDERAS --- */}
-              <LanguageSwitcher />
 
               {/* Menú Opciones */}
-              <NavDropdown 
-                title={<span style={{color:'#f0ad4e', fontWeight:'bold'}}>{t('nav.options')}</span>} 
-                id="basic-nav-dropdown" 
+              <NavDropdown
+                title={<span style={{color:'#f0ad4e', fontWeight:'bold'}}>{t('nav.options')}</span>}
+                id="basic-nav-dropdown"
                 menuVariant="dark"
-                className="me-3"
               >
                 <NavDropdown.Item onClick={() => handleMenuClick("createEvent")}>
                     {t('createEvent.title')}
@@ -215,9 +211,10 @@ export default function NavTop() {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <div className="me-3">
-                <ShoppingCart />
-              </div>
+              <ShoppingCart />
+
+              {/* --- 5. SWITCHER DE BANDERAS --- */}
+              <LanguageSwitcher />
 
               {/* Avatar de Usuario o Login */}
               {isAuthenticated ? (
