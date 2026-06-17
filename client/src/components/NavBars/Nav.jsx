@@ -211,10 +211,14 @@ export default function NavTop() {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <ShoppingCart />
+              <Nav.Item className="d-flex align-items-center">
+                <ShoppingCart />
+              </Nav.Item>
 
               {/* --- 5. SWITCHER DE BANDERAS --- */}
-              <LanguageSwitcher />
+              <Nav.Item className="d-flex align-items-center">
+                <LanguageSwitcher />
+              </Nav.Item>
 
               {/* Avatar de Usuario o Login */}
               {isAuthenticated ? (
