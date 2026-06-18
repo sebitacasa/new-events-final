@@ -1,7 +1,9 @@
 import React from "react";
 import Home from "./components/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
+import Loading from "./components/Loading";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import CreateEvent from "./components/CreateEvent";
@@ -32,9 +34,12 @@ const stripePromise = loadStripe("pk_test_51RKdqp2fTJ6qDYdqcOOqhecPicoUO3MqH20Kw
 
 
 function App() {
-  const user = useSelector((state) => state.userLoged)
+  const { isLoading } = useAuth0();
+  const user = useSelector((state) => state.userLoged);
 
-
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     
