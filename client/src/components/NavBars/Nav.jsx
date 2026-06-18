@@ -40,22 +40,24 @@ export default function NavTop() {
   const userLoged = useSelector((state) => state.userLoged);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(Action.getUserByExternalId(user.sub)).then((data) => {
-        if (data.payload === null) {
-          dispatch(
-            Action.createUser(
-              {
-                name: user.given_name,
-                lastName: user.family_name,
-                email: user.email,
-                picture: user.picture,
-              },
-              getAccessTokenSilently
-            )
-          );
-        }
-      });
+    if (isAuthenticated && user) {
+      dispatch(Action.getUserByExternalId(user.sub))
+        .then((data) => {
+          if (data?.payload === null) {
+            dispatch(
+              Action.createUser(
+                {
+                  name: user.given_name,
+                  lastName: user.family_name,
+                  email: user.email,
+                  picture: user.picture,
+                },
+                getAccessTokenSilently
+              )
+            );
+          }
+        })
+        .catch((err) => console.error("Auth user sync failed:", err.message));
     }
   }, [isAuthenticated, dispatch, user, getAccessTokenSilently]);
 

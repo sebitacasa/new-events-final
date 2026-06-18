@@ -202,11 +202,16 @@ export function createUser(payload, getAccessTokenSilently) {
 
 export function getUserByExternalId(externalId) {
   return async (dispatch) => {
-    let json = await axios.get(`${API_URL}/users/${externalId}`);
-    return dispatch({
-      type: GET_USER,
-      payload: json.data,
-    });
+    try {
+      let json = await axios.get(`${API_URL}/users/${externalId}`);
+      return dispatch({
+        type: GET_USER,
+        payload: json.data,
+      });
+    } catch (err) {
+      console.error("getUserByExternalId failed:", err.message);
+      return dispatch({ type: GET_USER, payload: null });
+    }
   };
 }
 

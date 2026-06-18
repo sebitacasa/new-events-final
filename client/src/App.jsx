@@ -5,6 +5,24 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
 import Loading from "./components/Loading";
 
+class ErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
+  static getDerivedStateFromError(error) { return { hasError: true, error }; }
+  componentDidCatch(error, info) { console.error("App crash caught:", error, info); }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ background: "#1a1a2e", color: "#f0ad4e", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "Arial, sans-serif", padding: "40px" }}>
+          <h2 style={{ marginBottom: 12 }}>Something went wrong</h2>
+          <p style={{ color: "#ccc", marginBottom: 24 }}>Please refresh the page or try again later.</p>
+          <button onClick={() => window.location.href = "/"} style={{ background: "#f0ad4e", color: "#1a1a2e", border: "none", borderRadius: 8, padding: "10px 24px", fontWeight: "bold", cursor: "pointer", fontSize: 16 }}>Go to Home</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import CreateEvent from "./components/CreateEvent";
 
@@ -42,7 +60,7 @@ function App() {
   }
 
   return (
-    
+    <ErrorBoundary>
     <BrowserRouter >
     <Elements stripe={stripePromise}>
     <Routes>
@@ -75,8 +93,8 @@ function App() {
         <Route exact path="/reviews" element={<Reviews />} />
       </Routes>
     </Elements>
-      
     </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 
