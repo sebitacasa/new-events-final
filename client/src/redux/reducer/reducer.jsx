@@ -67,6 +67,7 @@ function rootReducer(state = InitialState, action) {
         ...state,
         eventosDb: FilterEventitos,
       };
+    }
 
     case Action.FILTER_CALENDER_NUEVO: // para el calendario nuevo (filtra un rango de fechas)
       const eventitosNuevo = state.allEventState;
@@ -122,9 +123,9 @@ function rootReducer(state = InitialState, action) {
           : allState.filter((g) => g.city === action.payload);
       return {
         ...state,
-
         eventosDb: stateFilter,
       };
+    }
 
     case Action.BY_EVENT_TYPE: {
       const allType = state.allEventType || [];
@@ -134,10 +135,10 @@ function rootReducer(state = InitialState, action) {
           : allType.filter((g) => g.genero === action.payload);
       return {
         ...state,
-
         eventosBack: typeFilter,
         eventosDb: typeFilter,
       };
+    }
 
     case Action.GET_USER:
       return {
@@ -168,12 +169,11 @@ function rootReducer(state = InitialState, action) {
         action.payload === "All"
           ? allDate
           : allDate.filter((g) => g.month === action.payload);
-      /* console.log("filtradoMeses", dateFilter); */
       return {
         ...state,
-
         eventosDb: dateFilter,
       };
+    }
 
     case Action.BAN_USER:
       return {
