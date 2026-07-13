@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { useCart } from "react-use-cart";
+import Swal from "sweetalert2";
 import {
   Container,
   Row,
@@ -162,7 +163,19 @@ const Detail = () => {
                             price: Number(detalles.cost.replace(".", "")),
                             image: detalles.imagen,
                         }, 1);
-                        alert(t('detail.addedAlert')); // TRADUCCIÓN ALERTA
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: detalles.title,
+                            text: t('detail.addedAlert'),
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            background: "#1a1a2e",
+                            color: "#f0ad4e",
+                            iconColor: "#f0ad4e",
+                        });
                     }}
                 >
                     {/* TRADUCCIÓN BOTÓN AGREGAR */}

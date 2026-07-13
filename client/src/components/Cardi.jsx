@@ -4,17 +4,15 @@ import {
   Button,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { useCart } from "react-use-cart"; 
+import { useCart } from "react-use-cart";
+import Swal from "sweetalert2";
 import style from "./Card.module.css";
 import image2 from "../images/imagen-set.jpg";
 
-// 1. IMPORTAR HOOK
 import { useTranslation } from "react-i18next";
 
 export default function Cardi({ id, title, imagen, date, place, price }) {
-  // 2. INICIALIZAR HOOK
   const { t } = useTranslation();
-  
   const { addItem } = useCart();
 
   const handleAddToCart = () => {
@@ -22,12 +20,24 @@ export default function Cardi({ id, title, imagen, date, place, price }) {
       {
         id: id,
         name: title,
-        // Conversión de precio segura
-        price: typeof price === 'string' ? Number(price.replace(".", "")) : Number(price), 
+        price: typeof price === 'string' ? Number(price.replace(".", "")) : Number(price),
         image: imagen,
       },
       1
     );
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: title,
+      text: t('detail.addedAlert'),
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      background: "#1a1a2e",
+      color: "#f0ad4e",
+      iconColor: "#f0ad4e",
+    });
   };
 
   return (
