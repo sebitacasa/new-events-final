@@ -39,15 +39,17 @@ const InitialState = {
 
 function rootReducer(state = InitialState, action) {
   switch (action.type) {
-    case Action.GET_ALL_EVENTS_DB:
+    case Action.GET_ALL_EVENTS_DB: {
+      const safePayload = Array.isArray(action.payload) ? action.payload : [];
       return {
         ...state,
-        eventosBack: action.payload,
-        eventosDb: action.payload,
-        allEventType: action.payload,
-        allEventState: action.payload,
-        filterDate: action.payload,
+        eventosBack: safePayload,
+        eventosDb: safePayload,
+        allEventType: safePayload,
+        allEventState: safePayload,
+        filterDate: safePayload,
       };
+    }
     // PARA EL CALENDARIO ------------------------------------------------------
     case Action.GET_ALL_DATE:
       return {
@@ -55,8 +57,8 @@ function rootReducer(state = InitialState, action) {
         allDateEvents: action.payload,
       };
 
-    case Action.FILTER_CALENDER:
-      const eventitos = state.allEventState;
+    case Action.FILTER_CALENDER: {
+      const eventitos = state.allEventState || [];
       const FilterEventitos =
         action.payload === "All"
           ? eventitos
@@ -112,8 +114,8 @@ function rootReducer(state = InitialState, action) {
         eventosDb: action.payload,
       };
 
-    case Action.GET_STATES:
-      const allState = state.allEventState;
+    case Action.GET_STATES: {
+      const allState = state.allEventState || [];
       const stateFilter =
         action.payload === "All"
           ? allState
@@ -124,8 +126,8 @@ function rootReducer(state = InitialState, action) {
         eventosDb: stateFilter,
       };
 
-    case Action.BY_EVENT_TYPE:
-      const allType = state.allEventType;
+    case Action.BY_EVENT_TYPE: {
+      const allType = state.allEventType || [];
       const typeFilter =
         action.payload === "All"
           ? allType
@@ -160,8 +162,8 @@ function rootReducer(state = InitialState, action) {
         users: action.payload,
       };
 
-    case Action.FILTER_DATE:
-      const allDate = state.eventosBack;
+    case Action.FILTER_DATE: {
+      const allDate = state.eventosBack || [];
       const dateFilter =
         action.payload === "All"
           ? allDate

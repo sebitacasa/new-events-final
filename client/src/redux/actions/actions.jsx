@@ -45,14 +45,13 @@ export function getAllEvent() {
   return async function (dispatch) {
     try {
       const json = await axios.get(`${API_URL}/events/getAll`);
-      console.log("✅ Data recibida del backend:", json.data)
       return dispatch({
         type: GET_ALL_EVENTS_DB,
-        payload: json.data,
-        
+        payload: Array.isArray(json.data) ? json.data : [],
       });
     } catch (err) {
-      console.log(err);
+      console.error("getAllEvent failed:", err.message);
+      return dispatch({ type: GET_ALL_EVENTS_DB, payload: [] });
     }
   };
 }
