@@ -131,7 +131,6 @@ export default function NavTop() {
                 <span className={styles.logoUnder}>Under</span>
                 <span className={styles.logoEvents}>Events</span>
               </span>
-              <span className={styles.logoApp}>App</span>
             </div>
           </Navbar.Brand>
 
