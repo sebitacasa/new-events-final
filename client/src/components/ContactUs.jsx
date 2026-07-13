@@ -1,66 +1,93 @@
-import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap'
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle";
-import emailjs from 'emailjs-com';
-import styles from "./ContactUs.module.css"
-import Swal from "sweetalert2"
-import BackButton from './Button/BackButton';
+import React, { useState } from "react";
+import emailjs from "emailjs-com";
+import Swal from "sweetalert2";
+import BackButton from "./Button/BackButton";
 import Footer from "./Footer/Footer";
+import styles from "./ContactUs.module.css";
 
-export default class ContactUs extends Component {
-    render() {
-        function sendEmail(e){
-            e.preventDefault();
+export default function ContactUs() {
+  const [sending, setSending] = useState(false);
 
-            emailjs.sendForm('service_k0np36h', 'template_2661vcn', e.target, '4BHkR2Tf-F7GH6JZS').then(res=>{
-                console.log(res);
-            })
-        }
+  function handleSubmit(e) {
+    e.preventDefault();
+    setSending(true);
 
-        function handleOnClick(e){
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your comment has been sended okay :)',
-                showConfirmButton: false,
-                timer: 1500
-              })
-        }
+    emailjs
+      .sendForm("service_k0np36h", "template_2661vcn", e.target, "4BHkR2Tf-F7GH6JZS")
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Message sent!",
+          showConfirmButton: false,
+          timer: 1500,
+          background: "#161616",
+          color: "#ffffff",
+        });
+        e.target.reset();
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Something went wrong",
+          text: "Please try again later.",
+          background: "#161616",
+          color: "#ffffff",
+        });
+      })
+      .finally(() => setSending(false));
+  }
 
-        return (
-         
-                <div className={styles.contactUs} >
-                    <div>
-                        <BackButton/>
-                    </div>
-                    <div>
-                        <h1 className={styles.contactUsTitle}>Contact Us</h1>
-                    </div>
-                    <div className={styles.contactUsContent}>
-                        <Form style={{color: "white"}} onSubmit={sendEmail}>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label style={{color: "white"}} >Email address</Form.Label>
-                                <Form.Control type="email" placeholder="name@example.com" />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label style={{color: "white"}}>Name</Form.Label>
-                                <Form.Control rows={3} />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                <Form.Label style={{color: "white"}}>Comments</Form.Label>
-                                <Form.Control as="textarea" rows={3} />
-                            </Form.Group>
-                            <div className="d-grid gap-2">
-                                <Button type='submit' variant="dark" size="lg" onClick={handleOnClick} >
-                                    Send comment
-                                </Button>
-                            </div>
-                        </Form>
-                    </div>
-                    <Footer />
-                </div>
-               
-        )
-    }
+  return (
+    <div className={styles.page}>
+      <div className={styles.back}>
+        <BackButton />
+      </div>
+
+      <div className={styles.card}>
+        <p className={styles.title}>06 // CONTACT</p>
+        <h1 className={styles.heading}>Get in touch.</h1>
+
+        <form onSubmit={handleSubmit} noValidate>
+          <div className={styles.field}>
+            <label className={styles.label}>Name</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="to_name"
+              placeholder="Your name"
+              required
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>Email</label>
+            <input
+              className={styles.input}
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              required
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>Message</label>
+            <textarea
+              className={styles.textarea}
+              name="message"
+              placeholder="What's on your mind?"
+              required
+            />
+          </div>
+
+          <button className={styles.submit} type="submit" disabled={sending}>
+            {sending ? "Sending..." : "Send message →"}
+          </button>
+        </form>
+      </div>
+
+      <Footer />
+    </div>
+  );
 }

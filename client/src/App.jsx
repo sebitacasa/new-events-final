@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Home from "./components/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Loading from "./components/Loading";
+import * as Action from "./redux/actions/actions";
 
 class ErrorBoundary extends React.Component {
   constructor(props) { super(props); this.state = { hasError: false, error: null }; }
@@ -52,10 +53,40 @@ const stripePromise = loadStripe("pk_test_51RKdqp2fTJ6qDYdqcOOqhecPicoUO3MqH20Kw
 
 
 function App() {
-  const { isLoading } = useAuth0();
-  const user = useSelector((state) => state.userLoged);
+  const { isLoading, isAuthenticated, user: auth0User, getAccessTokenSilently } = useAuth0();
+  const dispatch = useDispatch();
+  const [userReady, setUserReady] = useState(false);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!isAuthenticated) {
+      setUserReady(true);
+      return;
+    }
+
+    if (auth0User) {
+      dispatch(Action.getUserByExternalId(auth0User.sub))
+        .then((data) => {
+          if (data?.payload === null) {
+            return dispatch(
+              Action.createUser(
+                {
+                  name: auth0User.given_name,
+                  lastName: auth0User.family_name,
+                  email: auth0User.email,
+                  picture: auth0User.picture,
+                },
+                getAccessTokenSilently
+              )
+            );
+          }
+        })
+        .finally(() => setUserReady(true));
+    }
+  }, [isLoading, isAuthenticated, auth0User, dispatch, getAccessTokenSilently]);
+
+  if (isLoading || !userReady) {
     return <Loading />;
   }
 

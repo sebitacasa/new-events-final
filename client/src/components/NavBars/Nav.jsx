@@ -36,30 +36,9 @@ export default function NavTop() {
   const navigate = useNavigate();
 
   // --- 3. Auth0 (Agregué loginWithPopup para el botón de Login) ---
-  const { user, isAuthenticated, logout, getAccessTokenSilently, loginWithPopup } = useAuth0();
+  const { user, isAuthenticated, logout, loginWithPopup } = useAuth0();
   const userLoged = useSelector((state) => state.userLoged);
 
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      dispatch(Action.getUserByExternalId(user.sub))
-        .then((data) => {
-          if (data?.payload === null) {
-            dispatch(
-              Action.createUser(
-                {
-                  name: user.given_name,
-                  lastName: user.family_name,
-                  email: user.email,
-                  picture: user.picture,
-                },
-                getAccessTokenSilently
-              )
-            );
-          }
-        })
-        .catch((err) => console.error("Auth user sync failed:", err.message));
-    }
-  }, [isAuthenticated, dispatch, user, getAccessTokenSilently]);
 
   // --- 4. Filtros ---
   const cities = useSelector((state) => state.allCities);
