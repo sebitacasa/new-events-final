@@ -55,6 +55,7 @@ const stripePromise = loadStripe("pk_test_51RKdqp2fTJ6qDYdqcOOqhecPicoUO3MqH20Kw
 function App() {
   const { isLoading, isAuthenticated, user: auth0User, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.userLoged);
   const [userReady, setUserReady] = useState(false);
 
   useEffect(() => {
